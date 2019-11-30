@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
-<h1>HI</h1>
+    <div className="App">
+    </div>
   );
 }
 
