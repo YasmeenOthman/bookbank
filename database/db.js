@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+require("mongoose-query-random");
 mongoose.set("useCreateIndex", true);
 
 //-------------------MongoURI----------------------------
@@ -176,8 +177,18 @@ var saveUniversity = function(uni) {
   });
 };
 
+//=======================================================
+//-------------------My function ------------------------
+//=======================================================
+
+//-------------------Find 4 random universities ---------
+var findRandomUnis = function(callback) {
+  University.find().random(4, true, callback);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
 module.exports.saveProfile = saveProfile;
 module.exports.saveUniversity = saveUniversity;
+module.exports.findRandomUnis = findRandomUnis;
