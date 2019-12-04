@@ -8,7 +8,6 @@ const userStyle = makeStyles({
     root: {
         padding: 0,
         maxWidth: '100%'
-
     },
     image: {
         width: '100%',
