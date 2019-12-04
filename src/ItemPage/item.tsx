@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       margin: 'auto',
       maxWidth: 1000,
-      maxHeight: 1000,
+      // maxHeight: 1000,
     },
     image: {
       width: '90%',
-      height: '100%',
+      // height: '100%',
     },
     img: {
       margin: 'auto',
@@ -80,21 +80,25 @@ const Item: React.FC = () => {
                  <br/>
                  <br/>
                 <Typography variant="subtitle1" >
-                By: <a href="/"> AMANI ELRAYES</a> 
+                <b> By:</b> <a href="/"> Alaa Alagha</a> 
                 </Typography>
                 <br/>
                 
                 <Typography variant="subtitle1" >
-                  University: Al-Azhar-Gaza
+                <b> Univbersity:</b>: Al-Azhar-Gaza
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1" >
-                  Department: Computer Science 
+                 <b> Department:</b> Computer Science 
                 </Typography>
                 <br/>
-               
                 <Typography variant="subtitle1" >
-                  Avalability: Yes
+                 <b>Description:</b>  It may be too heavy on the subject for someone
+                   who wants only to try out a React Redux tutorial 
+                </Typography>
+                <br/>
+                <Typography variant="subtitle1" >
+                  <b>Avalability:</b> Yes
                 </Typography>
                 <br/>
                 <br/>
