@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,41 +7,75 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import NavBar from './NavBar';
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 349,
+    maxWidth: 250,
   },
   media: {
-    height: 250,
+    height: 200,
   },
 });
 
-export default function MediaCard() {
-  const classes = useStyles();
-
-  return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="https://www.vasansbookstall.com/wp-content/uploads/2016/07/img722-422x600.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            The HISTORY OF ENGLISH LITERATURE
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Owner: Nour Saqqa
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-  );
+interface Props {
+  book: {
+    bookcover: String;
+    bookname: String;
+  };
 }
+
+// function sendAjaxRequest(_type: string, _url: string, _params: string, _callback: CallbackFunction) {
+
+//   var request = $.ajax({
+//       type: _type,
+//       url: BASE_URL + _url,
+//       data: _params,
+//       contentType: 'json'
+//   });
+//   request.done(function(res) {
+//       _callback(res);
+//   });
+//   request.fail(function(jqXHR, textStatus) {
+//       console.error(jqXHR);
+//       _callback({ err: true, message: "Request failed: " + textStatus });
+//   });
+
+// }
+
+const Items : React.FC<Props> = ({
+  book
+}) => {
+    const classes = useStyles();
+
+    return (
+      <div>
+      <NavBar />
+      <Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image= {book.bookcover}
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h6" component="h2">
+              {book.bookname}
+              {/* The HISTORY OF ENGLISH LITERATURE */}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary">
+            Request 
+          </Button>
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        </CardActions>
+      </Card>
+      </div>
+    );
+  }
+  
+  export default Items;
