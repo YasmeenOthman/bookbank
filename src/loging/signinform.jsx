@@ -93,7 +93,7 @@ class SignIn extends React.Component {
     );
   }
 
-  signin() {
+  login() {
     // event.preventDefault();
     const data = {
       email: $("#email").val(),

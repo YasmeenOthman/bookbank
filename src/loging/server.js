@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const db = require("./db.js");
@@ -78,6 +79,15 @@ app.post("/login", (req, res) => {
       res.send("error: " + err);
     });
 });
+//--------- this function could be added to any routes that the user can not do anything unless he is logged in-----
+// function ensureAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   } else {
+//     req.flash("danger", "Please login");
+//     //  res.redirect(url for the login page) will redirect the user to the login page
+//   }
+// }
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
