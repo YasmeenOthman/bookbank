@@ -27,6 +27,12 @@ const useStyles = makeStyles({
     color: 'white',
     marginLeft: -11,
     paddingLeft: 0
+  },
+  h1:{
+    margin: 19,
+    border: '1px solid #77b748',
+    textAlign: 'center',
+    color: '#77b748'
   }
 });
 export default function NavCate() {
@@ -57,6 +63,7 @@ export default function NavCate() {
         onClick={toggleDrawer(side, false)}
         onKeyDown={toggleDrawer(side, false)}
       >
+        <h1 className={classes.h1}>BOOK BANK</h1>
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -81,9 +88,6 @@ export default function NavCate() {
       </div>
     );
   // eslint-disable-next-line
-
-    
-  
     return (
       <div>
         <Button onClick={toggleDrawer('left', true)}><MenuIcon fontSize="large" className={classes.menu}/></Button>

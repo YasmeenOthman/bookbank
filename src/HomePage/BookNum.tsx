@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';
+import Box from '@material-ui/core/Box';
 //------Number of user,books and university component-----
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,14 +38,14 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             color: 'white'
         },
-        icons:{
+        icons: {
             width: '3em',
             height: 80
         },
         control: {
             padding: theme.spacing(3),
         },
-        h2:{
+        h2: {
             fontWeight: 100
         }
     }),
@@ -56,35 +57,43 @@ export default function BookNum() {
 
     return (
         <Grid container className={classes.root} spacing={5} >
+
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={10}>
 
                     <Grid item>
-                        <div className={classes.paper} >
-                            <div className={classes.insideDiv}>
-                                <PeopleAltIcon className={classes.icons}/>
-                                <h2 className={classes.h2}>Total Members</h2>
-                                <h2 className={classes.h2}>50</h2>
+                        <Box display={{ xs: 'none', sm: 'none', lg: 'block' }} className={classes.paper}>
+                            <div>
+                                <div className={classes.insideDiv}>
+                                    <PeopleAltIcon className={classes.icons} />
+                                    <h2 className={classes.h2}>Total Members</h2>
+                                    <h2 className={classes.h2}>50</h2>
+                                </div>
                             </div>
-                        </div>
+                        </Box>
+                    </Grid>
+
+                    <Grid item>
+                        <Box display={{ xs: 'none', sm: 'none', md: 'block' }} className={classes.paper2}>
+                            <div>
+                                <div className={classes.insideDiv}>
+                                    <MenuBookIcon className={classes.icons} />
+                                    <h2 className={classes.h2}>Books We Have</h2>
+                                    <h2 className={classes.h2}>50</h2>
+                                </div>
+                            </div>
+                        </Box>
                     </Grid>
                     <Grid item>
-                        <div className={classes.paper2}>
-                            <div className={classes.insideDiv}>
-                                <MenuBookIcon className={classes.icons}/>
-                                <h2 className={classes.h2}>Books We Have</h2>
-                                <h2 className={classes.h2}>50</h2>
+                        <Box display={{ xs: 'none', sm: 'block' }} className={classes.paper3}>
+                            <div>
+                                <div className={classes.insideDiv}>
+                                    <SchoolIcon className={classes.icons} />
+                                    <h2 className={classes.h2}>Number Of Universities</h2>
+                                    <h2 className={classes.h2}>5</h2>
+                                </div>
                             </div>
-                        </div>
-                    </Grid>
-                    <Grid item>
-                        <div className={classes.paper3}>
-                            <div className={classes.insideDiv}>
-                                <SchoolIcon className={classes.icons}/>
-                                <h2 className={classes.h2}>Number Of Universities</h2>
-                                <h2 className={classes.h2}>5</h2>
-                            </div>
-                        </div>
+                        </Box>
                     </Grid>
 
                 </Grid>

@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
         image: {
             position: 'relative',
             height: 200,
+            border: '3px solid #77b747',
             [theme.breakpoints.down('xs')]: {
                 width: '100% !important', // Overrides inline-style
                 height: 100,
@@ -100,11 +101,12 @@ const useStyles = makeStyles((theme: Theme) =>
             left: 'calc(50% - 9px)',
             transition: theme.transitions.create('opacity'),
         },
-        h2:{
+        h2: {
             color: 'gray',
-             marginBottom: 20
-}
-       
+            marginBottom: 20,
+            marginTop: 60
+        }
+
     }),
 );
 
@@ -112,7 +114,7 @@ export default function UniversitySlide() {
     const classes = useStyles();
 
     return (
-        <Container>
+        <Container style={{marginBottom:50}}>
             <h2 className={classes.h2}>University</h2>
             <div className={classes.root}>
                 {images.map(image => (

@@ -129,9 +129,9 @@ export default function NavBar() {
                                             <Paper >
                                                 <ClickAwayListener onClickAway={handleClose}>
                                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                                        <MenuItem onClick={handleClose}>Notification</MenuItem>
-                                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                                        <MenuItem onClick={handleClose}><Link href='/Profile'>Profile</Link></MenuItem>
+                                                        <MenuItem onClick={handleClose}><Link href='/Notification'>Notification</Link></MenuItem>
+                                                        <MenuItem onClick={handleClose}><Link href='/Logout'>Logout</Link></MenuItem>
                                                     </MenuList>
                                                 </ClickAwayListener>
                                             </Paper>
@@ -143,7 +143,6 @@ export default function NavBar() {
                     </Grid>
                 </div>
             </Toolbar>
-
             {/* second nav bar */}
             <Toolbar className={classes.secondNav}>
                 <div className={classes.root}>
@@ -164,6 +163,5 @@ export default function NavBar() {
                 </div>
             </Toolbar>
         </AppBar>
-
     )
 }
