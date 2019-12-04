@@ -97,8 +97,9 @@ var saveDonatedBook = function(donatedBook) {
 
 var userSchema = mongoose.Schema({
   id: { type: Number, unique: true },
+  username: { type: String },
   email: { type: String },
-  password: { type: String }
+  password: { type: String, required: true }
 });
 
 //-------------------User Model-------------------------

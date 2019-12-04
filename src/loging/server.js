@@ -66,13 +66,13 @@ app.post("/login", (req, res) => {
           let token = jwt.sign(payload, process.env.SECRET_KEY, {
             expiresIn: "1h"
           });
-          //   console.log(token);
+          // console.log(token);
           res.send(token);
         } else {
           res.json({ error: "check your password" });
         }
       } else {
-        res.json({ error: "User does not exist" });
+        res.json({ error: "Could not log in " });
       }
     })
     .catch(err => {

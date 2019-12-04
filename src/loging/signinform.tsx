@@ -1,4 +1,5 @@
 import React from "react";
+import { render } from "react-dom";
 import $ from "jquery";
 import jwt_decode from "jwt-decode";
 // import { Provider } from "react-redux";
@@ -25,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class SignIn extends React.Component {
+class SignIn extends React.Component<{ classes: any }> {
   render() {
     const { classes } = this.props;
     return (
