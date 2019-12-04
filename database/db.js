@@ -208,6 +208,13 @@ var countUsers = function(callBack) {
   User.count({}, callBack);
 };
 
+//--------- get the books of a university---------
+var getBooksOfUniversity = function(univId, callBack) {
+  Book.find({ universityId: univId })
+    .sort({ createdAt: "desc" })
+    .exec(callBack);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -218,3 +225,4 @@ module.exports.findRecentlyAddedBooks = findRecentlyAddedBooks;
 module.exports.countDonatedBooks = countDonatedBooks;
 module.exports.countUniversities = countUniversities;
 module.exports.countUsers = countUsers;
+module.exports.getBooksOfUniversity = getBooksOfUniversity;
