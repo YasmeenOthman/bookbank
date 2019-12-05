@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NavBar from '../HomePage/NavBar';
+import NavBar from '../../../HomePage/NavBar';
 import Items from './items';
 
 const book: Array<book> = [
@@ -13,7 +13,7 @@ bookname: 'LEARNING F*** REDUX'
 ] 
 
 //--------Main Items page------
-const Home: React.FC = () => {
+const ItemsPage: React.FC = () => {
   return (
     <div >
       <NavBar />
@@ -22,4 +22,4 @@ const Home: React.FC = () => {
   );
 }
 
-export default Home;
+export default ItemsPage;
