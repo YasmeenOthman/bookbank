@@ -63,7 +63,7 @@ app.post("/login", (req, res) => {
             password: user.password
           };
           let token = jwt.sign(payload, process.env.SECRET_KEY, {
-            expiresIn: "1h"
+            expiresIn: "24h"
           });
           console.log(token);
           res.send(token);
@@ -79,25 +79,25 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.get("/profile", (req, res) => {
-  var decoded = jwt.verify(
-    req.headers["authorization"],
-    process.env.SECRET_KEY
-  );
-  db.Signin.findOne({
-    _id: decoded.id
-  })
-    .then(user => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.send("user does not exist");
-      }
-    })
-    .catch(err => {
-      res.send("error:" + err);
-    });
-});
+// app.get("/profile", (req, res) => {
+//   var decoded = jwt.verify(
+//     req.headers["authorization"],
+//     process.env.SECRET_KEY
+//   );
+//   db.Signin.findOne({
+//     _id: decoded.id
+//   })
+//     .then(user => {
+//       if (user) {
+//         res.json(user);
+//       } else {
+//         res.send("user does not exist");
+//       }
+//     })
+//     .catch(err => {
+//       res.send("error:" + err);
+//     });
+// });
 
 //--------- this function could be added to any routes that the user can not do anything unless he is logged in-----
 // function ensureAuthenticated(req, res, next) {

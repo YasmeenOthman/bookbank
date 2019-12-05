@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
+// import { render } from "react-dom";
 import $ from "jquery";
 import jwt_decode from "jwt-decode";
 import SignUp from "./signupform";
@@ -46,7 +46,11 @@ class SignIn extends React.Component {
                   *
                 </span>
                 <br />
-                <input id="email" placeholder="email" />
+                <input
+                  id="email"
+                  placeholder="email"
+                  style={{ width: 250, height: 30 }}
+                />
               </div>
 
               <div className="field">
@@ -56,7 +60,12 @@ class SignIn extends React.Component {
                   *
                 </span>
                 <br />
-                <input type="password" id="password" placeholder="password" />
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="password"
+                  style={{ width: 250, height: 30 }}
+                />
               </div>
               <div>
                 <button
@@ -64,10 +73,12 @@ class SignIn extends React.Component {
                   className="ui button"
                   style={{
                     marginTop: 10,
-                    marginLeft: 10,
+                    marginLeft: 50,
                     backgroundColor: "#F08080",
-                    width: 40
+                    width: 70,
+                    height: 20
                   }}
+                  onClick={this.getUser.bind(this)}
                 >
                   Login
                 </button>
@@ -75,7 +86,7 @@ class SignIn extends React.Component {
                 <button
                   type="button"
                   className="ui button"
-                  style={{ backgroundColor: "#F08080" }}
+                  style={{ backgroundColor: "#F08080", width: 70, height: 20 }}
                   onClick={this.redirect.bind(this)}
                 >
                   Signup
@@ -93,7 +104,17 @@ class SignIn extends React.Component {
       component: <SignUp />
     });
   }
-
+  getUser() {
+    const token = localStorage.usertoken;
+    console.log(token);
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+    if (decoded.password === this.state.email) {
+      window.open("https://www.w3schools.com");
+    } else {
+      alert("Wrong password or email");
+    }
+  }
   loginFunction() {
     var data = {
       email: $("#email").val(),
@@ -101,13 +122,15 @@ class SignIn extends React.Component {
     };
     var that = this;
     $.ajax({
-      url: "/login",
+      url: "http://localhost:3001/login",
       method: "POST",
       data: data,
       datatype: "json",
       success: response => {
         localStorage.setItem("usertoken", response);
+        console.log(response);
         const decoded = jwt_decode(response);
+        // console.log(decoded);
         this.setState({
           email: decoded.password
         });
