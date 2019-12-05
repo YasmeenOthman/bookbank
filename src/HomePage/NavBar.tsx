@@ -17,6 +17,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import NavCate from './NavCate';
 import SearchAppBar from './SearchAppBar';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutStatus } from '../actions';
+
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -52,6 +55,11 @@ const userStyles = makeStyles({
 });
 //-----------------nav bar class-------------
 export default function NavBar() {
+    // for login user 
+    const isLogged:boolean = useSelector((state:any) => state.isLogged);
+    const dispatch = useDispatch();
+
+
     const classes = userStyles();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -64,7 +72,6 @@ export default function NavBar() {
         if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
             return;
         }
-
         setOpen(false);
     };
 
@@ -81,13 +88,13 @@ export default function NavBar() {
         if (prevOpen.current === true && open === false) {
             anchorRef.current!.focus();
         }
-
         prevOpen.current = open;
     }, [open]);
 
     return (
         <AppBar position="static">
             {/* first nav bar */}
+            
             <Toolbar className={classes.firstNav}>
                 <div className={classes.root}>
                     <Grid container >
@@ -109,6 +116,9 @@ export default function NavBar() {
                         <Grid container item xs={6} direction="row"
                             justify="flex-end"
                             alignItems="center">
+                                {/* if statment for check user if login or not */}
+                                {isLogged ?
+                                // log in icon and use name
                             <Grid item >
                                 <Button className={classes.button}
                                     ref={anchorRef}
@@ -131,7 +141,7 @@ export default function NavBar() {
                                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
                                                         <MenuItem onClick={handleClose}><Link href='/Profile'>Profile</Link></MenuItem>
                                                         <MenuItem onClick={handleClose}><Link href='/Notification'>Notification</Link></MenuItem>
-                                                        <MenuItem onClick={handleClose}><Link href='/Logout'>Logout</Link></MenuItem>
+                                                        <MenuItem onClick={() => dispatch(logoutStatus())}>Logout</MenuItem>
                                                     </MenuList>
                                                 </ClickAwayListener>
                                             </Paper>
@@ -139,6 +149,8 @@ export default function NavBar() {
                                     )}
                                 </Popper>
                             </Grid>
+                            // link to go to log in page
+                            : <Link href='/login'>Log In</Link>}
                         </Grid>
                     </Grid>
                 </div>
