@@ -59,26 +59,46 @@ app.post("/login", (req, res) => {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
             _id: user._id,
-            username: user.username,
             email: user.email,
             password: user.password
           };
           let token = jwt.sign(payload, process.env.SECRET_KEY, {
             expiresIn: "1h"
           });
-          // console.log(token);
+          console.log(token);
           res.send(token);
         } else {
           res.json({ error: "check your password" });
         }
       } else {
-        res.json({ error: "Could not log in " });
+        res.json({ error: "user does not exist" });
       }
     })
     .catch(err => {
       res.send("error: " + err);
     });
 });
+
+app.get("/profile", (req, res) => {
+  var decoded = jwt.verify(
+    req.headers["authorization"],
+    process.env.SECRET_KEY
+  );
+  db.Signin.findOne({
+    _id: decoded.id
+  })
+    .then(user => {
+      if (user) {
+        res.json(user);
+      } else {
+        res.send("user does not exist");
+      }
+    })
+    .catch(err => {
+      res.send("error:" + err);
+    });
+});
+
 //--------- this function could be added to any routes that the user can not do anything unless he is logged in-----
 // function ensureAuthenticated(req, res, next) {
 //   if (req.isAuthenticated()) {
