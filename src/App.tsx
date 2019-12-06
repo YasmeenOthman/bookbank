@@ -1,16 +1,21 @@
-import React from 'react';
+import React from "react";
 //import './App.css';
-// import Item from './ItemPage/item'
-import Home from '../src/HomePage/Home';
+// import Home from "../src/HomePage/Home";
+// import Item from "./ItemPage/item";
+import Login from "../src/loging/login";
+//import NavBar from './HomePage/NavBar'
+// import Home from "../src/HomePage/Home";
 
 const App: React.FC = () => {
   return (
     <div>
-      {/* <NavBar/> */}
-      <Home />
+      {/* <Home /> */}
+      <Login />
+
       {/* <Item /> */}
+      {/* <NavBar/> */}
     </div>
   );
-}
+};
 
 export default App;
