@@ -11,6 +11,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
+import axios from 'axios';
+import {useState,useEffect} from 'react';
 // import {connect} from 'react-redux';
 // import BookApi from "../ItemPage1/mockData/book"
 
@@ -71,13 +73,33 @@ const useStyles = makeStyles(theme => ({
   export default function Item() {
     const classes = useStyles();
     const [owner, setOwner] = React.useState('');
+
+    const [book,setBook] = useState([]);
+    const [ownerbook,setOwnerBook] = useState([]);
+
+    useEffect(() => {
+      var path = window.location.href;
+      console.log()
+      var univId = parseInt(path[32]);
+      var bookId = parseInt(path[path.length - 1]);
+
+      axios.get(`http://localhost:8000/univBooks/${univId}/book/${bookId}`)
+      .then(res => {
+        // console.log(res.data);
+        setBook(res.data.bluePrintBook);
+        // console.log(res.data.donatedBooksOwners)
+        setOwnerBook(res.data.donatedBooksOwners);
+    })
+      .catch(err => {
+        console.log(err);
+      })
+    },[]);
     
 
   const handleChange = event => {
     setOwner(event.target.value);
   };
 
-  
     return (
         <ThemeProvider theme={theme}>
         <div className={classes.root} >
@@ -86,7 +108,7 @@ const useStyles = makeStyles(theme => ({
             <Grid container spacing={4}>
               <Grid item>
                 <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt="complex" src="https://www.packtpub.com/media/catalog/product/cache/e4d64343b1bc593f1c5348fe05efa4a6/9/7/9781838641443-original.jpeg"/> 
+                  <img className={classes.img} alt="complex" src={book.bookCover}/> 
                 </ButtonBase>
                 </Grid>
               <Grid item xs={12} sm container>
@@ -94,17 +116,17 @@ const useStyles = makeStyles(theme => ({
                   <Grid item xs>
                     
                     <Typography gutterBottom variant="h5">
-                      React Redux with Hocks
+                      {book.bookName}
                     </Typography>
                      <br/> 
                      <br/>
                     <br/>
                     <Typography variant="subtitle1" >
-                    <b> University:</b> Al-Azhar 
+                    <b> University:</b> {book.universityId} 
                     </Typography>
                     <br/>
                     <Typography variant="subtitle1" >
-                     <b>Description:</b>  Amazing Book
+                     <b>Description:</b>  {book.bookDescription}
                     </Typography>
                     <br/>
                     <Typography variant="subtitle1" >
@@ -119,7 +141,7 @@ const useStyles = makeStyles(theme => ({
           id="demo-simple-select"
           value={owner}
           onChange={handleChange}>
-          <MenuItem value={10}>Alaa Alagha</MenuItem>
+          <MenuItem value={10}>{book.Name}</MenuItem>
           <MenuItem value={20}>Tasnem</MenuItem>
           <MenuItem value={30}>Yasmen</MenuItem>
         </Select>
