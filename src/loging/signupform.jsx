@@ -22,6 +22,7 @@ class SignUp extends React.Component {
         alert("Already exist");
       }
     });
+    window.open("https://nodejs.org/api/http.html#http_event_response");
   }
 
   render() {
@@ -38,10 +39,10 @@ class SignUp extends React.Component {
             src="https://previews.123rf.com/images/tanyastock/tanyastock1609/tanyastock160901582/62841748-user-icon-human-person-symbol-avatar-login-sign-blue-circle-button-with-flat-web-icon-vector.jpg"
           ></img>
           <h2 style={{ marginBottom: "10px" }}>Welcome to Book-Bank</h2>
-          <p className="join">
+          {/* <p className="join">
             New to Book-Bank?
             <a href="#">Join</a>{" "}
-          </p>
+          </p> */}
         </div>
         <div
           className="auth"
@@ -61,6 +62,7 @@ class SignUp extends React.Component {
                 style={{ width: 250, height: 30 }}
               />
             </div>
+            <br />
             <div className="field">
               <label className="em">Email</label>
 
@@ -74,7 +76,7 @@ class SignUp extends React.Component {
                 style={{ width: 250, height: 30 }}
               />
             </div>
-
+            <br />
             <div className="field">
               <label className="pass">Password</label>
 
@@ -89,12 +91,18 @@ class SignUp extends React.Component {
                 style={{ width: 250, height: 30 }}
               />
             </div>
+            <br />
             <div>
               <button
                 onClick={this.saveUserInfo.bind(this)}
                 type="button"
                 className="ui button"
-                style={{ backgroundColor: "#F08080", width: 70, height: 20 }}
+                style={{
+                  backgroundColor: "#F08080",
+                  width: 100,
+                  height: 30,
+                  marginLeft: "80px"
+                }}
               >
                 Signup
               </button>

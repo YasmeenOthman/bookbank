@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const bookBankDB = require("../database/db");
 require("mongoose-query-random");
-var homepageRouter = require("./routers/HomePage.js");
+var homepageRouter = require("./routers/homePage.js");
+var universityRouter = require("./routers/university.js");
 
 // app.use(express.static(path.join(__dirname, "../build")));
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/", homepageRouter);
+app.use("/univBooks", universityRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () =>

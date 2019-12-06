@@ -27,14 +27,14 @@ app.post("/signup", (req, res) => {
     password: body.password
   };
   //   console.log(userInfo);
-  db.Signin.findOne({
+  db.User.findOne({
     email: body.email
   })
     .then(user => {
       if (!user) {
         bcrypt.hash(body.password, 10, (err, hash) => {
           userInfo.password = hash;
-          db.Signin.create(userInfo).then(user => {
+          db.User.create(userInfo).then(user => {
             res.json({ status: user.email + "registered" }).catch(err => {
               res.send("error" + err);
             });
@@ -51,7 +51,7 @@ app.post("/signup", (req, res) => {
 //------------login-----------------------
 app.post("/login", (req, res) => {
   //   console.log(req.body);
-  db.Signin.findOne({
+  db.User.findOne({
     email: req.body.email
   })
     .then(user => {
@@ -84,7 +84,7 @@ app.post("/login", (req, res) => {
 //     req.headers["authorization"],
 //     process.env.SECRET_KEY
 //   );
-//   db.Signin.findOne({
+//   db.User.findOne({
 //     _id: decoded.id
 //   })
 //     .then(user => {

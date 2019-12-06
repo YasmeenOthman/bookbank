@@ -27,7 +27,12 @@ class SignIn extends React.Component {
             <h2 style={{ marginBottom: "10px" }}>Welcome to Book-Bank</h2>
             <p className="join">
               New to Book-Bank?
-              <a href="#">Join</a>{" "}
+              <button
+                style={{ border: "non", width: "50px" }}
+                onClick={this.redirect.bind(this)}
+              >
+                join
+              </button>
             </p>
           </div>
           <div
@@ -52,7 +57,7 @@ class SignIn extends React.Component {
                   style={{ width: 250, height: 30 }}
                 />
               </div>
-
+              <br />
               <div className="field">
                 <label className="pass">Password</label>
 
@@ -67,30 +72,29 @@ class SignIn extends React.Component {
                   style={{ width: 250, height: 30 }}
                 />
               </div>
+              <br />
               <div>
                 <button
                   type="submit"
                   className="ui button"
                   style={{
-                    marginTop: 10,
-                    marginLeft: 50,
                     backgroundColor: "#F08080",
-                    width: 70,
-                    height: 20
+                    width: 100,
+                    height: 30,
+                    marginLeft: "80px"
                   }}
                   onClick={this.getUser.bind(this)}
                 >
                   Login
                 </button>
-                <span className="choose"> or </span>
+                {/* <span className="choose"> or </span>
                 <button
                   type="button"
                   className="ui button"
                   style={{ backgroundColor: "#F08080", width: 70, height: 20 }}
-                  onClick={this.redirect.bind(this)}
                 >
                   Signup
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
@@ -104,23 +108,13 @@ class SignIn extends React.Component {
       component: <SignUp />
     });
   }
-  getUser() {
-    const token = localStorage.usertoken;
-    console.log(token);
-    const decoded = jwt_decode(token);
-    console.log(decoded);
-    if (decoded.password === this.state.email) {
-      window.open("https://www.w3schools.com");
-    } else {
-      alert("Wrong password or email");
-    }
-  }
+
   loginFunction() {
     var data = {
       email: $("#email").val(),
       password: $("#password").val()
     };
-    var that = this;
+
     $.ajax({
       url: "http://localhost:3001/login",
       method: "POST",
@@ -128,7 +122,7 @@ class SignIn extends React.Component {
       datatype: "json",
       success: response => {
         localStorage.setItem("usertoken", response);
-        console.log(response);
+        // console.log(response);
         const decoded = jwt_decode(response);
         // console.log(decoded);
         this.setState({
@@ -136,6 +130,18 @@ class SignIn extends React.Component {
         });
       }
     });
+  }
+
+  getUser() {
+    const token = localStorage.usertoken;
+    // console.log(token);
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+    if (decoded.password === this.state.email) {
+      window.open("https://www.w3schools.com");
+    } else {
+      alert("Wrong password or email");
+    }
   }
   render() {
     return this.state.component;

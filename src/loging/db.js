@@ -18,7 +18,7 @@ const userSchema = new Schema({
   password: { type: String, required: true }
 });
 
-const Signin = mongoose.model("signin", userSchema);
+const User = mongoose.model("users", userSchema);
 
 //----save data for testing in atlas ---------
 // let saveFun = () => {
@@ -35,5 +35,5 @@ const Signin = mongoose.model("signin", userSchema);
 //   });
 // };
 // saveFun();
-module.exports.Signin = Signin;
+module.exports.User = User;
 module.exports.userSchema = userSchema;
