@@ -215,6 +215,40 @@ var getBooksOfUniversity = function(univId, callBack) {
     .exec(callBack);
 };
 
+//---------get bluePrint book from its Id ---------
+var getbluePrintBook = function(bluePrintId, callBack) {
+  Book.findOne({ id: bluePrintId }).exec(callBack);
+};
+
+//--------- get the donated books from the bluePrint Book Id ---------
+var getDonatedBooks = function(bluePrintId, callBack) {
+  DonatedBook.find({ bookId: bluePrintId })
+    .sort({ createdAt: "asc" })
+    .exec(callBack);
+};
+
+//-------- get usres names of donated books from profile collection -------
+var getDonatedBooksOwnersName = async function(usersId) {
+  var usersName = [];
+  for (var i = 0; i < usersId.length; i++) {
+    var id = usersId[i];
+    await Profile.findOne({ userId: id }, "userName", function(err, profile) {
+      if (err) throw err;
+      console.log(profile.userName);
+      var ownerInfo = {
+        Id: id,
+        Name: profile.userName
+      };
+      usersName.push(ownerInfo);
+      console.log(ownerInfo);
+    });
+  }
+
+  console.log(usersName);
+
+  return usersName;
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -226,3 +260,6 @@ module.exports.countDonatedBooks = countDonatedBooks;
 module.exports.countUniversities = countUniversities;
 module.exports.countUsers = countUsers;
 module.exports.getBooksOfUniversity = getBooksOfUniversity;
+module.exports.getDonatedBooks = getDonatedBooks;
+module.exports.getDonatedBooksOwnersName = getDonatedBooksOwnersName;
+module.exports.getbluePrintBook = getbluePrintBook;
