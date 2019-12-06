@@ -53,14 +53,59 @@ router.route("/").get(function(req, res) {
   });
 });
 
-router.route("/university/:id/books").get(function(req, res) {
-  const univId = req.params.id;
-  bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
-    if (err) throw err;
-    console.log(booksOFTheUniversity);
-    res.json(booksOFTheUniversity);
-  });
-});
+// router.route("/").get(function(req, res) {
+//   console.log("serving the Root rout");
+
+//   var homePageData = {
+//     universities: [],
+//     recentBooks: [],
+//     totalUsers: 0,
+//     totalDonatedBooks: 0,
+//     totalUniversities: 0
+//   };
+
+//   // --------- Find 4 random universities ---------
+//   bookBankDB.findRandomUnis(function(err, randomUnis) {
+//     if (err) throw err;
+//     console.log(randomUnis);
+//     homePageData.universities = randomUnis;
+//     ///res.json(homePageData);
+//   });
+
+//   //--------- Find  recently added Books ---------
+//   bookBankDB.findRecentlyAddedBooks(function(err, books) {
+//     if (err) throw err;
+//     console.log(books);
+//     homePageData.recentBooks = books;
+//     //res.json(homePageData);
+//   });
+//   //--------- Find Number of Donated Books ---------
+//   bookBankDB.countDonatedBooks(function(err, numberOfDonatedBooks) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log(numberOfDonatedBooks);
+//     homePageData.totalDonatedBooks = numberOfDonatedBooks;
+//   });
+//   //--------- Find Number of Universities ---------
+//   bookBankDB.countUniversities(function(err, numberOfUnis) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log(numberOfUnis);
+//     homePageData.totalUniversities = numberOfUnis;
+//   });
+//   //--------- Find Number of Users ---------
+//   bookBankDB.countUsers(function(err, numberOfUsers) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log(numberOfUsers);
+//     homePageData.totalUsers = numberOfUsers;
+//     //now homePageData have all the data from the database.
+//     res.json(homePageData);
+//   });
+// });
 
 module.exports = router;
 

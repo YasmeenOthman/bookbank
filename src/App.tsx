@@ -11,12 +11,15 @@ import Home from '../src/HomePage/Home';
 // createStore(reducer, allInfo)
 const App: React.FC = () => {
   return (
+    
     <div>
-      {/* <NavBar/> */}
-      <Home />
+      {/* <Home /> */}
+      {/* <Login /> */}
+
       {/* <Item /> */}
+      {/* <NavBar/> */}
     </div>
   );
-}
+};
 
 export default App;
