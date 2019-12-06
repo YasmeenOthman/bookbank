@@ -185,6 +185,35 @@ var saveUniversity = function(uni) {
 var findRandomUnis = function(callback) {
   University.find().random(4, true, callback);
 };
+//--------- Find  recently added Books ---------
+var findRecentlyAddedBooks = function(callback) {
+  Book.find()
+    .sort({ createdAt: "desc" })
+    .limit(3)
+    .exec(callback);
+};
+
+//--------- count Donated Books ---------
+var countDonatedBooks = function(callBack) {
+  DonatedBook.count({}, callBack);
+};
+
+//--------- count Universities ---------
+var countUniversities = function(callBack) {
+  University.count({}, callBack);
+};
+
+//--------- count Users---------
+var countUsers = function(callBack) {
+  User.count({}, callBack);
+};
+
+//--------- get the books of a university---------
+var getBooksOfUniversity = function(univId, callBack) {
+  Book.find({ universityId: univId })
+    .sort({ createdAt: "desc" })
+    .exec(callBack);
+};
 
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
@@ -192,3 +221,8 @@ module.exports.saveUser = saveUser;
 module.exports.saveProfile = saveProfile;
 module.exports.saveUniversity = saveUniversity;
 module.exports.findRandomUnis = findRandomUnis;
+module.exports.findRecentlyAddedBooks = findRecentlyAddedBooks;
+module.exports.countDonatedBooks = countDonatedBooks;
+module.exports.countUniversities = countUniversities;
+module.exports.countUsers = countUsers;
+module.exports.getBooksOfUniversity = getBooksOfUniversity;
