@@ -1,7 +1,7 @@
 import React from 'react';
 //import './App.css';
-import ItemHome from './ItemPage/itemHome'
 // import Home from '../src/HomePage/Home';
+import Item from '../src/ItemPage1/item.jsx'
 
 const App: React.FC = () => {
   return (
@@ -9,11 +9,9 @@ const App: React.FC = () => {
     <div>
       {/* <NavBar/> */}
       {/* <Home /> */}
-      <ItemHome />
+      <Item />
     </div>
-    
   );
-
 }
 
 export default App;
