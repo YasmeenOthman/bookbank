@@ -6,8 +6,10 @@ import Login from "../src/loging/login";
 //import NavBar from './HomePage/NavBar'
 // import Home from "../src/HomePage/Home";
 
+
 const App: React.FC = () => {
   return (
+    
     <div>
       {/* <Home /> */}
       <Login />
