@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 // import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
@@ -24,12 +25,14 @@ const useStyles = makeStyles({
 export default function BookItems(props){
   const {book} = props;
   const classes = useStyles();
+  var path = window.location.href;
+  var univId = parseInt(path[path.length - 1]);
+  var bookId = parseInt(path[path.length - 1]);
 
-  // const cardUrl =
-  // "https://localhost:3000" + `${this.props.card.id}`;
   return ( 
-    // <div className="Container" display="flex" flexWrap="nowrap">
+
     <Card className={classes.card} container direction={'row'}>
+      <Link to={`http://localhost:8000/university/${univId}/book/${bookId}`}>
       <CardActionArea>
           <CardMedia
             className='media'
@@ -48,6 +51,7 @@ export default function BookItems(props){
             Learn More
           </Button>
         </CardActions>
+        </Link>
         </Card>
   )
 }

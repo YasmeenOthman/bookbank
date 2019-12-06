@@ -10,16 +10,14 @@ import axios from "axios";
 //--------Main Items page------
 export const ItemsPage  = () => {
   const [books, setbooks] = useState([]);
+  const [university,setUniversity]=useState([]);
 
   useEffect(() => {
     var path = window.location.href;
-    console.log(path);
     var x = [...path];
-    console.log(x)
     var y = x.length-1;
     var myId = x[y];
     // var type = typeof univId;
-    console.log(myId);
     // if (univId === "") {
     //   univId = "1";
     // }
@@ -28,17 +26,18 @@ export const ItemsPage  = () => {
 
     axios
       .get(
-        `http://localhost:8000/univBooks/${univId}`
+        `http://localhost:8000/university/${univId}`
       )
       .then(res => {
-        console.log(res);
+        //console.log(res);
         setbooks(res.data);
+        // setUniversity(res.data);
+        console.log(res.data);
     })
       .catch(err => {
         console.log(err);
       })
     },[]);
-
 
     return (
       <div>
