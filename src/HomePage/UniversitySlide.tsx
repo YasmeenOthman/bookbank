@@ -3,24 +3,29 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 //-----------------Unifersity Link Component----------
 const images = [
     {
+        id:1,
         url: 'https://geopoliticalfutures.com/wp-content/uploads/2019/04/Harvard-University.jpg',
         title: 'university-1',
         width: '25%',
     },
     {
+        id:2,
         url: 'https://image.iol.co.za/image/1/process/620x349?source=https://inm-baobab-prod-eu-west-1.s3.amazonaws.com/public/inm/media/image/iol/2018/10/19/17554222/NS%20cape%20town%20university.jpg&operation=CROP&offset=0x55&resize=730x408',
         title: 'university-2',
         width: '25%',
     },
     {
+        id:3,
         url: 'https://www.collegeatlas.org/wp-content/uploads/2014/06/4-year-accredited-colleges-and-universities-main-image2.jpg',
         title: 'university-3',
         width: '25%',
     },
     {
+        id:4,
         url: 'https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM',
         title: 'university-4',
         width: '25%',
@@ -133,6 +138,7 @@ export default function UniversitySlide() {
                                 backgroundImage: `url(${image.url})`,
                             }}
                         />
+                        <Link href='/univBooks/'>
                         <span className={classes.imageBackdrop} />
                         <span className={classes.imageButton}>
                             <Typography
@@ -145,6 +151,7 @@ export default function UniversitySlide() {
                                 <span className={classes.imageMarked} />
                             </Typography>
                         </span>
+                        </Link>
                     </ButtonBase>
                 ))}
             </div>

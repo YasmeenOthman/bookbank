@@ -2,6 +2,15 @@ var express = require("express");
 var router = express.Router();
 const bookBankDB = require("../../database/db.js");
 
+//---------------- Universities Page --------------------------
+router.route("/").get(function(req, res) {
+  bookBankDB.getAllUniversities(function(err, allUniversities) {
+    if (err) throw err;
+    console.log(allUniversities);
+    res.json(allUniversities);
+  });
+});
+
 //----------------Items Page Route --------------------------
 router.route("/:univId").get(function(req, res) {
   const univId = req.params.univId;

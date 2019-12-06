@@ -7,14 +7,18 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import allReducers from './reducers';
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
 const store = createStore(allReducers,
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
     (window as any).__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
+  <BrowserRouter>
     <Provider store={store}>
          <App />
     </Provider>
+    </BrowserRouter>
 
 , document.getElementById('root'));
 
