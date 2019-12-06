@@ -1,12 +1,18 @@
 import React from 'react';
+// import axios from 'axios';
 //import './App.css';
 // import Item from './ItemPage/item'
-import Home from '../src/HomePage/Home'
-import NavBar from './HomePage/NavBar'
+import Home from '../src/HomePage/Home';
+// import { createStore } from 'redux';
+// function reducer(state:any, action:any){
+//   return state
+// }
+
+// createStore(reducer, allInfo)
 const App: React.FC = () => {
   return (
     <div>
-      <NavBar/>
+      {/* <NavBar/> */}
       <Home />
       {/* <Item /> */}
     </div>
