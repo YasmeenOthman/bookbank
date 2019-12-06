@@ -36,7 +36,7 @@ export default function BookItems(props){
             className='media'
             style = {{height: 200}}
             image={book.Bookcover}
-            title="Contemplative Reptile"
+            title={book.Bookname}
         />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
@@ -78,7 +78,7 @@ export default function BookItems(props){
         </CardActions>
       </Card>
         </Grid>
-{/* 3rd */}
+{/* 3nd */}
         <Grid item xs={4}>
         <Card id = '1' className = 'cards' style = {{maxWidth: 250}} >
         <CardActionArea>
