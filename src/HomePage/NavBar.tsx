@@ -19,6 +19,8 @@ import NavCate from './NavCate';
 import SearchAppBar from './SearchAppBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutStatus } from '../actions';
+import { allData } from '../actions';
+
 
 
 //---------------styling for navbar--------------
@@ -57,10 +59,12 @@ const userStyles = makeStyles({
 export default function NavBar() {
     // for login user 
     const isLogged:boolean = useSelector((state:any) => state.isLogged);
+    
     const dispatch = useDispatch();
-
+    dispatch(allData());
 
     const classes = userStyles();
+
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
