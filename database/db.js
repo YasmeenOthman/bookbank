@@ -250,6 +250,16 @@ var getDonatedBooksOwnersName = async function(usersId) {
   return usersName;
 };
 
+//----- Git user's Profile ---------
+var getUserProfie = function(userId, callBack) {
+  Profile.findOne({ id: userId }).exec(callBack);
+};
+
+// -------- get all Universities ---------
+var getAllUniversities = function(callBack) {
+  University.find({}).exec(callBack);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -264,3 +274,5 @@ module.exports.getBooksOfUniversity = getBooksOfUniversity;
 module.exports.getDonatedBooks = getDonatedBooks;
 module.exports.getDonatedBooksOwnersName = getDonatedBooksOwnersName;
 module.exports.getbluePrintBook = getbluePrintBook;
+module.exports.getUserProfie = getUserProfie;
+module.exports.getAllUniversities = getAllUniversities;
