@@ -1,22 +1,27 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import AndroidIcon from "@material-ui/icons/Android";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import NavCate from "./NavCate";
-import SearchAppBar from "./SearchAppBar";
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import AndroidIcon from '@material-ui/icons/Android';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import NavCate from './NavCate';
+import SearchAppBar from './SearchAppBar';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutStatus } from '../actions';
+import { allData } from '../actions';
+
+
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -52,24 +57,27 @@ const userStyles = makeStyles({
 });
 //-----------------nav bar class-------------
 export default function NavBar() {
-  const classes = userStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement>(null);
+    // for login user 
+    const isLogged:boolean = useSelector((state:any) => state.isLogged);
+    
+    const dispatch = useDispatch();
+    dispatch(allData());
+
+    const classes = userStyles();
+
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
 
-  const handleClose = (event: React.MouseEvent<EventTarget>) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-
-    setOpen(false);
-  };
+    const handleClose = (event: React.MouseEvent<EventTarget>) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+            return;
+        }
+        setOpen(false);
+    };
 
   function handleListKeyDown(event: React.KeyboardEvent) {
     if (event.key === "Tab") {
@@ -78,157 +86,98 @@ export default function NavBar() {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
-    }
+    // return focus to the button when we transitioned from !open -> open
+    const prevOpen = React.useRef(open);
+    React.useEffect(() => {
+        if (prevOpen.current === true && open === false) {
+            anchorRef.current!.focus();
+        }
+        prevOpen.current = open;
+    }, [open]);
 
-    prevOpen.current = open;
-  }, [open]);
+    return (
+        <AppBar position="static">
+            {/* first nav bar */}
+            
+            <Toolbar className={classes.firstNav}>
+                <div className={classes.root}>
+                    <Grid container >
+                        <Grid container item xs={6} direction="row"
+                            justify="flex-start"
+                            alignItems="center">
+                            <Grid item >
+                                <Link href="#" style={{ textDecoration: 'none' }}>
+                                    <Button startIcon={<MailOutlineIcon />} className={classes.button}> Contact </Button>
+                                </Link>
+                            </Grid>
+                            <Grid item >
+                                <Link href="#" style={{ textDecoration: 'none' }}>
+                                    <Button startIcon={<AndroidIcon />} className={classes.button}> Mobile App </Button>
+                                </Link>
+                            </Grid>
+                        </Grid>
 
-  return (
-    <AppBar position="static">
-      {/* first nav bar */}
-      <Toolbar className={classes.firstNav}>
-        <div className={classes.root}>
-          <Grid container>
-            <Grid
-              container
-              item
-              xs={6}
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
-              <Grid item>
-                <Link href="#" style={{ textDecoration: "none" }}>
-                  <Button
-                    startIcon={<MailOutlineIcon />}
-                    className={classes.button}
-                  >
-                    {" "}
-                    Contact{" "}
-                  </Button>
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" style={{ textDecoration: "none" }}>
-                  <Button
-                    startIcon={<AndroidIcon />}
-                    className={classes.button}
-                  >
-                    {" "}
-                    Mobile App{" "}
-                  </Button>
-                </Link>
-              </Grid>
-            </Grid>
-
-            <Grid
-              container
-              item
-              xs={6}
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-            >
-              <Grid item>
-                <Button
-                  className={classes.button}
-                  ref={anchorRef}
-                  aria-controls={open ? "menu-list-grow" : undefined}
-                  aria-haspopup="true"
-                  onClick={handleToggle}
-                >
-                  {/* user image */}
-                  <Avatar
-                    className={classes.userImg}
-                    alt="Remy Sharp"
-                    src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
-                  />
-                  Hi,Nazeh
-                </Button>
-                <Popper
-                  className={classes.loginDraw}
-                  open={open}
-                  anchorEl={anchorRef.current}
-                  role={undefined}
-                  transition
-                  disablePortal
-                >
-                  {({ TransitionProps, placement }) => (
-                    <Grow
-                      {...TransitionProps}
-                      style={{
-                        transformOrigin:
-                          placement === "bottom"
-                            ? "center top"
-                            : "center bottom"
-                      }}
-                    >
-                      <Paper>
-                        <ClickAwayListener onClickAway={handleClose}>
-                          <MenuList
-                            autoFocusItem={open}
-                            id="menu-list-grow"
-                            onKeyDown={handleListKeyDown}
-                          >
-                            <MenuItem onClick={handleClose}>
-                              <Link href="/Profile">Profile</Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                              <Link href="/Notification">Notification</Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                              <Link href="/Logout">Logout</Link>
-                            </MenuItem>
-                          </MenuList>
-                        </ClickAwayListener>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </Toolbar>
-      {/* second nav bar */}
-      <Toolbar className={classes.secondNav}>
-        <div className={classes.root}>
-          <Grid container>
-            <Grid
-              item
-              xs={8}
-              lg={9}
-              xl={9}
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
-              <NavCate />
-              <Typography variant="h6" noWrap>
-                BOOK BANK
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={4}
-              lg={3}
-              xl={3}
-              container
-              justify="flex-start"
-              alignItems="center"
-            >
-              {/* Search component */}
-              <SearchAppBar />
-            </Grid>
-          </Grid>
-        </div>
-      </Toolbar>
-    </AppBar>
-  );
+                        <Grid container item xs={6} direction="row"
+                            justify="flex-end"
+                            alignItems="center">
+                                {/* if statment for check user if login or not */}
+                                {isLogged ?
+                                // log in icon and use name
+                            <Grid item >
+                                <Button className={classes.button}
+                                    ref={anchorRef}
+                                    aria-controls={open ? 'menu-list-grow' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={handleToggle}
+                                >
+                                    {/* user image */}
+                                    <Avatar className={classes.userImg} alt="Remy Sharp" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" />
+                                    Hi,Nazeh
+                                </Button>
+                                <Popper className={classes.loginDraw} open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal >
+                                    {({ TransitionProps, placement }) => (
+                                        <Grow
+                                            {...TransitionProps}
+                                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                        >
+                                            <Paper >
+                                                <ClickAwayListener onClickAway={handleClose}>
+                                                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
+                                                        <MenuItem onClick={handleClose}><Link href='/Profile'>Profile</Link></MenuItem>
+                                                        <MenuItem onClick={handleClose}><Link href='/Notification'>Notification</Link></MenuItem>
+                                                        <MenuItem onClick={() => dispatch(logoutStatus())}>Logout</MenuItem>
+                                                    </MenuList>
+                                                </ClickAwayListener>
+                                            </Paper>
+                                        </Grow>
+                                    )}
+                                </Popper>
+                            </Grid>
+                            // link to go to log in page
+                            : <Link href='/login'>Log In</Link>}
+                        </Grid>
+                    </Grid>
+                </div>
+            </Toolbar>
+            {/* second nav bar */}
+            <Toolbar className={classes.secondNav}>
+                <div className={classes.root}>
+                    <Grid container >
+                        <Grid item xs={8} lg={9} xl={9} container direction="row"
+                            justify="flex-start"
+                            alignItems="center">
+                            <NavCate />
+                            <Typography variant="h6" noWrap>
+                                BOOK BANK
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4} lg={3} xl={3} container justify="flex-start" alignItems="center">
+                            {/* Search component */}
+                            <SearchAppBar />
+                        </Grid>
+                    </Grid>
+                </div>
+            </Toolbar>
+        </AppBar>
+    )
 }
