@@ -47,12 +47,18 @@ router.route("/:univId/book/:bookId").get(function(req, res) {
       console.log(usersId);
 
       // get Users Name of the donated books
-      async function innerGetNames(usersId) {
-        var ownersName = await bookBankDB.getDonatedBooksOwnersName(usersId);
-        itemPageData["donatedBooksOwners"] = ownersName;
+      // async function innerGetNames(usersId) {
+      //   var ownersName = await bookBankDB.getDonatedBooksOwnersName(usersId);
+      //   itemPageData["donatedBooksOwners"] = ownersName;
+      //   res.json(itemPageData);
+      // }
+      // innerGetNames(usersId);
+
+      bookBankDB.getDonatedBooksOwnersName(usersId, function(err, profiles) {
+        if (err) throw err;
+        itemPageData["donatedBooksOwners"] = profiles;
         res.json(itemPageData);
-      }
-      innerGetNames(usersId);
+      });
     });
   });
 });

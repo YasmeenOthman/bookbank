@@ -116,7 +116,7 @@ class SignIn extends React.Component {
     };
 
     $.ajax({
-      url: "http://localhost:3001/login",
+      url: "/login",
       method: "POST",
       data: data,
       datatype: "json",
@@ -126,7 +126,7 @@ class SignIn extends React.Component {
         const decoded = jwt_decode(response);
         // console.log(decoded);
         this.setState({
-          email: decoded.password
+          password: decoded.password
         });
       }
     });
@@ -136,8 +136,8 @@ class SignIn extends React.Component {
     const token = localStorage.usertoken;
     // console.log(token);
     const decoded = jwt_decode(token);
-    console.log(decoded);
-    if (decoded.password === this.state.email) {
+    // console.log(decoded);
+    if (decoded.password === this.state.password) {
       window.open("https://www.w3schools.com");
     } else {
       alert("Wrong password or email");

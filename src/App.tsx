@@ -14,6 +14,7 @@ const App: React.FC = () => {
   var path = window.location.href;
   var univId = parseInt(path[path.length - 1]);
   return (
+
     <Router>
       <div className= "App">
         {/* <Home /> */}

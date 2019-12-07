@@ -25,35 +25,35 @@ import { allData } from '../actions';
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
-    root: {
-        width: 1170,
-        margin: '0 auto'
-    },
+  root: {
+    width: 1170,
+    margin: "0 auto"
+  },
 
-    firstNav: {
-        background: 'white',
-        zIndex: 10
-    },
-    secondNav: {
-        background: '#77b748',
-        borderBottom: '2px solid #428611',
-        minHeight: 50
-    },
-    button: {
-        color: 'gray',
-        fontSize: 11,
-        borderRadius: 0,
-        marginRight: 5,
-        "&:hover": {
-            backgroundColor: "transparent",
-        }
-    },
-    userImg: {
-        marginRight: 10
-    },
-    loginDraw:{
-        transform: 'translate3d(1301px, 5px, 0px) !important',   
+  firstNav: {
+    background: "white",
+    zIndex: 10
+  },
+  secondNav: {
+    background: "#77b748",
+    borderBottom: "2px solid #428611",
+    minHeight: 50
+  },
+  button: {
+    color: "gray",
+    fontSize: 11,
+    borderRadius: 0,
+    marginRight: 5,
+    "&:hover": {
+      backgroundColor: "transparent"
     }
+  },
+  userImg: {
+    marginRight: 10
+  },
+  loginDraw: {
+    transform: "translate3d(1301px, 5px, 0px) !important"
+  }
 });
 //-----------------nav bar class-------------
 export default function NavBar() {
@@ -68,9 +68,9 @@ export default function NavBar() {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
-    const handleToggle = () => {
-        setOpen(prevOpen => !prevOpen);
-    };
+  const handleToggle = () => {
+    setOpen(prevOpen => !prevOpen);
+  };
 
     const handleClose = (event: React.MouseEvent<EventTarget>) => {
         if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
@@ -79,12 +79,12 @@ export default function NavBar() {
         setOpen(false);
     };
 
-    function handleListKeyDown(event: React.KeyboardEvent) {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            setOpen(false);
-        }
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
     }
+  }
 
     // return focus to the button when we transitioned from !open -> open
     const prevOpen = React.useRef(open);
