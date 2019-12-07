@@ -28,7 +28,14 @@ const useStyles = makeStyles(theme => ({
             color: 'gray',
             marginBottom: 20
         },
-}));
+        root1:{
+          marginTop: 50,
+          textAlign: 'center',
+          marginBottom: 100,
+          fontSize:30
+        }
+      })
+);
 
 export const ItemsPage  = () => {
   const [books, setbooks] = useState([]);
@@ -67,17 +74,16 @@ export const ItemsPage  = () => {
     return (
       <div>
       <NavBar />
-        <Container>
-          {/* <h1>{university.universityName}</h1> */}
-            {/* <h2 className={classes.h2}>Latest Books Added</h2>  something for the university*/}
-            <Grid container direction="row"
+        <Container >
+        <h2 className={classes.root1}>University</h2>
+            <Grid  container direction="row"
                 justify="center"
                 alignItems="center" spacing={3}>
                 {books.map((book) => (
                     <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book.id}>
                         <Paper className={classes.paper}>
                             <img alt="img" src={book.bookCover} className={classes.imgBook}></img>
-                            <Link href={`/university/${book.universityId}/book/${book.id}`} style={{color: 'white'}}>
+                            <Link href={`/university/${book.universityId}/book/${book.id}`} style={{color: 'black'}}>
                                 <h3 style={{marginBottom:5}}>{book.bookName}</h3>
                             </Link>
                             <Link href={`/university/${book.universityId}/book/${book.id}`} style={{color: 'white'}}>
