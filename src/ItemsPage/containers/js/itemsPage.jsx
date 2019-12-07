@@ -75,7 +75,7 @@ export const ItemsPage  = () => {
       <div>
       <NavBar />
         <Container >
-        {/* <h2 className={classes.root1}>{university.universityName}</h2> */}
+        <h2 className={classes.root1}>University</h2>
             <Grid  container direction="row"
                 justify="center"
                 alignItems="center" spacing={3}>

@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 require("mongoose-query-random");
 mongoose.set("useCreateIndex", true);
+// mongoose.set("useUnifiedTopology", true);
 
 //-------------------MongoURI----------------------------
 const URI =
@@ -94,20 +95,16 @@ var saveDonatedBook = function(donatedBook) {
 //=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
-
 var userSchema = mongoose.Schema({
-  id: { type: Number, unique: true },
-  username: { type: String },
   email: { type: String },
-  password: { type: String, required: true }
+  password: { type: String }
 });
 
 //-------------------User Model-------------------------
-var User = mongoose.model("users", userSchema);
+var User = mongoose.model("user", userSchema);
 
 var saveUser = function(user) {
   var newUser = new User({
-    id: user.id,
     email: user.email,
     password: user.password
   });
@@ -190,7 +187,7 @@ var findRandomUnis = function(callback) {
 var findRecentlyAddedBooks = function(callback) {
   Book.find()
     .sort({ createdAt: "desc" })
-    .limit(3)
+    .limit(4)
     .exec(callback);
 };
 
@@ -229,25 +226,8 @@ var getDonatedBooks = function(bluePrintId, callBack) {
 };
 
 //-------- get usres names of donated books from profile collection -------
-var getDonatedBooksOwnersName = async function(usersId) {
-  var usersName = [];
-  for (var i = 0; i < usersId.length; i++) {
-    var id = usersId[i];
-    await Profile.findOne({ userId: id }, "userName", function(err, profile) {
-      if (err) throw err;
-      console.log(profile.userName);
-      var ownerInfo = {
-        Id: id,
-        Name: profile.userName
-      };
-      usersName.push(ownerInfo);
-      console.log(ownerInfo);
-    });
-  }
-
-  console.log(usersName);
-
-  return usersName;
+var getDonatedBooksOwnersName = function(usersId, callBack) {
+  Profile.find({ userId: { $in: usersId } }, callBack);
 };
 
 //----- Git user's Profile ---------
@@ -276,3 +256,4 @@ module.exports.getDonatedBooksOwnersName = getDonatedBooksOwnersName;
 module.exports.getbluePrintBook = getbluePrintBook;
 module.exports.getUserProfie = getUserProfie;
 module.exports.getAllUniversities = getAllUniversities;
+module.exports.User = User;
