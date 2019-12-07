@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 require("mongoose-query-random");
 mongoose.set("useCreateIndex", true);
+mongoose.set("useUnifiedTopology", true);
 
 //-------------------MongoURI----------------------------
 const URI =
@@ -94,19 +95,16 @@ var saveDonatedBook = function(donatedBook) {
 //=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
-
 var userSchema = mongoose.Schema({
-  id: { type: Number, unique: true },
   email: { type: String },
-  password: { type: String, required: true }
+  password: { type: String }
 });
 
 //-------------------User Model-------------------------
-var User = mongoose.model("users", userSchema);
+var User = mongoose.model("user", userSchema);
 
 var saveUser = function(user) {
   var newUser = new User({
-    id: user.id,
     email: user.email,
     password: user.password
   });
@@ -258,3 +256,4 @@ module.exports.getDonatedBooksOwnersName = getDonatedBooksOwnersName;
 module.exports.getbluePrintBook = getbluePrintBook;
 module.exports.getUserProfie = getUserProfie;
 module.exports.getAllUniversities = getAllUniversities;
+module.exports.User = User;
