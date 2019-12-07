@@ -122,9 +122,7 @@ class SignIn extends React.Component {
       datatype: "json",
       success: response => {
         localStorage.setItem("usertoken", response);
-        // console.log(response);
         const decoded = jwt_decode(response);
-        // console.log(decoded);
         this.setState({
           password: decoded.password
         });
@@ -134,11 +132,11 @@ class SignIn extends React.Component {
 
   getUser() {
     const token = localStorage.usertoken;
-    // console.log(token);
+    console.log(token);
     const decoded = jwt_decode(token);
     // console.log(decoded);
     if (decoded.password === this.state.password) {
-      window.open("https://www.w3schools.com");
+      window.open("/");
     } else {
       alert("Wrong password or email");
     }
