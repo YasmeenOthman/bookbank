@@ -1,5 +1,6 @@
 import React from "react";
 import $ from "jquery";
+import { func } from "prop-types";
 // import jwt_decode from "jwt-decode";
 
 class SignUp extends React.Component {
@@ -13,16 +14,21 @@ class SignUp extends React.Component {
       email: $("#email").val(),
       password: $("#password").val()
     };
+    console.log(registerInfo);
     $.ajax({
-      url: "/signup",
+      url: "http://localhost:8000/signup",
       method: "POST",
       data: registerInfo,
       dataType: "json",
-      success: function(err) {
+      success: function(data) {
+        console.log(data);
+        alert("you have been signed up successfully plz login now ");
+        window.location.href = "http://localhost:3000/login";
+      },
+      error: function(err) {
         alert("Already exist");
       }
     });
-    window.open("https://nodejs.org/api/http.html#http_event_response");
   }
 
   render() {

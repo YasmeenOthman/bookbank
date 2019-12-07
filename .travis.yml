@@ -1,14 +1,9 @@
 language: node_js
 node_js:
   # add your version by checking it (node -v)
-<<<<<<< HEAD
-  - 12.12.0
-  - 12.13.1
-=======
 - 12.12.0
 - 10.16.3
-cache: npm
->>>>>>> f99b10ba2d7337695b9ba58946f39de6dbfd75e9
+- 12.13.1
 
 cache: npm
 # later we can specify the scripts

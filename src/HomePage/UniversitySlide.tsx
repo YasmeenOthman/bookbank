@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+export interface IAppProps {
+  
+}
+export interface Books {
+  id: Number,
+  universityName: String,
+  __v: Number,
+  _id: String
+}
 //-----------------Unifersity Link Component----------
 const images = [
     {
@@ -25,9 +36,7 @@ const images = [
         title: 'university-4',
         width: '25%',
     },
-
 ];
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -39,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
         image: {
             position: 'relative',
             height: 200,
-            border: '3px solid #77b747',
+            border: '3px solid #77B747',
             [theme.breakpoints.down('xs')]: {
                 width: '100% !important', // Overrides inline-style
                 height: 100,
@@ -106,48 +115,64 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: 20,
             marginTop: 60
         }
-
     }),
 );
-
-export default function UniversitySlide() {
+const UniversitySlide: React.SFC<IAppProps> = (props) => {
+  const [universities, setUniversities] = useState<any>([])
+  const allInfo = async () => {
+    axios.get('http://localhost:8000/')
+      .then(({ data }) => {
+        let universities = data.universities;
+        setUniversities(universities);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  useEffect(() => {
+    allInfo();
+  }, [])
     const classes = useStyles();
-
     return (
         <Container style={{marginBottom:50}}>
             <h2 className={classes.h2}>University</h2>
             <div className={classes.root}>
-                {images.map(image => (
+                {universities.map((universitie:any)=> (
                     <ButtonBase
                         focusRipple
-                        key={image.title}
+                        key={universitie.id}
                         className={classes.image}
                         focusVisibleClassName={classes.focusVisible}
                         style={{
-                            width: image.width,
+                            width: '25%',
                         }}
                     >
                         <span
                             className={classes.imageSrc}
                             style={{
-                                backgroundImage: `url(${image.url})`,
+                                backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
                             }}
                         />
+                        <Link href={`/university/${universitie.id}`}>
                         <span className={classes.imageBackdrop} />
+                        
                         <span className={classes.imageButton}>
+                        
                             <Typography
                                 component="span"
                                 variant="subtitle1"
                                 color="inherit"
                                 className={classes.imageTitle}
                             >
-                                {image.title}
+                                {universitie.universityName}
                                 <span className={classes.imageMarked} />
                             </Typography>
                         </span>
+                        </Link>
                     </ButtonBase>
                 ))}
             </div>
         </Container>
     );
 }
+export default  UniversitySlide;
