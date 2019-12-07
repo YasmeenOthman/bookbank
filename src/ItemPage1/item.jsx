@@ -13,11 +13,6 @@ import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
 import {useState,useEffect} from 'react';
-// import {connect} from 'react-redux';
-// import BookApi from "../ItemPage1/mockData/book"
-
-
-
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -31,17 +26,14 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         margin: 'auto',
         maxWidth: 1500,
-        // maxHeight: 1000,
       },
       image: {
         width: '80%',
-        // height: '100%',
       },
       img: {
         margin: 'auto',
         display: 'block',
         maxWidth: '100%',
-        // maxHeight: '100%',
       },
       formControl: {
         margin: theme.spacing(1),
@@ -69,36 +61,31 @@ const useStyles = makeStyles(theme => ({
     },
   });
   
-
   export default function Item() {
     const classes = useStyles();
     const [owner, setOwner] = React.useState('');
-
     const [book,setBook] = useState([]);
-
+    const [ownerBook,setOwnerBook] = useState([]);
     useEffect(() => {
       var path = window.location.href;
       console.log()
       var univId = parseInt(path[32]);
       var bookId = parseInt(path[path.length - 1]);
-
       axios.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
       .then(res => {
         // console.log(res.data);
         setBook(res.data.bluePrintBook);
-        // console.log(res.data.donatedBooksOwners)
-        // setOwnerBook(res.data.donatedBooksOwners);
+        // console.log(res.data.donatedBooksOwners);
+        setOwnerBook(res.data.donatedBooksOwners);
     })
       .catch(err => {
         console.log(err);
       })
     },[]);
     
-
   const handleChange = event => {
     setOwner(event.target.value);
   };
-
     return (
         <ThemeProvider theme={theme}>
         <div className={classes.root} >
@@ -139,10 +126,10 @@ const useStyles = makeStyles(theme => ({
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={owner}
-          onChange={handleChange}>
-          <MenuItem value={10}>{book.Name}</MenuItem>
-          <MenuItem value={20}>Tasnem</MenuItem>
-          <MenuItem value={30}>Yasmen</MenuItem>
+          onChange={handleChange} >
+          {ownerBook.map((owner1) => (
+          <MenuItem value={20} key={owner1.id}> {owner1.userName}</MenuItem>
+          ))}
         </Select>
       </FormControl>
                   </Grid>
@@ -160,12 +147,3 @@ const useStyles = makeStyles(theme => ({
         </ThemeProvider>
     );
   }
- 
-
-  // const mapStateToProps =(state) => {
-  //     return {
-  //       bookItem: state.book.bookName,
-  //       bookUniversity:state.book.UniversityName
-  //     };
-  // }
-  // export default connect(mapStateToProps)(Item);
