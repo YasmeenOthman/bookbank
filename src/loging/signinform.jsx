@@ -122,9 +122,7 @@ class SignIn extends React.Component {
       datatype: "json",
       success: response => {
         localStorage.setItem("usertoken", response);
-        // console.log(response);
         const decoded = jwt_decode(response);
-        // console.log(decoded);
         this.setState({
           password: decoded.password
         });
