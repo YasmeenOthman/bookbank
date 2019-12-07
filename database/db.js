@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 require("mongoose-query-random");
 mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
+// mongoose.set("useUnifiedTopology", true);
 
 //-------------------MongoURI----------------------------
 const URI =
