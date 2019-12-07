@@ -53,7 +53,7 @@ const Items : React.FC<Props> = ({
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image= {book.bookcover}
+            image= "{book.bookcover}"
             title="Contemplative Reptile"
           />
           <CardContent>
