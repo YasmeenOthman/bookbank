@@ -36,9 +36,7 @@ const images = [
         title: 'university-4',
         width: '25%',
     },
-
 ];
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -50,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
         image: {
             position: 'relative',
             height: 200,
-            border: '3px solid #77b747',
+            border: '3px solid #77B747',
             [theme.breakpoints.down('xs')]: {
                 width: '100% !important', // Overrides inline-style
                 height: 100,
@@ -117,10 +115,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: 20,
             marginTop: 60
         }
-
     }),
 );
-
 const UniversitySlide: React.SFC<IAppProps> = (props) => {
   const [universities, setUniversities] = useState<any>([])
   const allInfo = async () => {
@@ -136,11 +132,7 @@ const UniversitySlide: React.SFC<IAppProps> = (props) => {
   useEffect(() => {
     allInfo();
   }, [])
-
-
-
     const classes = useStyles();
-
     return (
         <Container style={{marginBottom:50}}>
             <h2 className={classes.h2}>University</h2>

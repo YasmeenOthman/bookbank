@@ -75,7 +75,6 @@ const useStyles = makeStyles(theme => ({
     const [owner, setOwner] = React.useState('');
 
     const [book,setBook] = useState([]);
-    const [ownerbook,setOwnerBook] = useState([]);
 
     useEffect(() => {
       var path = window.location.href;
@@ -83,7 +82,7 @@ const useStyles = makeStyles(theme => ({
       var univId = parseInt(path[32]);
       var bookId = parseInt(path[path.length - 1]);
 
-      axios.get(`http://localhost:8000/univBooks/${univId}/book/${bookId}`)
+      axios.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
       .then(res => {
         // console.log(res.data);
         setBook(res.data.bluePrintBook);
