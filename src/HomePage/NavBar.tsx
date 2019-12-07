@@ -21,8 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 
-// var accessTokenObj = JSON.parse(localStorage.getItem("Token:"));
-// console.log(accessTokenObj);
+var token = localStorage.getItem("usertoken");
+console.log(token);
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({

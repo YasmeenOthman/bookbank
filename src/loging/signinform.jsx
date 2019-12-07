@@ -132,11 +132,11 @@ class SignIn extends React.Component {
 
   getUser() {
     const token = localStorage.usertoken;
-    // console.log(token);
+    console.log(token);
     const decoded = jwt_decode(token);
     // console.log(decoded);
     if (decoded.password === this.state.password) {
-      window.open("https://www.w3schools.com");
+      window.open("/");
     } else {
       alert("Wrong password or email");
     }

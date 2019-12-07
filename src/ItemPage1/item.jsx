@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
         // console.log(res.data);
         setBook(res.data.bluePrintBook);
         // console.log(res.data.donatedBooksOwners)
-        setOwnerBook(res.data.donatedBooksOwners);
+        // setOwnerBook(res.data.donatedBooksOwners);
     })
       .catch(err => {
         console.log(err);
