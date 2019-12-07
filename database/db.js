@@ -95,7 +95,6 @@ var saveDonatedBook = function(donatedBook) {
 //=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
-// var counter = 0;
 var userSchema = mongoose.Schema({
   email: { type: String },
   password: { type: String }
@@ -105,9 +104,7 @@ var userSchema = mongoose.Schema({
 var User = mongoose.model("user", userSchema);
 
 var saveUser = function(user) {
-  counter++;
   var newUser = new User({
-    // id: counter,
     email: user.email,
     password: user.password
   });
