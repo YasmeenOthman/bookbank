@@ -46,31 +46,32 @@ interface Props {
 const Items: React.FC<Props> = ({ book }) => {
   const classes = useStyles();
 
-  return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="{book.bookcover}"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
-            {book.bookname}
-            {/* The HISTORY OF ENGLISH LITERATURE */}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Request
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-  );
-};
+    return (
+      <Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image= "{book.bookcover}"
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h6" component="h2">
+              {book.bookname}
+              {/* The HISTORY OF ENGLISH LITERATURE */}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary">
+            Request 
+          </Button>
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+  
+  export default Items;
 
-export default Items;
