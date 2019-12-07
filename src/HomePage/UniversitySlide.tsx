@@ -153,7 +153,7 @@ const UniversitySlide: React.SFC<IAppProps> = (props) => {
                                 backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
                             }}
                         />
-                        <Link href={`/univBooks/${universitie.id}`}>
+                        <Link href={`/university/${universitie.id}`}>
                         <span className={classes.imageBackdrop} />
                         
                         <span className={classes.imageButton}>

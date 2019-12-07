@@ -42,6 +42,7 @@ export const ItemsPage  = () => {
     return (
       <div>
      <NavBar />
+     
      <h1>Books</h1>
       <div className='mainContainer'>
         {/* <BookItems /> */}
