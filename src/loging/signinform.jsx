@@ -3,6 +3,7 @@ import React from "react";
 import $ from "jquery";
 import jwt_decode from "jwt-decode";
 import SignUp from "./signupform";
+import { conditionalExpression } from "@babel/types";
 // import { Provider } from "react-redux";
 // import store from "./store";
 // import { connect } from "react-redux";
@@ -109,26 +110,30 @@ class SignIn extends React.Component {
     });
   }
 
-  loginFunction() {
+  loginFunction(event) {
+    event.preventDefault();
     var data = {
       email: $("#email").val(),
       password: $("#password").val()
     };
 
     $.ajax({
-      url: "/login",
+      url: "http://localhost:8000/login",
       method: "POST",
       data: data,
       datatype: "json",
       success: response => {
-        localStorage.setItem("usertoken", response);
-        const decoded = jwt_decode(response);
+        // console.log(response)
+        localStorage.setItem("usertoken", response.token);
+        console.log(response.token);
+        const decoded = jwt_decode(response.token);
         this.setState({
           password: decoded.password
         });
-      }
+       }
     });
   }
+
 
   getUser() {
     const token = localStorage.usertoken;

@@ -116,7 +116,7 @@ router.route("/login").post((req, res) => {
             expiresIn: "24h"
           });
           // console.log(token);
-          res.send(token);
+          res.send({token:token,user:user});
         } else {
           res.json({ error: "check your password" });
         }
