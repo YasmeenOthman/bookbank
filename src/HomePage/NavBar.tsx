@@ -21,163 +21,203 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logoutStatus } from '../actions';
 import { allData } from '../actions';
 
-
+var token = localStorage.getItem('usertoken');
+console.log(token);
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
-  root: {
-    width: 1170,
-    margin: "0 auto"
-  },
+	root: {
+		width: 1170,
+		margin: '0 auto'
+	},
 
-  firstNav: {
-    background: "white",
-    zIndex: 10
-  },
-  secondNav: {
-    background: "#77b748",
-    borderBottom: "2px solid #428611",
-    minHeight: 50
-  },
-  button: {
-    color: "gray",
-    fontSize: 11,
-    borderRadius: 0,
-    marginRight: 5,
-    "&:hover": {
-      backgroundColor: "transparent"
-    }
-  },
-  userImg: {
-    marginRight: 10
-  },
-  loginDraw: {
-    transform: "translate3d(1301px, 5px, 0px) !important"
-  }
+	firstNav: {
+		background: 'white',
+		zIndex: 10
+	},
+	secondNav: {
+		background: '#77b748',
+		borderBottom: '2px solid #428611',
+		minHeight: 50
+	},
+	button: {
+		color: 'gray',
+		fontSize: 11,
+		borderRadius: 0,
+		marginRight: 5,
+		'&:hover': {
+			backgroundColor: 'transparent'
+		}
+	},
+	userImg: {
+		marginRight: 10
+	},
+	loginDraw: {
+		transform: 'translate3d(1301px, 5px, 0px) !important'
+	}
 });
 //-----------------nav bar class-------------
 export default function NavBar() {
-    // for login user 
-    const isLogged:boolean = useSelector((state:any) => state.isLogged);
-    
-    const dispatch = useDispatch();
-    dispatch(allData());
+	// for login user
+	const isLogged: boolean = useSelector((state: any) => state.isLogged);
 
-    const classes = userStyles();
+	const dispatch = useDispatch();
+	dispatch(allData());
 
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef<HTMLButtonElement>(null);
+	const classes = userStyles();
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
-  };
+	const [ open, setOpen ] = React.useState(false);
+	const anchorRef = React.useRef<HTMLButtonElement>(null);
 
-    const handleClose = (event: React.MouseEvent<EventTarget>) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-            return;
-        }
-        setOpen(false);
-    };
+	const handleToggle = () => {
+		setOpen((prevOpen) => !prevOpen);
+	};
 
-  function handleListKeyDown(event: React.KeyboardEvent) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
+	const handleClose = (event: React.MouseEvent<EventTarget>) => {
+		if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+			return;
+		}
+		setOpen(false);
+	};
 
-    // return focus to the button when we transitioned from !open -> open
-    const prevOpen = React.useRef(open);
-    React.useEffect(() => {
-        if (prevOpen.current === true && open === false) {
-            anchorRef.current!.focus();
-        }
-        prevOpen.current = open;
-    }, [open]);
+	function handleListKeyDown(event: React.KeyboardEvent) {
+		if (event.key === 'Tab') {
+			event.preventDefault();
+			setOpen(false);
+		}
+	}
 
-    return (
-        <AppBar position="static">
-            {/* first nav bar */}
-            
-            <Toolbar className={classes.firstNav}>
-                <div className={classes.root}>
-                    <Grid container >
-                        <Grid container item xs={6} direction="row"
-                            justify="flex-start"
-                            alignItems="center">
-                            <Grid item >
-                                <Link href="#" style={{ textDecoration: 'none' }}>
-                                    <Button startIcon={<MailOutlineIcon />} className={classes.button}> Contact </Button>
-                                </Link>
-                            </Grid>
-                            <Grid item >
-                                <Link href="#" style={{ textDecoration: 'none' }}>
-                                    <Button startIcon={<AndroidIcon />} className={classes.button}> Mobile App </Button>
-                                </Link>
-                            </Grid>
-                        </Grid>
+	// return focus to the button when we transitioned from !open -> open
+	const prevOpen = React.useRef(open);
+	React.useEffect(
+		() => {
+			if (prevOpen.current === true && open === false) {
+				anchorRef.current!.focus();
+			}
+			prevOpen.current = open;
+		},
+		[ open ]
+	);
 
-                        <Grid container item xs={6} direction="row"
-                            justify="flex-end"
-                            alignItems="center">
-                                {/* if statment for check user if login or not */}
-                                {isLogged ?
-                                // log in icon and use name
-                            <Grid item >
-                                <Button className={classes.button}
-                                    ref={anchorRef}
-                                    aria-controls={open ? 'menu-list-grow' : undefined}
-                                    aria-haspopup="true"
-                                    onClick={handleToggle}
-                                >
-                                    {/* user image */}
-                                    <Avatar className={classes.userImg} alt="Remy Sharp" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" />
-                                    Hi,Nazeh
-                                </Button>
-                                <Popper className={classes.loginDraw} open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal >
-                                    {({ TransitionProps, placement }) => (
-                                        <Grow
-                                            {...TransitionProps}
-                                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                                        >
-                                            <Paper >
-                                                <ClickAwayListener onClickAway={handleClose}>
-                                                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                                                        <MenuItem onClick={handleClose}><Link href='/Profile'>Profile</Link></MenuItem>
-                                                        <MenuItem onClick={handleClose}><Link href='/Notification'>Notification</Link></MenuItem>
-                                                        <MenuItem onClick={() => dispatch(logoutStatus())}>Logout</MenuItem>
-                                                    </MenuList>
-                                                </ClickAwayListener>
-                                            </Paper>
-                                        </Grow>
-                                    )}
-                                </Popper>
-                            </Grid>
-                            // link to go to log in page
-                            : <Link href='/login'>Log In</Link>}
-                        </Grid>
-                    </Grid>
-                </div>
-            </Toolbar>
-            {/* second nav bar */}
-            <Toolbar className={classes.secondNav}>
-                <div className={classes.root}>
-                    <Grid container >
-                        <Grid item xs={8} lg={9} xl={9} container direction="row"
-                            justify="flex-start"
-                            alignItems="center">
-                            <NavCate />
-                            <Typography variant="h6" noWrap>
-                                BOOK BANK
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={4} lg={3} xl={3} container justify="flex-start" alignItems="center">
-                            {/* Search component */}
-                            <SearchAppBar />
-                        </Grid>
-                    </Grid>
-                </div>
-            </Toolbar>
-        </AppBar>
-    )
+	return (
+		<AppBar position="static">
+			{/* first nav bar */}
+
+			<Toolbar className={classes.firstNav}>
+				<div className={classes.root}>
+					<Grid container>
+						<Grid container item xs={6} direction="row" justify="flex-start" alignItems="center">
+							<Grid item>
+								<Link href="#" style={{ textDecoration: 'none' }}>
+									<Button startIcon={<MailOutlineIcon />} className={classes.button}>
+										{' '}
+										Contact{' '}
+									</Button>
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link href="#" style={{ textDecoration: 'none' }}>
+									<Button startIcon={<AndroidIcon />} className={classes.button}>
+										{' '}
+										Mobile App{' '}
+									</Button>
+								</Link>
+							</Grid>
+						</Grid>
+
+						<Grid container item xs={6} direction="row" justify="flex-end" alignItems="center">
+							{/* if statment for check user if login or not */}
+							{isLogged ? (
+								// log in icon and use name
+								<Grid item>
+									<Button
+										className={classes.button}
+										ref={anchorRef}
+										aria-controls={open ? 'menu-list-grow' : undefined}
+										aria-haspopup="true"
+										onClick={handleToggle}
+									>
+										{/* user image */}
+										<Avatar
+											className={classes.userImg}
+											alt="Remy Sharp"
+											src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
+										/>
+										Hi,Nazeh
+									</Button>
+									<Popper
+										className={classes.loginDraw}
+										open={open}
+										anchorEl={anchorRef.current}
+										role={undefined}
+										transition
+										disablePortal
+									>
+										{({ TransitionProps, placement }) => (
+											<Grow
+												{...TransitionProps}
+												style={{
+													transformOrigin:
+														placement === 'bottom' ? 'center top' : 'center bottom'
+												}}
+											>
+												<Paper>
+													<ClickAwayListener onClickAway={handleClose}>
+														<MenuList
+															autoFocusItem={open}
+															id="menu-list-grow"
+															onKeyDown={handleListKeyDown}
+														>
+															<MenuItem onClick={handleClose}>
+																<Link href="/Profile">Profile</Link>
+															</MenuItem>
+															<MenuItem onClick={handleClose}>
+																<Link href="/Notification">Notification</Link>
+															</MenuItem>
+															<MenuItem onClick={() => dispatch(logoutStatus())}>
+																Logout
+															</MenuItem>
+														</MenuList>
+													</ClickAwayListener>
+												</Paper>
+											</Grow>
+										)}
+									</Popper>
+								</Grid>
+							) : (
+								// link to go to log in page
+								<Link href="/login">Log In</Link>
+							)}
+						</Grid>
+					</Grid>
+				</div>
+			</Toolbar>
+			{/* second nav bar */}
+			<Toolbar className={classes.secondNav}>
+				<div className={classes.root}>
+					<Grid container>
+						<Grid
+							item
+							xs={8}
+							lg={9}
+							xl={9}
+							container
+							direction="row"
+							justify="flex-start"
+							alignItems="center"
+						>
+							<NavCate />
+							<Typography variant="h6" noWrap>
+								BOOK BANK
+							</Typography>
+						</Grid>
+						<Grid item xs={4} lg={3} xl={3} container justify="flex-start" alignItems="center">
+							{/* Search component */}
+							<SearchAppBar />
+						</Grid>
+					</Grid>
+				</div>
+			</Toolbar>
+		</AppBar>
+	);
 }

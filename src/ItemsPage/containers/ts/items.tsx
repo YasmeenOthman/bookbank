@@ -10,19 +10,19 @@ import Typography from '@material-ui/core/Typography';
 // import NavBar from './NavBar';
 
 const useStyles = makeStyles({
-  card: {
-    maxWidth: 250,
-  },
-  media: {
-    height: 200,
-  },
+	card: {
+		maxWidth: 250
+	},
+	media: {
+		height: 200
+	}
 });
 
 interface Props {
-  book: {
-    bookcover: String;
-    bookname: String;
-  };
+	book: {
+		bookcover: String;
+		bookname: String;
+	};
 }
 
 // function sendAjaxRequest(_type: string, _url: string, _params: string, _callback: CallbackFunction) {
@@ -43,36 +43,30 @@ interface Props {
 
 // }
 
-const Items : React.FC<Props> = ({
-  book
-}) => {
-    const classes = useStyles();
+const Items: React.FC<Props> = ({ book }) => {
+	const classes = useStyles();
 
-    return (
-      <Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image= "{book.bookcover}"
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h6" component="h2">
-              {book.bookname}
-              {/* The HISTORY OF ENGLISH LITERATURE */}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Request 
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-  
-  export default Items;
+	return (
+		<Card className={classes.card}>
+			<CardActionArea>
+				<CardMedia className={classes.media} image="{book.bookcover}" title="Contemplative Reptile" />
+				<CardContent>
+					<Typography gutterBottom variant="h6" component="h2">
+						{book.bookname}
+						{/* The HISTORY OF ENGLISH LITERATURE */}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
+			<CardActions>
+				<Button size="small" color="primary">
+					Request
+				</Button>
+				<Button size="small" color="primary">
+					Learn More
+				</Button>
+			</CardActions>
+		</Card>
+	);
+};
+
+export default Items;
