@@ -21,8 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 
-var token = localStorage.getItem("usertoken");
-console.log(token);
+// var token = localStorage.getItem("usertoken");
+// console.log(token);
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -209,9 +209,9 @@ export default function NavBar() {
                   </Popper>
                 </Grid>
               ) : (
-                // link to go to log in page
-                <Link href="/login">Log In</Link>
-              )}
+                  // link to go to log in page
+                  <Link href="/login">Log In</Link>
+                )}
             </Grid>
           </Grid>
         </div>
