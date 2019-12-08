@@ -1,12 +1,10 @@
 import React from "react";
 import SignIn from "./signinform";
-// import SignUp from "./signupform";
 
-const Login: React.FC = () => {
+export const Login = () => {
   return (
     <div>
       <SignIn />
-      {/* <SignUp /> */}
     </div>
   );
 };

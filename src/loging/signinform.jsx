@@ -3,7 +3,8 @@ import React from "react";
 import $ from "jquery";
 import jwt_decode from "jwt-decode";
 import SignUp from "./signupform";
-import Home from "./../HomePage/Home"
+import Home from "./../HomePage/Home";
+
 // import e from "express";
 // import { Provider } from "react-redux";
 // import store from "./store";
@@ -112,24 +113,25 @@ class SignIn extends React.Component {
   }
 
   loginFunction(event) {
+    console.log("frontend")
     event.preventDefault();
     var data = {
       email: $("#email").val(),
       password: $("#password").val()
     };
-    var that = this;
+    // var that = this;
     $.ajax({
-      url: "/login",
+      url: "http://localhost:8000/login",
       method: "POST",
       data: data,
       datatype: "json",
       success: data => {
-        // console.log(res)
+        console.log(data.token)
         localStorage.setItem("usertoken", data.token);
-        // const decoded = jwt_decode(data.token);
-        // this.setState({
-        //   email: decoded.password
-        // });
+        const decoded = jwt_decode(data.token);
+        this.setState({
+          email: decoded.password
+        });
         this.setState({
           component: <Home />
         });

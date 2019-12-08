@@ -7,7 +7,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import Box from '@material-ui/core/Box';
 //------Number of user,books and university component-----
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             flexGrow: 1,

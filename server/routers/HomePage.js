@@ -27,28 +27,28 @@ router.route("/").get(function (req, res) {
     //--------- Find  recently added Books ---------
     bookBankDB.findRecentlyAddedBooks(function (err, books) {
       if (err) throw err;
-      console.log(books);
+      //console.log(books);
       homePageData.recentBooks = books;
       //--------- Find Number of Donated Books ---------
       bookBankDB.countDonatedBooks(function (err, numberOfDonatedBooks) {
         if (err) {
           throw err;
         }
-        console.log(numberOfDonatedBooks);
+        //console.log(numberOfDonatedBooks);
         homePageData.totalDonatedBooks = numberOfDonatedBooks;
         //--------- Find Number of Universities ---------
         bookBankDB.countUniversities(function (err, numberOfUnis) {
           if (err) {
             throw err;
           }
-          console.log(numberOfUnis);
+          //console.log(numberOfUnis);
           homePageData.totalUniversities = numberOfUnis;
           //--------- Find Number of Users ---------
           bookBankDB.countUsers(function (err, numberOfUsers) {
             if (err) {
               throw err;
             }
-            console.log(numberOfUsers);
+            // console.log(numberOfUsers);
             homePageData.totalUsers = numberOfUsers;
             //now homePageData have all the data from the database.
             res.json(homePageData);
@@ -101,6 +101,9 @@ router.route("/signup").post((req, res) => {
 
 router.route("/login").post((req, res) => {
   //   console.log(req.body);
+  // if (req.body.email === undefined || req.body.password === undefined) {
+  //   alert("Please check your email or password")
+  // }
   bookBankDB.User.findOne({
     email: req.body.email
   })
