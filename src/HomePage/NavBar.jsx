@@ -15,14 +15,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import NavCate from "./NavCate";
-import SearchAppBar from "./SearchAppBar";
+import NavCate from "./NavCate.jsx";
+import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 
-var token = localStorage.getItem("usertoken");
-console.log(token);
+
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -56,34 +55,45 @@ const userStyles = makeStyles({
     transform: "translate3d(1301px, 5px, 0px) !important"
   }
 });
-//-----------------nav bar class-------------
-export default function NavBar() {
-  // for login user
-  const isLogged: boolean = useSelector((state: any) => state.isLogged);
 
+
+
+
+
+//-----------------nav bar class-------------
+export const NavBar = () => {
+  // for login user
+  const isLogged = useSelector((state) => state.isLogged);
+  var x = localStorage.getItem("usertoken");
+  console.log(x)
   const dispatch = useDispatch();
   dispatch(allData());
+  const logOutFun = () => {
 
+    var token = localStorage.removeItem("usertoken");
+    dispatch(logoutStatus())
+    console.log(token)
+  }
   const classes = userStyles();
 
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
 
-  const handleClose = (event: React.MouseEvent<EventTarget>) => {
+  const handleClose = (event) => {
     if (
       anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
+      anchorRef.current.contains(event.target)
     ) {
       return;
     }
     setOpen(false);
   };
 
-  function handleListKeyDown(event: React.KeyboardEvent) {
+  function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
@@ -94,7 +104,7 @@ export default function NavBar() {
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
+      anchorRef.focus();
     }
     prevOpen.current = open;
   }, [open]);
@@ -147,7 +157,7 @@ export default function NavBar() {
               alignItems="center"
             >
               {/* if statment for check user if login or not */}
-              {isLogged ? (
+              {x ? (
                 // log in icon and use name
                 <Grid item>
                   <Button
@@ -197,7 +207,7 @@ export default function NavBar() {
                                 <Link href="/Notification">Notification</Link>
                               </MenuItem>
                               <MenuItem
-                                onClick={() => dispatch(logoutStatus())}
+                                onClick={logOutFun}
                               >
                                 Logout
                               </MenuItem>
@@ -209,9 +219,9 @@ export default function NavBar() {
                   </Popper>
                 </Grid>
               ) : (
-                // link to go to log in page
-                <Link href="/login">Log In</Link>
-              )}
+                  // link to go to log in page
+                  <Link href="/login">Log In</Link>
+                )}
             </Grid>
           </Grid>
         </div>
@@ -253,3 +263,4 @@ export default function NavBar() {
     </AppBar>
   );
 }
+export default NavBar;
