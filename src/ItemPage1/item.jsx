@@ -15,12 +15,11 @@ import axios from 'axios';
 import {useState,useEffect} from 'react';
 
 
-
+ //----Styling for ItemPage--------------
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         padding:'80px',
-        
       },
       root1:{
         margin: theme.spacing(2),
@@ -34,7 +33,6 @@ const useStyles = makeStyles(theme => ({
       image: {
         width: '80%',
       },
-
       img: {
         margin: 'auto',
         display: 'block',
@@ -66,7 +64,7 @@ const useStyles = makeStyles(theme => ({
       }
     },
   });
-  
+  /////////////////////////// 
 
   export default function Item() {
     const classes = useStyles();
@@ -83,11 +81,9 @@ const useStyles = makeStyles(theme => ({
 
       axios.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
       .then(res => {
-        // console.log(res.data);
         setBook(res.data.bluePrintBook);
-        // console.log(res.data.donatedBooksOwners);
         setOwnerBook(res.data.donatedBooksOwners);
-    })
+      })
       .catch(err => {
         console.log(err);
       })
@@ -97,9 +93,8 @@ const useStyles = makeStyles(theme => ({
   const handleChange = event => {
     setOwner(event.target.value);
   };
-
     return (
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
         <div className={classes.root} >
         <NavBar/>
           <Paper className={classes.paper}>
@@ -143,20 +138,20 @@ const useStyles = makeStyles(theme => ({
           <MenuItem value={20} key={owner1.id}> {owner1.userName}</MenuItem>
           ))}
         </Select>
-      </FormControl>
-                  </Grid>
-                  <Grid item>
-                  <div >
-                    <Button variant="contained" className={classes.root1}>Send Message</Button>
-                    <Button variant="contained">Send Request For Owner</Button>
-                    </div>
-                  </Grid>
-                </Grid>
+        </FormControl>
+          </Grid>
+            <Grid item>
+            <div >
+              <Button variant="contained" className={classes.root1}>Send Message</Button>
+              <Button variant="contained">Send Request For Owner</Button>
+            </div>
               </Grid>
-            </Grid>
-          </Paper>
-        </div>
-        </ThemeProvider>
+              </Grid>
+              </Grid>
+           </Grid>
+           </Paper>
+         </div>
+  </ThemeProvider>
     );
   }
  
