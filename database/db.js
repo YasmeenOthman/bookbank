@@ -8,7 +8,7 @@ const URI =
   "mongodb+srv://bookbank:bookbank@book-bank-3ough.mongodb.net/test?retryWrites=true&w=majority";
 
 //-------------------Connection Setup-------------------------
-mongoose.connect(URI, function(err, db) {
+mongoose.connect(URI, function (err, db) {
   if (err) {
     console.log(
       "Unable to connect to the server. Please start the server. Error:",
@@ -21,7 +21,7 @@ mongoose.connect(URI, function(err, db) {
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
+db.once("open", function () {
   // we're connected!
   console.log("We're Connected: TAZ");
 });
@@ -41,7 +41,7 @@ var booksSchema = mongoose.Schema({
 //-------------------Book Model-------------------------
 let Book = mongoose.model("books", booksSchema);
 
-var saveBook = function(book) {
+var saveBook = function (book) {
   console.log("in save function");
   var newBook = new Book({
     id: book.id,
@@ -52,7 +52,7 @@ var saveBook = function(book) {
     createdAt: book.createdAt
   });
 
-  newBook.save(function(err, res) {
+  newBook.save(function (err, res) {
     if (err) {
       throw err;
     }
@@ -74,7 +74,7 @@ var donatedBooksSchema = mongoose.Schema({
 //-------------------Donated Book Model-------------------------
 let DonatedBook = mongoose.model("donated-books", donatedBooksSchema);
 
-var saveDonatedBook = function(donatedBook) {
+var saveDonatedBook = function (donatedBook) {
   console.log("in save function");
   var newDonatedBook = new DonatedBook({
     id: donatedBook.id,
@@ -84,7 +84,7 @@ var saveDonatedBook = function(donatedBook) {
     createdAt: donatedBook.createdAt
   });
 
-  newDonatedBook.save(function(err, res) {
+  newDonatedBook.save(function (err, res) {
     if (err) {
       throw err;
     }
@@ -96,6 +96,7 @@ var saveDonatedBook = function(donatedBook) {
 //-------------------User Schema-------------------------
 //=======================================================
 var userSchema = mongoose.Schema({
+  username: { type: String },
   email: { type: String },
   password: { type: String }
 });
@@ -103,13 +104,13 @@ var userSchema = mongoose.Schema({
 //-------------------User Model-------------------------
 var User = mongoose.model("user", userSchema);
 
-var saveUser = function(user) {
+var saveUser = function (user) {
   var newUser = new User({
     email: user.email,
     password: user.password
   });
 
-  newUser.save(function(err, res) {
+  newUser.save(function (err, res) {
     if (err) {
       throw err;
     }
@@ -132,7 +133,7 @@ var profileSchema = mongoose.Schema({
 //-------------------Profile Model-------------------------
 var Profile = mongoose.model("profiles", profileSchema);
 
-var saveProfile = function(profile) {
+var saveProfile = function (profile) {
   var newProfile = new Profile({
     id: profile.id,
     userId: profile.userId,
@@ -141,7 +142,7 @@ var saveProfile = function(profile) {
     userAvatar: profile.userAvatar
   });
 
-  newProfile.save(function(err, res) {
+  newProfile.save(function (err, res) {
     if (err) {
       throw err;
     }
@@ -161,13 +162,13 @@ var universitySchema = mongoose.Schema({
 //-------------------University Model----------------------
 var University = mongoose.model("universities", universitySchema);
 
-var saveUniversity = function(uni) {
+var saveUniversity = function (uni) {
   var newUniversity = new University({
     id: uni.id,
     universityName: uni.universityName
   });
 
-  newUniversity.save(function(err, res) {
+  newUniversity.save(function (err, res) {
     if (err) {
       throw err;
     }
@@ -180,63 +181,63 @@ var saveUniversity = function(uni) {
 //=======================================================
 
 //-------------------Find 4 random universities ---------
-var findRandomUnis = function(callback) {
+var findRandomUnis = function (callback) {
   University.find().random(4, true, callback);
 };
 //--------- Find  recently added Books ---------
-var findRecentlyAddedBooks = function(callback) {
+var findRecentlyAddedBooks = function (callback) {
   Book.find()
     .sort({ createdAt: "desc" })
-    .limit(3)
+    .limit(4)
     .exec(callback);
 };
 
 //--------- count Donated Books ---------
-var countDonatedBooks = function(callBack) {
+var countDonatedBooks = function (callBack) {
   DonatedBook.count({}, callBack);
 };
 
 //--------- count Universities ---------
-var countUniversities = function(callBack) {
+var countUniversities = function (callBack) {
   University.count({}, callBack);
 };
 
 //--------- count Users---------
-var countUsers = function(callBack) {
+var countUsers = function (callBack) {
   User.count({}, callBack);
 };
 
 //--------- get the books of a university---------
-var getBooksOfUniversity = function(univId, callBack) {
+var getBooksOfUniversity = function (univId, callBack) {
   Book.find({ universityId: univId })
     .sort({ createdAt: "desc" })
     .exec(callBack);
 };
 
 //---------get bluePrint book from its Id ---------
-var getbluePrintBook = function(bluePrintId, callBack) {
+var getbluePrintBook = function (bluePrintId, callBack) {
   Book.findOne({ id: bluePrintId }).exec(callBack);
 };
 
 //--------- get the donated books from the bluePrint Book Id ---------
-var getDonatedBooks = function(bluePrintId, callBack) {
+var getDonatedBooks = function (bluePrintId, callBack) {
   DonatedBook.find({ bookId: bluePrintId })
     .sort({ createdAt: "asc" })
     .exec(callBack);
 };
 
 //-------- get usres names of donated books from profile collection -------
-var getDonatedBooksOwnersName = function(usersId, callBack) {
+var getDonatedBooksOwnersName = function (usersId, callBack) {
   Profile.find({ userId: { $in: usersId } }, callBack);
 };
 
 //----- Git user's Profile ---------
-var getUserProfie = function(userId, callBack) {
+var getUserProfie = function (userId, callBack) {
   Profile.findOne({ id: userId }).exec(callBack);
 };
 
 // -------- get all Universities ---------
-var getAllUniversities = function(callBack) {
+var getAllUniversities = function (callBack) {
   University.find({}).exec(callBack);
 };
 

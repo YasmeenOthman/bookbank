@@ -1,6 +1,6 @@
 import React from "react";
 import $ from "jquery";
-import { func } from "prop-types";
+// import { func } from "prop-types";
 // import jwt_decode from "jwt-decode";
 
 class SignUp extends React.Component {
@@ -20,12 +20,12 @@ class SignUp extends React.Component {
       method: "POST",
       data: registerInfo,
       dataType: "json",
-      success: function(data) {
+      success: function (data) {
         console.log(data);
         alert("you have been signed up successfully plz login now ");
         window.location.href = "http://localhost:3000/login";
       },
-      error: function(err) {
+      error: function (err) {
         alert("Already exist");
       }
     });

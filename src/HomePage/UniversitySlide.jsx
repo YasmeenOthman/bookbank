@@ -1,43 +1,14 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-export interface IAppProps {
-  
-}
-export interface Books {
-  id: Number,
-  universityName: String,
-  __v: Number,
-  _id: String
-}
+
 //-----------------Unifersity Link Component----------
-const images = [
-    {
-        url: 'https://geopoliticalfutures.com/wp-content/uploads/2019/04/Harvard-University.jpg',
-        title: 'university-1',
-        width: '25%',
-    },
-    {
-        url: 'https://image.iol.co.za/image/1/process/620x349?source=https://inm-baobab-prod-eu-west-1.s3.amazonaws.com/public/inm/media/image/iol/2018/10/19/17554222/NS%20cape%20town%20university.jpg&operation=CROP&offset=0x55&resize=730x408',
-        title: 'university-2',
-        width: '25%',
-    },
-    {
-        url: 'https://www.collegeatlas.org/wp-content/uploads/2014/06/4-year-accredited-colleges-and-universities-main-image2.jpg',
-        title: 'university-3',
-        width: '25%',
-    },
-    {
-        url: 'https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM',
-        title: 'university-4',
-        width: '25%',
-    },
-];
-const useStyles = makeStyles((theme: Theme) =>
+
+const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             display: 'flex',
@@ -117,27 +88,27 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-const UniversitySlide: React.SFC<IAppProps> = (props) => {
-  const [universities, setUniversities] = useState<any>([])
-  const allInfo = async () => {
-    axios.get('http://localhost:8000/')
-      .then(({ data }) => {
-        let universities = data.universities;
-        setUniversities(universities);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  useEffect(() => {
-    allInfo();
-  }, [])
+export const UniversitySlide = () => {
+    const [universities, setUniversities] = useState([])
+    const allInfo = async () => {
+        axios.get('http://localhost:8000/')
+            .then(({ data }) => {
+                let universities = data.universities;
+                setUniversities(universities);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    useEffect(() => {
+        allInfo();
+    }, [])
     const classes = useStyles();
     return (
-        <Container style={{marginBottom:50}}>
+        <Container style={{ marginBottom: 50 }}>
             <h2 className={classes.h2}>University</h2>
             <div className={classes.root}>
-                {universities.map((universitie:any)=> (
+                {universities.map((universitie) => (
                     <ButtonBase
                         focusRipple
                         key={universitie.id}
@@ -154,20 +125,20 @@ const UniversitySlide: React.SFC<IAppProps> = (props) => {
                             }}
                         />
                         <Link href={`/university/${universitie.id}`}>
-                        <span className={classes.imageBackdrop} />
-                        
-                        <span className={classes.imageButton}>
-                        
-                            <Typography
-                                component="span"
-                                variant="subtitle1"
-                                color="inherit"
-                                className={classes.imageTitle}
-                            >
-                                {universitie.universityName}
-                                <span className={classes.imageMarked} />
-                            </Typography>
-                        </span>
+                            <span className={classes.imageBackdrop} />
+
+                            <span className={classes.imageButton}>
+
+                                <Typography
+                                    component="span"
+                                    variant="subtitle1"
+                                    color="inherit"
+                                    className={classes.imageTitle}
+                                >
+                                    {universitie.universityName}
+                                    <span className={classes.imageMarked} />
+                                </Typography>
+                            </span>
                         </Link>
                     </ButtonBase>
                 ))}
@@ -175,4 +146,4 @@ const UniversitySlide: React.SFC<IAppProps> = (props) => {
         </Container>
     );
 }
-export default  UniversitySlide;
+export default UniversitySlide;

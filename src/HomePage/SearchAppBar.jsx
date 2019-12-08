@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchIcon from '@material-ui/icons/Search';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SearchAppBar() {
+export const SearchAppBar = () => {
   const classes = useStyles();
 
   return (
@@ -85,3 +85,4 @@ export default function SearchAppBar() {
     </div>
   );
 }
+export default SearchAppBar;
