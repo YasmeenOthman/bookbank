@@ -3,7 +3,9 @@ import React from "react";
 import $ from "jquery";
 import jwt_decode from "jwt-decode";
 import SignUp from "./signupform";
-import { conditionalExpression } from "@babel/types";
+import Home from "./../HomePage/Home";
+
+// import e from "express";
 // import { Provider } from "react-redux";
 // import store from "./store";
 // import { connect } from "react-redux";
@@ -84,7 +86,7 @@ class SignIn extends React.Component {
                     height: 30,
                     marginLeft: "80px"
                   }}
-                  onClick={this.getUser.bind(this)}
+
                 >
                   Login
                 </button>
@@ -111,41 +113,44 @@ class SignIn extends React.Component {
   }
 
   loginFunction(event) {
+    console.log("frontend")
     event.preventDefault();
     var data = {
       email: $("#email").val(),
       password: $("#password").val()
     };
-
+    // var that = this;
     $.ajax({
       url: "http://localhost:8000/login",
       method: "POST",
       data: data,
       datatype: "json",
-      success: response => {
-        // console.log(response)
-        localStorage.setItem("usertoken", response.token);
-        console.log(response.token);
-        const decoded = jwt_decode(response.token);
+      success: data => {
+        console.log(data.token)
+        localStorage.setItem("usertoken", data.token);
+        const decoded = jwt_decode(data.token);
         this.setState({
-          password: decoded.password
+          email: decoded.password
+        });
+        this.setState({
+          component: <Home />
         });
        }
     });
   }
 
-
-  getUser() {
-    const token = localStorage.usertoken;
-    console.log(token);
-    const decoded = jwt_decode(token);
-    // console.log(decoded);
-    if (decoded.password === this.state.password) {
-      window.open("/");
-    } else {
-      alert("Wrong password or email");
-    }
-  }
+  // getUser() {
+  //   // event.preventDefault();
+  //   const token = localStorage.getItem("usertoken");
+  //   // if (token !== "undefined") {
+  //   const decoded = jwt_decode(token);
+  //   if (decoded.password === this.state.password) {
+  //     window.location.reload();
+  //   } else {
+  //     alert("Wrong password or email");
+  //   }
+  //   // }
+  // }
   render() {
     return this.state.component;
   }

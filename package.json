@@ -39,6 +39,7 @@
     "mongoose": "^5.7.14",
     "mongoose-query-random": "^1.0.1",
     "node-authorization": "^2.0.2",
+    "node-pre-gyp": "^0.14.0",
     "nodemon": "^2.0.1",
     "npm": "^6.13.1",
     "react": "^16.12.0",
