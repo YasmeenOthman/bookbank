@@ -59,8 +59,8 @@ router.route("/").get(function (req, res) {
   });
 });
 //----------------------------input validation-------------------------------------------
-const validateRegisterInput = require("../../src/loging/signupValidation.js");
-const validateLoginInput = require("../../src/loging/loginValidation.js");
+const validateRegisterInput = require("../validation/signupValidation.js");
+const validateLoginInput = require("../validation/loginValidation.js");
 //---------------------------------------------------------------------------------------
 
 //--------------Authentication--------------------
@@ -77,6 +77,7 @@ router.route("/signup").post((req, res) => {
   }
 
   var userInfo = {
+    username: body.username,
     email: body.email,
     password: body.password
   };
@@ -125,6 +126,7 @@ router.route("/login").post((req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
+            username: user.username,
             email: user.email,
             password: user.password
           };

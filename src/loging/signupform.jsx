@@ -21,13 +21,12 @@ class SignUp extends React.Component {
       data: registerInfo,
       dataType: "json",
       success: function (data) {
-        console.log(data);
-        alert("you have been signed up successfully plz login now ");
+        alert("You sign up successfully ,plz login");
         window.location.href = "http://localhost:3000/login";
+      },
+      error: function (err) {
+        alert("Already exist");
       }
-      // error: function (err) {
-      //   alert("Already exist");
-      // }
     });
   }
 

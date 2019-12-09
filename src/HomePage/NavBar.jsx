@@ -60,15 +60,10 @@ const userStyles = makeStyles({
 
 
 
-// 
-
-// var email = decoded.email;
-// 
-
 //-----------------nav bar class-------------
 export const NavBar = () => {
   // for login user
-  //----------get the token fro the local storage-----------
+  //----------get the token from the local storage-----------
   var token = localStorage.getItem("usertoken");
   var email = "";
   if (token) {
