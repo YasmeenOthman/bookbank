@@ -5,6 +5,7 @@ import Item from "./ItemPage1/item.jsx";
 import SignIn from "./loging/signinform.jsx";
 import universityitems from "./UniversityItem/universityitems";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserProfile from './UserProfile/user' 
 // import UniversityItems from "./UniversityItem/universityitems.jsx";
 
 
@@ -12,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 export const App = () => {
   return (
     <Router>
+      {/* <UserProfile /> */}
       <div className="App">
         <Switch>
           <Route exact path='/' component={Home} />
@@ -19,7 +21,8 @@ export const App = () => {
           <Route exact path={'/university/:univId/book/:bookId'} component={Item} />
           <Route exact path="/login" component={SignIn} />
           <Route exact path="/university" component={universityitems} />
-        </Switch>
+          <Route exact path="/university/:id" component={UserProfile} />
+        </Switch> 
       </div>
     </Router>
   );

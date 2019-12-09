@@ -93,7 +93,7 @@ export const Universityitems = (props) => {
 
     useEffect(() => {
         props.fetchPosts();
-    }, [])// passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
+    }, [])
     const classes = useStyles();
 
     return (
