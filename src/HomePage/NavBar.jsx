@@ -65,11 +65,11 @@ export const NavBar = () => {
   // for login user
   //----------get the token from the local storage-----------
   var token = localStorage.getItem("usertoken");
-  var email = "";
+  var username = "";
   if (token) {
     const decoded = jwt_decode(token);
     // console.log(decoded)
-    email = decoded.email
+    username = decoded.username
   }
 
   // console.log(email)
@@ -186,7 +186,7 @@ export const NavBar = () => {
                       alt="Remy Sharp"
                       src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
                     />
-                    <p>{email}</p>
+                    <p>{username}</p>
                     {/* {token ? <p>{x}</p> : <p>username</p>} */}
                   </Button>
                   <Popper
