@@ -135,7 +135,7 @@ class SignIn extends React.Component {
         this.setState({
           component: <Home />
         });
-      }
+       }
     });
   }
 
