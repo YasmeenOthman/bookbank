@@ -1,6 +1,7 @@
 //import axios from 'axios';
 //import {useState ,useEffect} from 'react';
 export function loadData(){
+    
     // const [posts, setPosts] = useState([])
     // useEffect(()=>{
     //     axios
