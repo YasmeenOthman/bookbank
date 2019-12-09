@@ -8,11 +8,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
 
-const App: React.FC = () => {
+export const App = () => {
   return (
     <Router>
       <div className="App">
-
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path={`/university/:id`} component={ItemsPage} />
