@@ -14,7 +14,7 @@ class SignUp extends React.Component {
       email: $("#email").val(),
       password: $("#password").val()
     };
-    console.log(registerInfo);
+    // console.log(registerInfo);
     $.ajax({
       url: "http://localhost:8000/signup",
       method: "POST",
@@ -24,10 +24,10 @@ class SignUp extends React.Component {
         console.log(data);
         alert("you have been signed up successfully plz login now ");
         window.location.href = "http://localhost:3000/login";
-      },
-      error: function (err) {
-        alert("Already exist");
       }
+      // error: function (err) {
+      //   alert("Already exist");
+      // }
     });
   }
 
@@ -45,10 +45,7 @@ class SignUp extends React.Component {
             src="https://previews.123rf.com/images/tanyastock/tanyastock1609/tanyastock160901582/62841748-user-icon-human-person-symbol-avatar-login-sign-blue-circle-button-with-flat-web-icon-vector.jpg"
           ></img>
           <h2 style={{ marginBottom: "10px" }}>Welcome to Book-Bank</h2>
-          {/* <p className="join">
-            New to Book-Bank?
-            <a href="#">Join</a>{" "}
-          </p> */}
+
         </div>
         <div
           className="auth"
