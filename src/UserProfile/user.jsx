@@ -4,20 +4,17 @@ import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from '../HomePage/NavBar';
-import InputLabel from '@material-ui/core/InputLabel';
 import Avatar from '@material-ui/core/Avatar';
 import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import RestoreIcon from '@material-ui/icons/Restore';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -71,7 +68,8 @@ const useStyles = makeStyles(theme => ({
     var email = decoded.email;
 
     const classes = useStyles();
-    const [user, setUser] = React.useState('');
+ 
+
     useEffect(() => {
       var path = window.location.href;
       console.log()
@@ -86,11 +84,12 @@ const useStyles = makeStyles(theme => ({
       })
     },[]);
 
-    
+    const [user, setUser] = React.useState('');
+    const [value, setValue] = React.useState('recents');
 
-  // const handleChange = event => {
-  //   setOwner(event.target.value);
-  // };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
     return (
         <ThemeProvider theme={theme}>
         <div className={classes.root} >
@@ -121,11 +120,23 @@ const useStyles = makeStyles(theme => ({
                     <br/>
                     <div >
                     <Button variant="contained">Add A BOOK</Button>
+                    <BottomNavigation value={value} onChange={handleChange}>
+                  <BottomNavigationAction label="recent books added" value="recents" icon={<RestoreIcon />} />
+                  </BottomNavigation>
+
                     </div>
                   </Grid>
-                  <Grid item>
-
-                  </Grid>
+                  <List dense={dense}>
+              {generate(
+                <ListItem>
+                  <ListItemText
+                    primary="" //donated books
+                    secondary={secondary ? 'Secondary text' : null}
+                  />
+                </ListItem>,
+              )}
+            </List>
+     
                 </Grid>
               </Grid>
             </Grid>
