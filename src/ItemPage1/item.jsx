@@ -13,9 +13,6 @@ import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
 import {useState,useEffect} from 'react';
-
-
- //----Styling for ItemPage--------------
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
@@ -64,32 +61,28 @@ const useStyles = makeStyles(theme => ({
       }
     },
   });
-  /////////////////////////// 
-
+  
   export default function Item() {
     const classes = useStyles();
     const [owner, setOwner] = React.useState('');
-
     const [book,setBook] = useState([]);
     const [ownerBook,setOwnerBook] = useState([]);
-
     useEffect(() => {
       var path = window.location.href;
       console.log()
       var univId = parseInt(path[32]);
       var bookId = parseInt(path[path.length - 1]);
-
       axios.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
       .then(res => {
         setBook(res.data.bluePrintBook);
+        // console.log(res.data.donatedBooksOwners);
         setOwnerBook(res.data.donatedBooksOwners);
-      })
+    })
       .catch(err => {
         console.log(err);
       })
     },[]);
     
-
   const handleChange = event => {
     setOwner(event.target.value);
   };
@@ -154,4 +147,3 @@ const useStyles = makeStyles(theme => ({
   </ThemeProvider>
     );
   }
- 
