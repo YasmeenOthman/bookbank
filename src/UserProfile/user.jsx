@@ -16,6 +16,8 @@ import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,8 +34,8 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 1500,
       },
       avatar: {
-        margin: 'auto',
-        Width: '500',
+        width: '100px',
+        height: '100px'
       },
       formControl: {
         margin: theme.spacing(1),
@@ -60,8 +62,14 @@ const useStyles = makeStyles(theme => ({
       }
     },
   });
-  
+ 
+
   function UserProfile(props) {
+    var token = localStorage.getItem("usertoken");
+    console.log(token);
+    const decoded = jwt_decode(token);
+    var email = decoded.email;
+
     const classes = useStyles();
     const [user, setUser] = React.useState('');
     useEffect(() => {
@@ -78,8 +86,7 @@ const useStyles = makeStyles(theme => ({
       })
     },[]);
 
-    var token = localStorage.getItem("usertoken");
-    console.log(token)
+    
 
   // const handleChange = event => {
   //   setOwner(event.target.value);
@@ -91,6 +98,7 @@ const useStyles = makeStyles(theme => ({
           <Paper className={classes.paper}>
             <Grid container spacing={4}>
             <Grid item>
+            <br/> <br/><br/><br/><br/><br/>
             <Avatar className={classes.avatar}></Avatar>
                 </Grid>
               <Grid item xs={12} sm container>
@@ -108,21 +116,15 @@ const useStyles = makeStyles(theme => ({
                     </Typography>
                     <br/>
                     <Typography variant="subtitle1" >
-                     <b>Email:</b> {user.email}          
+                     <b>Email:</b> {email}          
                     </Typography>
                     <br/>
-                    <Typography variant="subtitle1" >
-
-                    </Typography>
-                    <br/>
-    
-
+                    <div >
+                    <Button variant="contained">Add A BOOK</Button>
+                    </div>
                   </Grid>
                   <Grid item>
-                  <div >
-                    <Button variant="contained" className={classes.root1}>Send Message</Button>
-                    <Button variant="contained">Send Request</Button>
-                    </div>
+
                   </Grid>
                 </Grid>
               </Grid>

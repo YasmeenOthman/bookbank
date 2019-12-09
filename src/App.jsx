@@ -21,7 +21,7 @@ export const App = () => {
           <Route exact path={'/university/:univId/book/:bookId'} component={Item} />
           <Route exact path="/login" component={SignIn} />
           <Route exact path="/university" component={universityitems} />
-          <Route exact path="/university/:id" component={UserProfile} />
+          <Route exact path="/profile/:userId" component={UserProfile} />
         </Switch> 
       </div>
     </Router>
