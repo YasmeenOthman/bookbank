@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/postActions';
 //-----------------Unifersity Link Component----------
 
 const useStyles = makeStyles((theme) =>
@@ -88,62 +88,57 @@ const useStyles = makeStyles((theme) =>
         }
     }),
 );
-export const UniversitySlide = () => {
-    const [universities, setUniversities] = useState([])
-    const allInfo = async () => {
-        axios.get('http://localhost:8000/')
-            .then(({ data }) => {
-                let universities = data.universities;
-                setUniversities(universities);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+export const UniversitySlide = (props) => {
+
     useEffect(() => {
-        allInfo();
-    }, [])
+        props.fetchPosts();
+    }, [])// passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
     const classes = useStyles();
+
     return (
         <Container style={{ marginBottom: 50 }}>
             <h2 className={classes.h2}>University</h2>
-            <div className={classes.root}>
-                {universities.map((universitie) => (
-                    <ButtonBase
-                        focusRipple
-                        key={universitie.id}
-                        className={classes.image}
-                        focusVisibleClassName={classes.focusVisible}
-                        style={{
-                            width: '25%',
-                        }}
-                    >
-                        <span
-                            className={classes.imageSrc}
+            {props.posts.data ?
+                <div className={classes.root}>
+                    {props.posts.data.universities.map((universitie) => (
+                        <ButtonBase
+                            focusRipple
+                            key={universitie.id}
+                            className={classes.image}
+                            focusVisibleClassName={classes.focusVisible}
                             style={{
-                                backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
+                                width: '25%',
                             }}
-                        />
-                        <Link href={`/university/${universitie.id}`}>
-                            <span className={classes.imageBackdrop} />
-
-                            <span className={classes.imageButton}>
-
-                                <Typography
-                                    component="span"
-                                    variant="subtitle1"
-                                    color="inherit"
-                                    className={classes.imageTitle}
-                                >
-                                    {universitie.universityName}
-                                    <span className={classes.imageMarked} />
-                                </Typography>
-                            </span>
-                        </Link>
-                    </ButtonBase>
-                ))}
-            </div>
+                        >
+                            <span
+                                className={classes.imageSrc}
+                                style={{
+                                    backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
+                                }}
+                            />
+                            <Link href={`/university/${universitie.id}`}>
+                                <span className={classes.imageBackdrop} />
+                                <span className={classes.imageButton}>
+                                    <Typography
+                                        component="span"
+                                        variant="subtitle1"
+                                        color="inherit"
+                                        className={classes.imageTitle}
+                                    >
+                                        {universitie.universityName}
+                                        <span className={classes.imageMarked} />
+                                    </Typography>
+                                </span>
+                            </Link>
+                        </ButtonBase>
+                    ))}
+                </div>
+                : <div></div>}
         </Container>
     );
 }
-export default UniversitySlide;
+const mapStateToProps = state => ({
+    posts: state.posts.items
+})
+
+export default connect(mapStateToProps, { fetchPosts })(UniversitySlide);
