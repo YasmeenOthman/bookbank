@@ -23,7 +23,6 @@ import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 
 
-
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
   root: {
@@ -53,7 +52,7 @@ const userStyles = makeStyles({
     marginRight: 10
   },
   loginDraw: {
-    transform: "translate3d(1301px, 5px, 0px) !important"
+   
   }
 });
 
