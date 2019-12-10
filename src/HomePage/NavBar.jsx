@@ -19,6 +19,9 @@ import NavCate from "./NavCate.jsx";
 import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
+import { allData } from "../actions";
+import jwt_decode from "jwt-decode";
+
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -56,23 +59,32 @@ const userStyles = makeStyles({
 
 
 
-
 //-----------------nav bar class-------------
 export const NavBar = () => {
   // for login user
-  useSelector((state) => state.isLogged);
-  let x = localStorage.getItem("usertoken");
+  //----------get the token from the local storage-----------
+  var token = localStorage.getItem("usertoken");
+  var username = "";
+  if (token) {
+    const decoded = jwt_decode(token);
+    // console.log(decoded)
+    username = decoded.userName
+  }
+
+  // console.log(email)
+  const isLogged = useSelector((state) => state.isLogged);
+
 
   const dispatch = useDispatch();
-  
-  const logOutFun = () => {
+  // dispatch(allData());
 
-    var token = localStorage.removeItem("usertoken");
+  //--------logOut Function///////////
+  const logOutFun = () => {
     dispatch(logoutStatus())
+    var token = localStorage.removeItem("usertoken");
     console.log(token)
   }
   const classes = userStyles();
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -98,13 +110,13 @@ export const NavBar = () => {
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
+  // const prevOpen = React.useRef(open);
+  // React.useEffect(() => {
+  //   if (prevOpen.current === true && open === false) {
+  //     anchorRef.focus();
+  //   }
+  //   prevOpen.current = open;
+  // }, [open]);
 
   return (
     <AppBar position="static">
@@ -154,7 +166,7 @@ export const NavBar = () => {
               alignItems="center"
             >
               {/* if statment for check user if login or not */}
-              {x ? (
+              {isLogged ? (
                 // log in icon and use name
                 <Grid item>
                   <Button
@@ -170,7 +182,8 @@ export const NavBar = () => {
                       alt="Remy Sharp"
                       src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
                     />
-                    Hi,Nazeh
+                    <p>{username}</p>
+                    {/* {token ? <p>{x}</p> : <p>username</p>} */}
                   </Button>
                   <Popper
                     className={classes.loginDraw}

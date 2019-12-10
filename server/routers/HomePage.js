@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+// const middleware = require('Authorization/middleware.js');
 
 var router = express.Router();
 const bookBankDB = require("../../database/db.js");
@@ -58,13 +59,27 @@ router.route("/").get(function (req, res) {
     });
   });
 });
+//----------------------------input validation-------------------------------------------
+const validateRegisterInput = require("../validation/signupValidation.js");
+const validateLoginInput = require("../validation/loginValidation.js");
+//---------------------------------------------------------------------------------------
+
+//--------------Authentication--------------------
+//------------------------------------------------
 process.env.SECRET_KEY = "secret";
 
 router.route("/signup").post((req, res) => {
   let body = req.body;
-  // console.log(req.body);
+
+  // Form validation
+  const { errors, isValid } = validateRegisterInput(body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   var userInfo = {
+    userName: body.userName,
     email: body.email,
     password: body.password
   };
@@ -98,19 +113,26 @@ router.route("/signup").post((req, res) => {
       res.send("error" + err);
     });
 });
-
+//--------------------------------------------
+//---------------login------------------------
+//--------------------------------------------
 router.route("/login").post((req, res) => {
-  //   console.log(req.body);
-  // if (req.body.email === undefined || req.body.password === undefined) {
-  //   alert("Please check your email or password")
-  // }
+  // Form validation
+  const { errors, isValid } = validateLoginInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+
+  }
   bookBankDB.User.findOne({
-    email: req.body.email
+    email: req.body.email,
+
   })
     .then(user => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
+            userName: user.userName,
             email: user.email,
             password: user.password
           };
@@ -118,12 +140,12 @@ router.route("/login").post((req, res) => {
             expiresIn: "24h"
           });
           // console.log(token);
-          res.send({ token: token, user: user });
+          res.json({ success: true, message: "Authentication successful!", token: token, user: user });
         } else {
-          res.json({ error: "check your password" });
+          res.json({ success: false, error: "check your password" });
         }
       } else {
-        res.json({ error: "user does not exist" });
+        res.json({ success: false, error: "could not log in,plz join our website" });
       }
     })
     .catch(err => {
