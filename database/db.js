@@ -26,21 +26,19 @@ db.once('open', function() {
 //-------------------Book Schema-------------------------
 //=======================================================
 var booksSchema = mongoose.Schema({
-	id: { type: Number, unique: true },
 	bookName: { type: String },
 	bookCover: { type: String },
 	bookDescription: { type: String },
-	universityId: { type: Number },
+	universityId: { type: String },
 	createdAt: { type: Date, default: Date.now }
 });
 
 //-------------------Book Model-------------------------
 let Book = mongoose.model('books', booksSchema);
 
-var saveBook = function(book) {
-	console.log('in save function');
+var saveBook = function(book, callBack) {
+	// console.log('in save function');
 	var newBook = new Book({
-		id: book.id,
 		bookName: book.bookName,
 		bookCover: book.bookCover,
 		bookDescription: book.bookDescription,
@@ -48,21 +46,15 @@ var saveBook = function(book) {
 		createdAt: book.createdAt
 	});
 
-	newBook.save(function(err, res) {
-		if (err) {
-			throw err;
-		}
-		console.log('this book is added now', res);
-	});
+	newBook.save(callBack);
 };
 
 //=======================================================
 //-------------------Donated Book Schema-------------------------
 //=======================================================
 var donatedBooksSchema = mongoose.Schema({
-	id: { type: Number, unique: true },
-	userId: { type: Number },
-	bookId: { type: Number },
+	userId: { type: String },
+	bookId: { type: String },
 	availability: { type: Boolean },
 	createdAt: { type: Date, default: Date.now }
 });
@@ -70,29 +62,24 @@ var donatedBooksSchema = mongoose.Schema({
 //-------------------Donated Book Model-------------------------
 let DonatedBook = mongoose.model('donated-books', donatedBooksSchema);
 
-var saveDonatedBook = function(donatedBook) {
+var saveDonatedBook = function(donatedBook, callBack) {
 	console.log('in save function');
 	var newDonatedBook = new DonatedBook({
-		id: donatedBook.id,
 		userId: donatedBook.userId,
 		bookId: donatedBook.bookId,
 		availability: donatedBook.availability,
 		createdAt: donatedBook.createdAt
 	});
 
-	newDonatedBook.save(function(err, res) {
-		if (err) {
-			throw err;
-		}
-		console.log('this donated book has been added ', res);
-	});
+	newDonatedBook.save(callBack);
 };
 
 //=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
 var userSchema = mongoose.Schema({
-	email: { type: String },
+	userName: { type: String },
+	email: { type: String, unique: true },
 	password: { type: String }
 });
 
@@ -101,6 +88,7 @@ var User = mongoose.model('user', userSchema);
 
 var saveUser = function(user) {
 	var newUser = new User({
+		userName: user.userName,
 		email: user.email,
 		password: user.password
 	});
@@ -118,10 +106,8 @@ var saveUser = function(user) {
 //=======================================================
 
 var profileSchema = mongoose.Schema({
-	id: { type: Number, unique: true },
-	userId: { type: Number },
-	userName: { type: String },
-	universityId: { type: Number },
+	userId: { type: String },
+	universityId: { type: String },
 	userAvatar: { type: String }
 });
 
@@ -130,7 +116,6 @@ var Profile = mongoose.model('profiles', profileSchema);
 
 var saveProfile = function(profile) {
 	var newProfile = new Profile({
-		id: profile.id,
 		userId: profile.userId,
 		userName: profile.userName,
 		universityId: profile.universityId,
@@ -150,8 +135,8 @@ var saveProfile = function(profile) {
 //=======================================================
 
 var universitySchema = mongoose.Schema({
-	id: { type: Number, unique: true },
-	universityName: { type: String }
+	universityName: { type: String },
+	universityImg: { type: String }
 });
 
 //-------------------University Model----------------------
@@ -159,8 +144,8 @@ var University = mongoose.model('universities', universitySchema);
 
 var saveUniversity = function(uni) {
 	var newUniversity = new University({
-		id: uni.id,
-		universityName: uni.universityName
+		universityName: uni.universityName,
+		universityImg: uni.universityImg
 	});
 
 	newUniversity.save(function(err, res) {
