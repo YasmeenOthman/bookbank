@@ -48,7 +48,7 @@ export const LastBook = (posts) => {
                     justify="center"
                     alignItems="center" spacing={3}>
                     {posts.posts.data.recentBooks.map((book) => (
-                        <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book.id}>
+                        <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
                             <Paper className={classes.paper}>
                                 <img alt="img" src={book.bookCover} className={classes.imgBook}></img>
                                 <Link href={`/university/${book.universityId}/book/${book.id}`} style={{ color: 'white' }}>
@@ -57,9 +57,9 @@ export const LastBook = (posts) => {
                                 <Link href={`/university/${book.universityId}/book/${book.id}`} style={{ color: 'white' }}>
                                     <p style={{ marginBottom: 5 }}>university name</p>
                                 </Link>
-                                <Link href={`/university/${book.universityId}/book/${book.id}`} style={{ color: 'white' }}>
+                                {/* <Link href={`/university/${book.universityId}/book/${book.id}`} style={{ color: 'white' }}>
                                     <Button style={{ color: 'white', border: '1px solid white' }} variant="outlined">Default</Button>
-                                </Link>
+                                </Link> */}
                             </Paper>
                         </Grid>
                     ))}
