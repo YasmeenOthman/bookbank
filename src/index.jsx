@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 // const store = createStore(allReducers, applyMiddleware(thunk));
 
 
-
 ReactDOM.render(
     <Provider store={store}>
          <App />

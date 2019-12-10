@@ -70,6 +70,7 @@ export const NavBar = () => {
     const decoded = jwt_decode(token);
     // console.log(decoded)
     username = decoded.username
+    var id = decoded._id
   }
 
   // console.log(email)
@@ -215,7 +216,7 @@ export const NavBar = () => {
                               onKeyDown={handleListKeyDown}
                             >
                               <MenuItem onClick={handleClose}>
-                                <Link href="/Profile">Profile</Link>
+                                <Link href={`/profile/${id}`}>Profile</Link>
                               </MenuItem>
                               <MenuItem onClick={handleClose}>
                                 <Link href="/Notification">Notification</Link>
