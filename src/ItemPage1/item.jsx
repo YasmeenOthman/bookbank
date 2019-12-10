@@ -128,7 +128,7 @@ const useStyles = makeStyles(theme => ({
           value={owner}
           onChange={handleChange} >
           {ownerBook.map((owner1) => (
-          <MenuItem value={20} key={owner1.id}> {owner1.userName}</MenuItem>
+          <MenuItem value={owner1.userName} key={owner1.id}> {owner1.userName}</MenuItem>
           ))}
         </Select>
         </FormControl>
