@@ -106,6 +106,7 @@ var User = mongoose.model("user", userSchema);
 
 var saveUser = function (user) {
   var newUser = new User({
+    username: user.userName,
     email: user.email,
     password: user.password
   });
@@ -125,7 +126,7 @@ var saveUser = function (user) {
 var profileSchema = mongoose.Schema({
   id: { type: Number, unique: true },
   userId: { type: Number },
-  userName: { type: String },
+  // userName: { type: String },
   universityId: { type: Number },
   userAvatar: { type: String }
 });
@@ -137,7 +138,7 @@ var saveProfile = function (profile) {
   var newProfile = new Profile({
     id: profile.id,
     userId: profile.userId,
-    userName: profile.userName,
+    // userName: profile.userName,
     universityId: profile.universityId,
     userAvatar: profile.userAvatar
   });

@@ -85,19 +85,13 @@ class SignIn extends React.Component {
                     width: 100,
                     height: 30,
                     marginLeft: "80px"
+
                   }}
 
                 >
                   Login
                 </button>
-                {/* <span className="choose"> or </span>
-                <button
-                  type="button"
-                  className="ui button"
-                  style={{ backgroundColor: "#F08080", width: 70, height: 20 }}
-                >
-                  Signup
-                </button> */}
+
               </div>
             </form>
           </div>
@@ -139,17 +133,17 @@ class SignIn extends React.Component {
     });
   }
 
-  // getUser() {
-  //   // event.preventDefault();
+  // getUser(event) {
+  //   event.preventDefault();
   //   const token = localStorage.getItem("usertoken");
-  //   // if (token !== "undefined") {
+  //   // if (token === undefined) {
   //   const decoded = jwt_decode(token);
   //   if (decoded.password === this.state.password) {
-  //     window.location.reload();
+  //     alert("welcome")
   //   } else {
   //     alert("Wrong password or email");
   //   }
-  //   // }
+  // }
   // }
   render() {
     return this.state.component;
