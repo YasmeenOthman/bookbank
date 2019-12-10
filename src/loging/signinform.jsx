@@ -107,29 +107,35 @@ class SignIn extends React.Component {
   }
 
   loginFunction(event) {
-    console.log("frontend")
     event.preventDefault();
     var data = {
       email: $("#email").val(),
       password: $("#password").val()
     };
-    // var that = this;
     $.ajax({
       url: "http://localhost:8000/login",
       method: "POST",
       data: data,
       datatype: "json",
       success: data => {
-        console.log(data.token)
-        localStorage.setItem("usertoken", data.token);
-        const decoded = jwt_decode(data.token);
-        this.setState({
-          email: decoded.password
-        });
-        this.setState({
-          component: <Home />
-        });
-       }
+        if (data.success) {
+          localStorage.setItem("usertoken", data.token);
+          this.setState({
+            component: <Home />
+          });
+          // const decoded = jwt_decode(data.token);
+          // this.setState({
+          //   email: decoded.password
+
+          // });
+        } else {
+          alert(data.error)
+        }
+
+
+
+      }
+
     });
   }
 

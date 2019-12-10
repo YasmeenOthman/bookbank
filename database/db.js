@@ -96,29 +96,25 @@ var saveDonatedBook = function (donatedBook) {
 //-------------------User Schema-------------------------
 //=======================================================
 var userSchema = mongoose.Schema({
-  username: { type: String },
-  email: { type: String },
+  userName: { type: String },
+  email: { type: String, unique: true },
   password: { type: String }
 });
-
 //-------------------User Model-------------------------
-var User = mongoose.model("user", userSchema);
-
+var User = mongoose.model('user', userSchema);
 var saveUser = function (user) {
   var newUser = new User({
-    username: user.userName,
+    userName: user.userName,
     email: user.email,
     password: user.password
   });
-
   newUser.save(function (err, res) {
     if (err) {
       throw err;
     }
-    console.log("this user was added now", res);
+    console.log('this user was added now', res);
   });
 };
-
 //=======================================================
 //-------------------Profile Schema-------------------------
 //=======================================================

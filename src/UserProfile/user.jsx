@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
     console.log(token);
     const decoded = jwt_decode(token);
     var email = decoded.email;
-    var username = decoded.username
+    var username = decoded.userName
     const classes = useStyles();
  
 

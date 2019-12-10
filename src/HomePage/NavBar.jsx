@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
@@ -21,7 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
-
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/userActions';
 
 
 //---------------styling for navbar--------------
@@ -61,7 +62,7 @@ const userStyles = makeStyles({
 
 
 //-----------------nav bar class-------------
-export const NavBar = () => {
+export const NavBar = (props) => {
   // for login user
   //----------get the token from the local storage-----------
   var token = localStorage.getItem("usertoken");
@@ -69,8 +70,7 @@ export const NavBar = () => {
   if (token) {
     const decoded = jwt_decode(token);
     // console.log(decoded)
-    username = decoded.username
-    var id = decoded._id
+    username = decoded.userName
   }
 
   // console.log(email)
@@ -84,12 +84,9 @@ export const NavBar = () => {
   const logOutFun = () => {
     dispatch(logoutStatus())
     var token = localStorage.removeItem("usertoken");
-
-
     console.log(token)
   }
   const classes = userStyles();
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -113,15 +110,17 @@ export const NavBar = () => {
       setOpen(false);
     }
   }
-
+//   useEffect(() => {
+//     props.fetchPosts();
+// }, [])
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
+  // const prevOpen = React.useRef(open);
+  // React.useEffect(() => {
+  //   if (prevOpen.current === true && open === false) {
+  //     anchorRef.focus();
+  //   }
+  //   prevOpen.current = open;
+  // }, [open]);
 
   return (
     <AppBar position="static">
@@ -216,7 +215,8 @@ export const NavBar = () => {
                               onKeyDown={handleListKeyDown}
                             >
                               <MenuItem onClick={handleClose}>
-                                <Link href={`/profile/${id}`}>Profile</Link>
+                                <Link href={`/profile/`}>Profile</Link>
+                                {/* <Link href={`/profile/${props.posts.data.user._id}`}>Profile</Link> */}
                               </MenuItem>
                               <MenuItem onClick={handleClose}>
                                 <Link href="/Notification">Notification</Link>
