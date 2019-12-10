@@ -118,14 +118,22 @@ class SignIn extends React.Component {
       data: data,
       datatype: "json",
       success: data => {
-        localStorage.setItem("usertoken", data.token);
-        const decoded = jwt_decode(data.token);
-        this.setState({
-          email: decoded.password
-        });
-        this.setState({
-          component: <Home />
-        });
+        if (data.success) {
+          localStorage.setItem("usertoken", data.token);
+          this.setState({
+            component: <Home />
+          });
+          // const decoded = jwt_decode(data.token);
+          // this.setState({
+          //   email: decoded.password
+
+          // });
+        } else {
+          alert(data.error)
+        }
+
+
+
       }
     });
   }

@@ -10,7 +10,7 @@ class SignUp extends React.Component {
 
   saveUserInfo() {
     var registerInfo = {
-      username: $("#username").val(),
+      userName: $("#username").val(),
       email: $("#email").val(),
       password: $("#password").val()
     };

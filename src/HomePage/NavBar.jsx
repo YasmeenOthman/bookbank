@@ -69,7 +69,7 @@ export const NavBar = () => {
   if (token) {
     const decoded = jwt_decode(token);
     // console.log(decoded)
-    username = decoded.username
+    username = decoded.userName
   }
 
   // console.log(email)
