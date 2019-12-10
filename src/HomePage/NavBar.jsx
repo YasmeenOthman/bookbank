@@ -19,7 +19,7 @@ import NavCate from "./NavCate.jsx";
 import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
-import { allData } from "../actions";
+
 
 
 
@@ -63,11 +63,11 @@ const userStyles = makeStyles({
 //-----------------nav bar class-------------
 export const NavBar = () => {
   // for login user
-  const isLogged = useSelector((state) => state.isLogged);
-  var x = localStorage.getItem("usertoken");
-  console.log(x)
+  useSelector((state) => state.isLogged);
+  let x = localStorage.getItem("usertoken");
+
   const dispatch = useDispatch();
-  dispatch(allData());
+  
   const logOutFun = () => {
 
     var token = localStorage.removeItem("usertoken");

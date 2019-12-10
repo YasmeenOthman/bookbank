@@ -1,10 +1,13 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';
 import Box from '@material-ui/core/Box';
+import { stat } from 'fs';
+
 //------Number of user,books and university component-----
 
 const useStyles = makeStyles((theme) =>
@@ -54,35 +57,36 @@ const useStyles = makeStyles((theme) =>
     }),
 );
 
-export default function BookNum() {
+export const BookNum = (numbers) => {
 
     const classes = useStyles();
 
     return (
         <Grid container className={classes.root} spacing={5} >
-
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={10}>
-
                     <Grid item>
                         <Box display={{ xs: 'none', sm: 'none', lg: 'block' }} className={classes.paper}>
                             <div>
                                 <div className={classes.insideDiv}>
                                     <PeopleAltIcon className={classes.icons} />
                                     <h2 className={classes.h2}>Total Members</h2>
-                                    <h2 className={classes.h2}>50</h2>
+                                    {numbers.numbers.data ?
+                                    <h2 className={classes.h2}>{numbers.numbers.data.totalUsers}</h2>
+                                    : <h2></h2>}
                                 </div>
                             </div>
                         </Box>
                     </Grid>
-
                     <Grid item>
                         <Box display={{ xs: 'none', sm: 'none', md: 'block' }} className={classes.paper2}>
                             <div>
                                 <div className={classes.insideDiv}>
                                     <MenuBookIcon className={classes.icons} />
                                     <h2 className={classes.h2}>Books We Have</h2>
-                                    <h2 className={classes.h2}>50</h2>
+                                    {numbers.numbers.data ?
+                                    <h2 className={classes.h2}>{numbers.numbers.data.totalDonatedBooks}</h2>
+                                    : <h2></h2>}
                                 </div>
                             </div>
                         </Box>
@@ -93,15 +97,19 @@ export default function BookNum() {
                                 <div className={classes.insideDiv}>
                                     <SchoolIcon className={classes.icons} />
                                     <h2 className={classes.h2}>Number Of Universities</h2>
-                                    <h2 className={classes.h2}>5</h2>
+                                    {numbers.numbers.data ?
+                                    <h2 className={classes.h2}>{numbers.numbers.data.totalUniversities}</h2>
+                                    : <h2></h2>}
                                 </div>
                             </div>
                         </Box>
                     </Grid>
-
                 </Grid>
             </Grid>
-
         </Grid>
     );
 }
+const mapStateToProps = state =>({
+    numbers: state.posts.items
+})
+export default connect(mapStateToProps)(BookNum)

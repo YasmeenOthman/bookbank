@@ -1,10 +1,10 @@
-import React from 'react';
-
+import React ,{ useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
-import { createStyles, fade, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchIcon from '@material-ui/icons/Search';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -60,8 +60,27 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
-export const SearchAppBar = () => {
+export const SearchAppBar = (posts) => {
+  const [searchValue, setSearchValue] = useState('');
   const classes = useStyles();
+  console.log(searchValue)
+  let x =[]
+  posts.posts.data ?
+    x = posts.posts.data.recentBooks
+    : x = [];
+
+    console.log(x)
+    const handleChange = event => setSearchValue(event.target.value);
+    const regex = new RegExp(searchValue, 'gi' )
+    var searchItems =  x.filter(function(hero) {
+      if(x){
+        if(searchValue){
+        return hero.bookName.match(regex);
+        }
+      }
+      
+    });
+    console.log(searchItems)
 
   return (
     <div className={classes.root}>
@@ -78,11 +97,25 @@ export const SearchAppBar = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={searchValue}
+              onChange={handleChange}
             />
           </div>
         </Toolbar>
       </AppBar>
+      
+      <div>
+        {x?
+        <div>
+        {searchItems.map((item) => (<div key={item._id}>{item.bookName}</div>))}
+        
+        </div>
+        :<div></div>}
+      </div>
     </div>
   );
 }
-export default SearchAppBar;
+const mapStateOfProps = state => ({
+    posts: state.posts.items
+})
+export default connect(mapStateOfProps)(SearchAppBar);

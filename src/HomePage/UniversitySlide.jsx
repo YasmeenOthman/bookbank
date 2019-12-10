@@ -1,5 +1,5 @@
-
-import React, { useEffect } from 'react';
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
+
 //-----------------Unifersity Link Component----------
 
 const useStyles = makeStyles((theme) =>
