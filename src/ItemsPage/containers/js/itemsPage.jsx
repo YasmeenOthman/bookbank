@@ -71,6 +71,9 @@ export const ItemsPage  = () => {
       })
     },[]);
 
+    
+    
+
     return (
       <div>
       <NavBar />

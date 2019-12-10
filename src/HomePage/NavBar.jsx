@@ -20,6 +20,7 @@ import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
+import jwt_decode from "jwt-decode";
 
 
 
@@ -59,19 +60,31 @@ const userStyles = makeStyles({
 
 
 
-
 //-----------------nav bar class-------------
 export const NavBar = () => {
   // for login user
-  const isLogged = useSelector((state) => state.isLogged);
-  var x = localStorage.getItem("usertoken");
-  console.log(x)
-  const dispatch = useDispatch();
-  dispatch(allData());
-  const logOutFun = () => {
+  //----------get the token from the local storage-----------
+  var token = localStorage.getItem("usertoken");
+  var username = "";
+  if (token) {
+    const decoded = jwt_decode(token);
+    // console.log(decoded)
+    username = decoded.username
+  }
 
-    var token = localStorage.removeItem("usertoken");
+  // console.log(email)
+  const isLogged = useSelector((state) => state.isLogged);
+
+
+  const dispatch = useDispatch();
+  // dispatch(allData());
+
+  //--------logOut Function///////////
+  const logOutFun = () => {
     dispatch(logoutStatus())
+    var token = localStorage.removeItem("usertoken");
+
+
     console.log(token)
   }
   const classes = userStyles();
@@ -157,7 +170,7 @@ export const NavBar = () => {
               alignItems="center"
             >
               {/* if statment for check user if login or not */}
-              {x ? (
+              {isLogged ? (
                 // log in icon and use name
                 <Grid item>
                   <Button
@@ -173,7 +186,8 @@ export const NavBar = () => {
                       alt="Remy Sharp"
                       src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
                     />
-                    Hi,Nazeh
+                    <p>{username}</p>
+                    {/* {token ? <p>{x}</p> : <p>username</p>} */}
                   </Button>
                   <Popper
                     className={classes.loginDraw}

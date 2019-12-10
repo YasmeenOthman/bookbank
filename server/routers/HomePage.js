@@ -58,13 +58,26 @@ router.route("/").get(function (req, res) {
     });
   });
 });
+//----------------------------input validation-------------------------------------------
+const validateRegisterInput = require("../validation/signupValidation.js");
+const validateLoginInput = require("../validation/loginValidation.js");
+//---------------------------------------------------------------------------------------
+
+//--------------Authentication--------------------
 process.env.SECRET_KEY = "secret";
 
 router.route("/signup").post((req, res) => {
   let body = req.body;
-  // console.log(req.body);
+
+  // Form validation
+  const { errors, isValid } = validateRegisterInput(body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   var userInfo = {
+    username: body.username,
     email: body.email,
     password: body.password
   };
@@ -98,12 +111,14 @@ router.route("/signup").post((req, res) => {
       res.send("error" + err);
     });
 });
-
+//---------------login------------------------
 router.route("/login").post((req, res) => {
-  //   console.log(req.body);
-  // if (req.body.email === undefined || req.body.password === undefined) {
-  //   alert("Please check your email or password")
-  // }
+  // Form validation
+  const { errors, isValid } = validateLoginInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   bookBankDB.User.findOne({
     email: req.body.email
   })
@@ -111,6 +126,7 @@ router.route("/login").post((req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
+            username: user.username,
             email: user.email,
             password: user.password
           };
@@ -123,7 +139,7 @@ router.route("/login").post((req, res) => {
           res.json({ error: "check your password" });
         }
       } else {
-        res.json({ error: "user does not exist" });
+        res.json({ error: "Email not found" });
       }
     })
     .catch(err => {

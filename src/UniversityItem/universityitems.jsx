@@ -1,5 +1,4 @@
-
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
@@ -7,7 +6,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
-//-----------------Unifersity Link Component----------
+import NavBar from '.././HomePage/NavBar';
+// import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -89,16 +89,18 @@ const useStyles = makeStyles((theme) =>
         }
     }),
 );
-export const UniversitySlide = (props) => {
+export const Universityitems = (props) => {
 
     useEffect(() => {
         props.fetchPosts();
-    }, [])// passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
+    }, [])
     const classes = useStyles();
 
     return (
+      <div>
+        <NavBar />
         <Container style={{ marginBottom: 50 }}>
-            <h2 className={classes.h2}>University</h2>
+            <h2 className={classes.h2}>Universities</h2>
             {props.posts.data ?
                 <div className={classes.root}>
                     {props.posts.data.universities.map((universitie) => (
@@ -136,10 +138,11 @@ export const UniversitySlide = (props) => {
                 </div>
                 : <div></div>}
         </Container>
+      </div>
     );
 }
 const mapStateToProps = state => ({
     posts: state.posts.items
 })
 
-export default connect(mapStateToProps, { fetchPosts })(UniversitySlide);
+export default connect(mapStateToProps, { fetchPosts })(Universityitems);
