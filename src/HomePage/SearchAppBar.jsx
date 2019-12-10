@@ -1,10 +1,11 @@
-import React ,{ useState } from 'react';
+import React, { useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import { createStyles, fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchIcon from '@material-ui/icons/Search';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -46,6 +47,13 @@ const useStyles = makeStyles((theme) =>
     inputRoot: {
       color: 'inherit',
     },
+    result: {
+      position: 'absolute',
+      background: 'white',
+      color: 'gray',
+      boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+      borderRadius: 4
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
       transition: theme.transitions.create('width'),
@@ -61,61 +69,68 @@ const useStyles = makeStyles((theme) =>
 );
 
 export const SearchAppBar = (posts) => {
-  const [searchValue, setSearchValue] = useState('');
-  const classes = useStyles();
-  console.log(searchValue)
-  let x =[]
-  posts.posts.data ?
-    x = posts.posts.data.recentBooks
-    : x = [];
+  const classes = useStyles();//For styling
+  const [searchValue, setSearchValue] = useState('');//Hooks for Search function
 
-    console.log(x)
-    const handleChange = event => setSearchValue(event.target.value);
-    const regex = new RegExp(searchValue, 'gi' )
-    var searchItems =  x.filter(function(hero) {
-      if(x){
-        if(searchValue){
+  let allBooks = []
+  posts.posts.data ?
+    allBooks = posts.posts.data.recentBooks
+    : allBooks = [];
+
+  console.log(allBooks)
+  const handleChange = event => setSearchValue(event.target.value);
+  const regex = new RegExp(searchValue, 'gi')
+  var searchItems = allBooks.filter(function (hero) {
+    if (allBooks) {
+      if (searchValue) {
         return hero.bookName.match(regex);
-        }
       }
-      
-    });
-    console.log(searchItems)
+    }
+
+  });
+  console.log(searchItems)
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.searchBar}>
-        <Toolbar>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <div>
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.searchBar}>
+          <Toolbar>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchValue}
+                onChange={handleChange}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchValue}
-              onChange={handleChange}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-      
-      <div>
-        {x?
-        <div>
-        {searchItems.map((item) => (<div key={item._id}>{item.bookName}</div>))}
-        
-        </div>
-        :<div></div>}
+          </Toolbar>
+        </AppBar>
+      </div>
+      {/* Search result div */}
+      <div className={classes.result}>
+        {allBooks ?
+          <Grid container className={classes.root}>
+            {searchItems.map((item) => (
+            <div key={item._id}>
+             <div>
+             <a>{item.bookName}</a>
+             </div>
+            </div>
+            ))}
+          </Grid>
+          : <div></div>}
       </div>
     </div>
   );
 }
 const mapStateOfProps = state => ({
-    posts: state.posts.items
+  posts: state.posts.items
 })
 export default connect(mapStateOfProps)(SearchAppBar);

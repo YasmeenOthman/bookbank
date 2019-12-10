@@ -20,9 +20,6 @@ import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 
-
-
-
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
   root: {
@@ -52,7 +49,7 @@ const userStyles = makeStyles({
     marginRight: 10
   },
   loginDraw: {
-    transform: "translate3d(1301px, 5px, 0px) !important"
+   
   }
 });
 
