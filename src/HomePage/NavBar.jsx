@@ -83,12 +83,9 @@ export const NavBar = () => {
   const logOutFun = () => {
     dispatch(logoutStatus())
     var token = localStorage.removeItem("usertoken");
-
-
     console.log(token)
   }
   const classes = userStyles();
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -114,13 +111,13 @@ export const NavBar = () => {
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
+  // const prevOpen = React.useRef(open);
+  // React.useEffect(() => {
+  //   if (prevOpen.current === true && open === false) {
+  //     anchorRef.focus();
+  //   }
+  //   prevOpen.current = open;
+  // }, [open]);
 
   return (
     <AppBar position="static">
