@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import NavBar from '../HomePage/NavBar';
 import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
@@ -66,7 +69,7 @@ const useStyles = makeStyles(theme => ({
     console.log(token);
     const decoded = jwt_decode(token);
     var email = decoded.email;
-
+    var username = decoded.username
     const classes = useStyles();
  
 
@@ -111,7 +114,7 @@ const useStyles = makeStyles(theme => ({
                      <br/>
                     <br/>
                     <Typography variant="subtitle1" >
-                    Name:{user.userName} 
+                    Name:{username} 
                     </Typography>
                     <br/>
                     <Typography variant="subtitle1" >
@@ -126,17 +129,12 @@ const useStyles = makeStyles(theme => ({
 
                     </div>
                   </Grid>
-                  <List dense={dense}>
-              {generate(
-                <ListItem>
-                  <ListItemText
-                    primary="" //donated books
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                </ListItem>,
-              )}
-            </List>
-     
+                  {/* <List >  */}
+                  {/* {ownerBook.map((user1) => ( */}
+                {/* <ListItem > */}
+                  {/* <ListItemText key={user1.id}/> {user1.bookName} </ListItem> */}
+                {/* ))} */}
+                 {/* </List> */}
                 </Grid>
               </Grid>
             </Grid>
