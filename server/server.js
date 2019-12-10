@@ -15,7 +15,9 @@ var profileRouter = require("./routers/profile.js");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-
+app.get("/test", function (req, res) {
+  res.send("hello")
+})
 app.use("/", homepageRouter);
 app.use("/university", universityRouter);
 app.use("/profile", profileRouter);

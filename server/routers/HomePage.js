@@ -27,28 +27,28 @@ router.route('/').get(function(req, res) {
 		//--------- Find  recently added Books ---------
 		bookBankDB.findRecentlyAddedBooks(function(err, books) {
 			if (err) throw err;
-			console.log(books);
+			//console.log(books);
 			homePageData.recentBooks = books;
 			//--------- Find Number of Donated Books ---------
 			bookBankDB.countDonatedBooks(function(err, numberOfDonatedBooks) {
 				if (err) {
 					throw err;
 				}
-				console.log(numberOfDonatedBooks);
+				//console.log(numberOfDonatedBooks);
 				homePageData.totalDonatedBooks = numberOfDonatedBooks;
 				//--------- Find Number of Universities ---------
 				bookBankDB.countUniversities(function(err, numberOfUnis) {
 					if (err) {
 						throw err;
 					}
-					console.log(numberOfUnis);
+					//console.log(numberOfUnis);
 					homePageData.totalUniversities = numberOfUnis;
 					//--------- Find Number of Users ---------
 					bookBankDB.countUsers(function(err, numberOfUsers) {
 						if (err) {
 							throw err;
 						}
-						console.log(numberOfUsers);
+						// console.log(numberOfUsers);
 						homePageData.totalUsers = numberOfUsers;
 						//now homePageData have all the data from the database.
 						res.json(homePageData);
@@ -58,13 +58,27 @@ router.route('/').get(function(req, res) {
 		});
 	});
 });
+//----------------------------input validation-------------------------------------------
+const validateRegisterInput = require('../validation/signupValidation.js');
+const validateLoginInput = require('../validation/loginValidation.js');
+//---------------------------------------------------------------------------------------
+
+//--------------Authentication--------------------
+//------------------------------------------------
 process.env.SECRET_KEY = 'secret';
 
 router.route('/signup').post((req, res) => {
 	let body = req.body;
-	// console.log(req.body);
+
+	// Form validation
+	const { errors, isValid } = validateRegisterInput(body);
+	// Check validation
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
 
 	var userInfo = {
+		userName: body.userName,
 		email: body.email,
 		password: body.password
 	};
@@ -99,9 +113,16 @@ router.route('/signup').post((req, res) => {
 			res.send('error' + err);
 		});
 });
-
+//--------------------------------------------
+//---------------login------------------------
+//--------------------------------------------
 router.route('/login').post((req, res) => {
-	//   console.log(req.body);
+	// Form validation
+	const { errors, isValid } = validateLoginInput(req.body);
+	// Check validation
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
 	bookBankDB.User
 		.findOne({
 			email: req.body.email
@@ -110,7 +131,7 @@ router.route('/login').post((req, res) => {
 			if (user) {
 				if (bcrypt.compareSync(req.body.password, user.password)) {
 					const payload = {
-						// _id: user._id,
+						userName: user.userName,
 						email: user.email,
 						password: user.password
 					};
@@ -118,12 +139,12 @@ router.route('/login').post((req, res) => {
 						expiresIn: '24h'
 					});
 					// console.log(token);
-					res.send(token);
+					res.json({ success: true, message: 'Authentication successful!', token: token, user: user });
 				} else {
-					res.json({ error: 'check your password' });
+					res.json({ success: false, error: 'check your password' });
 				}
 			} else {
-				res.json({ error: 'user does not exist' });
+				res.json({ success: false, error: 'could not log in,plz join our website' });
 			}
 		})
 		.catch((err) => {

@@ -15,14 +15,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import NavCate from './NavCate';
-import SearchAppBar from './SearchAppBar';
+import NavCate from './NavCate.jsx';
+import SearchAppBar from './SearchAppBar.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutStatus } from '../actions';
 import { allData } from '../actions';
-
-var token = localStorage.getItem('usertoken');
-console.log(token);
+import jwt_decode from 'jwt-decode';
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -56,31 +54,47 @@ const userStyles = makeStyles({
 		transform: 'translate3d(1301px, 5px, 0px) !important'
 	}
 });
+
 //-----------------nav bar class-------------
-export default function NavBar() {
+export const NavBar = () => {
 	// for login user
-	const isLogged: boolean = useSelector((state: any) => state.isLogged);
+	//----------get the token from the local storage-----------
+	var token = localStorage.getItem('usertoken');
+	var username = '';
+	if (token) {
+		const decoded = jwt_decode(token);
+		// console.log(decoded)
+		username = decoded.userName;
+	}
+
+	// console.log(email)
+	const isLogged = useSelector((state) => state.isLogged);
 
 	const dispatch = useDispatch();
-	dispatch(allData());
+	// dispatch(allData());
 
+	//--------logOut Function///////////
+	const logOutFun = () => {
+		dispatch(logoutStatus());
+		var token = localStorage.removeItem('usertoken');
+		console.log(token);
+	};
 	const classes = userStyles();
-
 	const [ open, setOpen ] = React.useState(false);
-	const anchorRef = React.useRef<HTMLButtonElement>(null);
+	const anchorRef = React.useRef(null);
 
 	const handleToggle = () => {
 		setOpen((prevOpen) => !prevOpen);
 	};
 
-	const handleClose = (event: React.MouseEvent<EventTarget>) => {
-		if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+	const handleClose = (event) => {
+		if (anchorRef.current && anchorRef.current.contains(event.target)) {
 			return;
 		}
 		setOpen(false);
 	};
 
-	function handleListKeyDown(event: React.KeyboardEvent) {
+	function handleListKeyDown(event) {
 		if (event.key === 'Tab') {
 			event.preventDefault();
 			setOpen(false);
@@ -88,16 +102,13 @@ export default function NavBar() {
 	}
 
 	// return focus to the button when we transitioned from !open -> open
-	const prevOpen = React.useRef(open);
-	React.useEffect(
-		() => {
-			if (prevOpen.current === true && open === false) {
-				anchorRef.current!.focus();
-			}
-			prevOpen.current = open;
-		},
-		[ open ]
-	);
+	// const prevOpen = React.useRef(open);
+	// React.useEffect(() => {
+	//   if (prevOpen.current === true && open === false) {
+	//     anchorRef.focus();
+	//   }
+	//   prevOpen.current = open;
+	// }, [open]);
 
 	return (
 		<AppBar position="static">
@@ -143,7 +154,8 @@ export default function NavBar() {
 											alt="Remy Sharp"
 											src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
 										/>
-										Hi,Nazeh
+										<p>{username}</p>
+										{/* {token ? <p>{x}</p> : <p>username</p>} */}
 									</Button>
 									<Popper
 										className={classes.loginDraw}
@@ -174,9 +186,7 @@ export default function NavBar() {
 															<MenuItem onClick={handleClose}>
 																<Link href="/Notification">Notification</Link>
 															</MenuItem>
-															<MenuItem onClick={() => dispatch(logoutStatus())}>
-																Logout
-															</MenuItem>
+															<MenuItem onClick={logOutFun}>Logout</MenuItem>
 														</MenuList>
 													</ClickAwayListener>
 												</Paper>
@@ -220,4 +230,5 @@ export default function NavBar() {
 			</Toolbar>
 		</AppBar>
 	);
-}
+};
+export default NavBar;

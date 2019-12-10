@@ -82,7 +82,6 @@ var userSchema = mongoose.Schema({
 	email: { type: String, unique: true },
 	password: { type: String }
 });
-
 //-------------------User Model-------------------------
 var User = mongoose.model('user', userSchema);
 
@@ -100,7 +99,6 @@ var saveUser = function(user) {
 		console.log('this user was added now', res);
 	});
 };
-
 //=======================================================
 //-------------------Profile Schema-------------------------
 //=======================================================
