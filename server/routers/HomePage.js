@@ -142,7 +142,7 @@ router.route("/login").post((req, res) => {
           // console.log(token);
           res.json({ success: true, message: "Authentication successful!", token: token, user: user });
         } else {
-          res.json({ success: false, error: "check your password" });
+          res.json({ success: false, error: "Please check your password" });
         }
       } else {
         res.json({ success: false, error: "could not log in,plz join our website" });

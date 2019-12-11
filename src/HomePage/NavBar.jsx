@@ -52,7 +52,7 @@ const userStyles = makeStyles({
     marginRight: 10
   },
   loginDraw: {
-   
+
   }
 });
 
@@ -214,7 +214,9 @@ export const NavBar = () => {
                                 <Link href="/Profile">Profile</Link>
                               </MenuItem>
                               <MenuItem onClick={handleClose}>
-                                <Link href="/Notification">Notification</Link>
+                                <Link href="/Notification">
+                                  Notification
+                                </Link>
                               </MenuItem>
                               <MenuItem
                                 onClick={logOutFun}
