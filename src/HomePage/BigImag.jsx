@@ -7,7 +7,9 @@ import BookNum from './BookNum';
 const userStyle = makeStyles({
     root: {
         padding: 0,
-        maxWidth: '100%'
+        maxWidth: '100%',
+        position: 'relative',
+        zIndex: -1
     },
     image: {
         width: '100%',

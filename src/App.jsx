@@ -16,14 +16,17 @@ export const App = () => {
   return (
     <Router>
       {/* <UserProfile /> */}
+      
       <div className="App">
+      {/* <FirstAddBook/> */}
         <Switch>
-          {/* <Route exact path='/' component={Home} />
+           <Route exact path='/' component={FirstAddBook} />
+           {/*
           <Route exact path={`/university/:id`} component={ItemsPage} />
           <Route exact path={'/university/:univId/book/:bookId'} component={Item} />
           <Route exact path="/login" component={SignIn} /> */}
         {/* <AddBook/> */}
-        <FirstAddBook/>
+        {/* <FirstAddBook/> */}
           {/* <Route exact path="/university" component={universityitems} />
           <Route exact path="/profile/:userId" component={UserProfile} /> */}
         </Switch> 

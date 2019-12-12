@@ -23,7 +23,6 @@ import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 
 
-
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
   root: {
@@ -53,7 +52,7 @@ const userStyles = makeStyles({
     marginRight: 10
   },
   loginDraw: {
-    transform: "translate3d(1301px, 5px, 0px) !important"
+   
   }
 });
 
@@ -69,7 +68,7 @@ export const NavBar = () => {
   if (token) {
     const decoded = jwt_decode(token);
     // console.log(decoded)
-    username = decoded.username
+    username = decoded.userName
   }
 
   // console.log(email)
@@ -83,12 +82,9 @@ export const NavBar = () => {
   const logOutFun = () => {
     dispatch(logoutStatus())
     var token = localStorage.removeItem("usertoken");
-
-
     console.log(token)
   }
   const classes = userStyles();
-
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -114,13 +110,13 @@ export const NavBar = () => {
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
+  // const prevOpen = React.useRef(open);
+  // React.useEffect(() => {
+  //   if (prevOpen.current === true && open === false) {
+  //     anchorRef.focus();
+  //   }
+  //   prevOpen.current = open;
+  // }, [open]);
 
   return (
     <AppBar position="static">
