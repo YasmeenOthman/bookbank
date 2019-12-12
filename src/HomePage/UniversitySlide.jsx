@@ -1,5 +1,5 @@
-
-import React, { useEffect } from 'react';
+// eslint-disable-next-line
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
+
 //-----------------Unifersity Link Component----------
 
 const useStyles = makeStyles((theme) =>
@@ -104,7 +105,7 @@ export const UniversitySlide = (props) => {
                     {props.posts.data.universities.map((universitie) => (
                         <ButtonBase
                             focusRipple
-                            key={universitie.id}
+                            key={universitie._id}
                             className={classes.image}
                             focusVisibleClassName={classes.focusVisible}
                             style={{
@@ -114,7 +115,7 @@ export const UniversitySlide = (props) => {
                             <span
                                 className={classes.imageSrc}
                                 style={{
-                                    backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
+                                    backgroundImage: `url(${universitie.universityImg})`,
                                 }}
                             />
                             <Link href={`/university/${universitie.id}`}>

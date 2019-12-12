@@ -21,6 +21,18 @@ router.route("/:univId").get(function (req, res) {
   });
 });
 
+
+//----------------Books according to uni name Route --------------------------
+router.route("/name").get(function (req, res) {
+  const univname = req.params.universityName;
+  console.log(univname)
+  bookBankDB.getBooksOfUniversity(univname, function (err, booksOFTheUniversity) {
+    if (err) throw err;
+    //console.log(booksOFTheUniversity);
+    res.json(booksOFTheUniversity);
+  });
+});
+
 //----------------- Item Page Route----------------------------
 router.route("/:univId/book/:bookId").get(function (req, res) {
   var bookId = req.params.bookId;
