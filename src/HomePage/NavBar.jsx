@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
-
+import Notifications from "../Notify/Notification"
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -187,6 +187,7 @@ export const NavBar = () => {
 															</MenuItem>
 															<MenuItem onClick={handleClose}>
 																<Link href="/Notification">Notification</Link>
+																{/* < Notifications /> */}
 															</MenuItem>
 															<MenuItem onClick={logOutFun}>Logout</MenuItem>
 														</MenuList>
