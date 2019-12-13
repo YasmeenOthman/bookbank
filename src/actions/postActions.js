@@ -1,7 +1,7 @@
 import { FETCH_POSTS } from './types';
 import axios from 'axios';
-// GET ALL DATA FOR HOME PAGE
-export const fetchPosts= () => dispatch => {   
+export const fetchPosts= () => dispatch => {
+    console.log('fitching');
             axios.get('http://localhost:8000/')
                 .then(data => dispatch({
                     type: FETCH_POSTS,
@@ -11,5 +11,5 @@ export const fetchPosts= () => dispatch => {
                     console.log(err)
                 })
                 
-        }
+}
     
