@@ -118,7 +118,7 @@ export const UniversitySlide = (props) => {
                                     backgroundImage: `url(${universitie.universityImg})`,
                                 }}
                             />
-                            <Link href={`/university/${universitie.id}`}>
+                            <Link href={`/university/${universitie._id}`}>
                                 <span className={classes.imageBackdrop} />
                                 <span className={classes.imageButton}>
                                     <Typography

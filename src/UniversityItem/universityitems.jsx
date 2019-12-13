@@ -106,7 +106,7 @@ export const Universityitems = (props) => {
                     {props.posts.data.universities.map((universitie) => (
                         <ButtonBase
                             focusRipple
-                            key={universitie.id}
+                            key={universitie._id}
                             className={classes.image}
                             focusVisibleClassName={classes.focusVisible}
                             style={{
@@ -119,7 +119,7 @@ export const Universityitems = (props) => {
                                     backgroundImage: `url(https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/james_madison_university.jpg?itok=29bxi7ZM)`,
                                 }}
                             />
-                            <Link href={`/university/${universitie.id}`}>
+                            <Link href={`/university/${universitie._id}`}>
                                 <span className={classes.imageBackdrop} />
                                 <span className={classes.imageButton}>
                                     <Typography
