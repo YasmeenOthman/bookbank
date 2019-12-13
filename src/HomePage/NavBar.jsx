@@ -49,10 +49,10 @@ const userStyles = makeStyles({
     }
   },
   userImg: {
-    marginRight: 10
+    marginRight: 10,
   },
-  loginDraw: {
-   
+  title: {
+		color: 'white',
   }
 
 });
@@ -143,7 +143,7 @@ export const NavBar = () => {
 
 						<Grid container item xs={6} direction="row" justify="flex-end" alignItems="center">
 							{/* if statment for check user if login or not */}
-							{isLogged ? (
+							{token ? (
 								// log in icon and use name
 								<Grid item>
 									<Button
@@ -223,9 +223,11 @@ export const NavBar = () => {
 							alignItems="center"
 						>
 							<NavCate />
-							<Typography variant="h6" noWrap>
+							<Link href="/">
+							<Typography variant="h6" noWrap className= {classes.title}>
 								BOOK BANK
 							</Typography>
+							</Link>
 						</Grid>
 						<Grid item xs={4} lg={3} xl={3} container justify="flex-start" alignItems="center">
 							{/* Search component */}
