@@ -16,8 +16,7 @@ export const App = () => {
 			{/* <UserProfile /> */}
 			<div className="App">
 				<Switch>
-					<Route exact path="/" component={AddBook} />
-					{/* <Route exact path='/' component={Home} /> */}
+					<Route exact path="/" component={Home} />
 					<Route exact path={`/university/:id`} component={ItemsPage} />
 					<Route exact path={'/university/:univId/book/:bookId'} component={Item} />
 					<Route exact path="/login" component={SignIn} />

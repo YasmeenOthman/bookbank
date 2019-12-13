@@ -227,7 +227,7 @@ router.route('/login').post((req, res) => {
 // 	universityImg:
 // 		'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Islamic_Uni_Gaza.jpg/880px-Islamic_Uni_Gaza.jpg'
 // });
-// res.json('added successfully');
+// 	res.json('added successfully');
 // });
 
 module.exports = router;

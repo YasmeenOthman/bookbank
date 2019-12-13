@@ -91,7 +91,7 @@ let RequestedBook = mongoose.model('requested-books', requestedBooksSchema);
 var saveRequestedBook = function(requestedBook, callBack) {
 	// console.log('in save function');
 	var newRequestedBook = new RequestedBook({
-		userId: requestedBook.userId,
+		requesterId: requestedBook.requesterId,
 		ownerId: requestedBook.ownerId,
 		bookId: requestedBook.bookId,
 		donatedBookId: requestedBook.donatedBookId,
