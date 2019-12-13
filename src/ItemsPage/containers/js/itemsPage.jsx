@@ -47,15 +47,9 @@ export const ItemsPage  = () => {
     var x = [...path];
     var y = x.length-1;
     var myId = x[y];
-    // var type = typeof univId;
-    // if (univId === "") {
-    //   univId = "1";
-    // }
-    // var id = "1";
     var univId = myId;
 
-    axios
-      .get(
+    axios.get(
         `http://localhost:8000/university/${univId}`
       )
       .then(res => {

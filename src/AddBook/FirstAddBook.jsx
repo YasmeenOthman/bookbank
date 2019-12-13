@@ -4,7 +4,6 @@ import NavBar from "../HomePage/NavBar";
 import { createStyles, fade,makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-import AppBar from '@material-ui/core/AppBar';
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -13,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 0
       },
       paper: {
-        // background: 'rgb(0, 179, 0)',
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary
@@ -56,7 +55,6 @@ const useStyles = makeStyles(theme => ({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-        //   marginLeft: theme.spacing(20),
         marginRight: theme.spacing(50),
         width: 'auto',
         },
@@ -87,9 +85,6 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         [theme.breakpoints.up('sm')]: {
           width: 290,
-        //   '&:focus': {
-        //     width: 350,
-        //   },
         },
       },
       imgBook: {
@@ -99,62 +94,112 @@ const useStyles = makeStyles(theme => ({
     },
     allSearch:{
       paddingLeft:0
-    }
+    },
+    result: {
+      position: 'absolute',
+      background: 'white',
+      // color: 'gray',
+      boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+      borderRadius: 4,
+      width: '20%',
+      // right: '22%',
+      height:'100%'
+    },
+    BookImg: {
+      height: 100,
+      width: '85%'
+    },
+    searchItem: {
+      padding: 10 
+    },
+    searchLink: {
+      cursor: 'pointer',
+      color: 'gray',
+    },
+    searchImg: {
+      borderRight: '4px solid #77b748'
+    },
+    linkGrid: {
+      paddingLeft: 15
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: 290,
+        // '&:focus': {
+        //   width: 200,
+        // },
+      },
+    },
 }));
 
 
 export  const FirstAddBook = (props) => {
   useEffect(() => {
-    props.fetchPosts();
-  }, [])
+    // props.fetchPosts();
+  }, []);
     const classes = useStyles();
-    const [university, setUni] = React.useState("");
-    const [univ,setUniv] = React.useState([]);
-    const [name,setName]= React.useState("");
+    const [choosenUniv, setChoosenUniv] = React.useState("");
+    const [allUnivs,setallUnivs] = React.useState([]);
     const [searchValue, setSearchValue] = useState('');//Hooks for Search function
-    const [uniBooks,setuniBooks]=useState("");
-    
-    let allBooks = []
-    props.posts.data ?
-    allBooks = props.posts.data.recentBooks
-    : allBooks = [];
-    console.log(allBooks)
+    const [allbooksOfUniv,setAllbooksOfUniv]=useState([]);
 
+    //-----------------------------Search related to University Name-----------------------------
+   
     const handleChange = event => setSearchValue(event.target.value);
     RegExp.quote = function(searchValue) {
     return searchValue.replace(/([.?*+^$[\]\\(){}|-])/gi, "\\$1");
     };
     const regex = new RegExp(RegExp.quote(searchValue), 'gi')
-    var searchItems = allBooks.filter(function (hero) {
-    if (allBooks) {
+    var searchItems = allbooksOfUniv.filter(function (hero) {
+    if (allbooksOfUniv) {
       if (searchValue) {
         return hero.bookName.match(regex);
       }
     }
-
-    });
+    }
+    );
     console.log(searchItems)
-    React.useEffect(() =>{
+
+    //-----------------------------To get all universities for dropdownList-----------------------------
+
+    useEffect( () => {
         axios.get(`http://localhost:8000/university/`)
         .then(res => {
-          setUniv(res.data);
+          setallUnivs(res.data);
       })
         .catch(err => {
           console.log(err);
         })
       }, []);
 
-      const onUniChange = event => {
-        var path = window.location.href;
-        var x = [...path];
-        var y = x.length-1;
-        var myId = x[y];
-        var univId = myId;
+   //-----------------------------To get all books related to universityName-----------------------------
+     
+        const onUniChange = event => {
         console.log("The University is:  ",event.target.value);
-        setUni(event.target.value);
+        setChoosenUniv(event.target.value);
+        var univId= findChoosenUnivId(choosenUniv);
+        axios.get(`http://localhost:8000/university/${univId}`)
+        .then(res => {
+          setAllbooksOfUniv(res.data);
+          console.log("All the books related to universityName",res.data)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+ 
+    //-----------------------------To get universityName according to UniversityID-----------------------------
+      const findChoosenUnivId = (choosenUnivName) => {
+        for (var i = 0; i < allUnivs.length; i++) {
+          if (allUnivs[i].universityName === choosenUnivName) {
+            return allUnivs[i]._id;
+          }
+        }
       };
-
-
+    
       return (
        <div>
           <NavBar />
@@ -174,14 +219,13 @@ export  const FirstAddBook = (props) => {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={university}
+                value={choosenUniv}
                 onChange={onUniChange}
               >
-                {univ.map((univ1) => (
-                <MenuItem key={univ1.id} value={univ1.universityName}>{univ1.universityName}</MenuItem>
+                {allUnivs.map((univ) => (
+                <MenuItem key={univ.id} value={univ.universityName}>{univ.universityName}</MenuItem>
                  ))}
               </Select>
-
               <div>
               <br/>
               <br/>
@@ -206,30 +250,35 @@ export  const FirstAddBook = (props) => {
                 value={searchValue}
                 onChange={handleChange}
               />
-            </div>
+            </div>    
           </Toolbar>
           <br/>
           <br/>
           <br/>
           <div className={classes.result}>
-        {allBooks ?
-          <Grid container className={classes.root}>
-            <Paper className={classes.paper}>
-                <img alt="img"  className={classes.imgBook}></img>
-                <h3 style={{marginBottom:5}}>Book Name</h3>
-                <h3 style={{marginBottom:5}}>Book Description</h3>
-                <Button style={{color: 'Black',border: '1px solid white'}} variant="outlined">Add this Book </Button>        
-            </Paper>
-          </Grid>
-          : <div></div>}
+          {searchItems ? 
+            <div >
+              {searchItems.map((item) => (
+              <Grid key={item._id} className={classes.searchItem} container>
+                <Grid item xs={4} className={classes.searchImg}>
+                <img alt='logo' src={item.bookCover} className={classes.BookImg}></img>
+                </Grid>
+                <Grid item xs={8} className={classes.linkGrid}>
+                <h3 style={{marginBottom:5}}>{item.bookName}</h3>
+                <h3 style={{marginBottom:5}}>{item.bookDescription}</h3>
+                <Button style={{marginBottom:5}} variant="contained" color="primary">Add this Book </Button>
+                </Grid>
+              </Grid>
+              ))}
             </div>
+          : <div>hiiii</div> }
+             </div>
             </div>
           </form>  
           </Container>
    
        </div>
       );
-
 }
 
 const mapStateToProps = state => ({
