@@ -63,10 +63,13 @@ export const NavBar = () => {
 	//----------get the token from the local storage-----------
 	var token = localStorage.getItem('usertoken');
 	var username = '';
+	var id = '';
 	if (token) {
 		const decoded = jwt_decode(token);
-		// console.log(decoded)
+		console.log(decoded)
 		username = decoded.userName;
+	id = decoded.userId;
+		console.log(id)
 	}
 
 	// console.log(email)
@@ -183,7 +186,7 @@ export const NavBar = () => {
 															onKeyDown={handleListKeyDown}
 														>
 															<MenuItem onClick={handleClose}>
-																<Link href="/Profile">Profile</Link>
+																<Link href={`/Profile/${id}`}>Profile</Link>
 															</MenuItem>
 															<MenuItem onClick={handleClose}>
 																<Link href="/Notification">Notification</Link>

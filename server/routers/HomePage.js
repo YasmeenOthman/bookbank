@@ -153,10 +153,12 @@ router.route('/login').post((req, res) => {
 			if (user) {
 				if (bcrypt.compareSync(req.body.password, user.password)) {
 					const payload = {
+						userId: user._id,
 						userName: user.userName,
 						email: user.email,
 						password: user.password
 					};
+					
 					let token = jwt.sign(payload, process.env.SECRET_KEY, {
 						expiresIn: '24h'
 					});
