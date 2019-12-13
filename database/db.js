@@ -142,7 +142,6 @@ var Profile = mongoose.model('profiles', profileSchema);
 var saveProfile = function(profile) {
 	var newProfile = new Profile({
 		userId: profile.userId,
-		userName: profile.userName,
 		universityId: profile.universityId,
 		userAvatar: profile.userAvatar
 	});
@@ -258,7 +257,7 @@ var getDonatedBooks = function(bluePrintId, callBack) {
 
 //-------- get usres names of donated books from profile collection -------
 var getDonatedBooksOwnersName = function(usersId, callBack) {
-	Profile.find({ userId: { $in: usersId } }, callBack);
+	User.find({ _id: { $in: usersId } }, callBack);
 };
 
 //----- Git user's Profile ---------

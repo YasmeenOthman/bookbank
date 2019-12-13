@@ -98,7 +98,7 @@ export const SearchAppBar = (posts) => {
       allBooks = posts.posts.data.recentBooks
   : allBooks = [];
 
-  console.log(allBooks)
+  // console.log(allBooks)
   const handleChange = event => setSearchValue(event.target.value);
   RegExp.quote = function(searchValue) {
     return searchValue.replace(/([.?*+^$[\]\\(){}|-])/gi, "\\$1");
