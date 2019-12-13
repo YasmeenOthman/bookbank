@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -9,37 +9,38 @@ import Button from '@material-ui/core/Button';
 import NavBar from '../../../HomePage/NavBar';
 // import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1
-	},
-	paper: {
-		// background: 'rgb(0, 179, 0)',
-		padding: theme.spacing(2),
-		textAlign: 'center',
-		color: theme.palette.text.secondary
-	},
-	imgBook: {
-		height: 250,
-		marginBottom: 10,
-		maxWidth: '100%'
-	},
-	h2: {
-		color: 'gray',
-		marginBottom: 20
-	},
-	root1: {
-		marginTop: 50,
-		textAlign: 'center',
-		marginBottom: 100,
-		fontSize: 30
-	}
-}));
+const useStyles = makeStyles(theme => ({
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            // background: 'rgb(0, 179, 0)',
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            color: theme.palette.text.secondary
+        },
+        imgBook: {
+            height: 250,
+            marginBottom: 10,
+            maxWidth: '100%'
+        },
+        h2: {
+            color: 'gray',
+            marginBottom: 20
+        },
+        root1:{
+          marginTop: 50,
+          textAlign: 'center',
+          marginBottom: 100,
+          fontSize:30
+        }
+      })
+);
 
-export const ItemsPage = () => {
-	const [ books, setbooks ] = useState([]);
-	const [ university, setUniversity ] = useState([]);
-	const classes = useStyles();
+export const ItemsPage  = () => {
+  const [books, setbooks] = useState([]);
+  const [university,setUniversity]=useState([]);
+  const classes = useStyles();
 
 	useEffect(() => {
 		var path = window.location.href;

@@ -9,6 +9,7 @@ import UserProfile from './UserProfile/user';
 // import UniversityItems from "./UniversityItem/universityitems.jsx";
 // import MediaUploader from './MediaUpload/mediaUpload';
 import AddBook from './AddBook/Addbook';
+import { FirstAddBook } from './AddBook/FirstAddBook.jsx';
 
 export const App = () => {
 	return (
@@ -22,6 +23,7 @@ export const App = () => {
 					<Route exact path="/login" component={SignIn} />
 					<Route exact path="/university" component={universityitems} />
 					<Route exact path="/profile/:userId" component={UserProfile} />
+					{/* <Route exact path="profile/"/> */}
 				</Switch>
 			</div>
 		</Router>
