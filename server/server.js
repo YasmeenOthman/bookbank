@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const http = require("http-server")
 const app = express();
 const bookBankDB = require("../database/db");
 require("mongoose-query-random");
@@ -26,3 +26,4 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () =>
   console.log(`Listening to  http://localhost:${PORT} ...`)
 );
+

@@ -69,14 +69,15 @@ const useStyles = makeStyles(theme => ({
     console.log(token);
     const decoded = jwt_decode(token);
     var email = decoded.email;
-    var username = decoded.username
+    var username = decoded.userName
     const classes = useStyles();
  
 
     useEffect(() => {
       var path = window.location.href;
-      console.log()
-      var userId = parseInt(path[path.length - 1]);
+      console.log(path)
+      var myPath = path.split('/');
+      var userId = myPath[4];
       axios.get(`http://localhost:8000/profile/${userId}`)
       .then(res => {
         setUser(res.data);

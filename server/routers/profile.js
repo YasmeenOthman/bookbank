@@ -65,6 +65,28 @@ router.route('/addBlueprintDonatedBook').post(function(req, res) {
 	});
 });
 
+//----------------- Add  new Book donated -------------
+router.route('/:userId/AddDonatedBook').post(function(req, res) {
+	const dataFromClient = req.body;
+
+	var donatedBookInfo = {
+		userId: dataFromClient.userId,
+		bookId: dataFromClient.bookId,
+		availability: true,
+		createdAt: Date.now()
+	};
+
+	//-------------Create New DonatedBook doc-------------------
+	bookBankDB.saveDonatedBook(donatedBookInfo, function(err, newDonatedBook) {
+		if (err) {
+			throw err;
+		}
+
+		console.log('new donated book has been added ' + newDonatedBook);
+
+		res.json(newDonatedBook);
+	});
+});
 //-------------get bluePrint books of user's donated books -------------------
 router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 	const userId = req.params.userId;

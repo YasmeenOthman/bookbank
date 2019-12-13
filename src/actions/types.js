@@ -1,2 +1,3 @@
+// User reduxer types
 export const FETCH_POSTS = 'FETCH_POSTS';
-export const FETCH_BOOKS = 'FETCH_BOOKS';
+export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
