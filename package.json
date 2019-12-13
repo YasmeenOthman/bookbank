@@ -28,6 +28,7 @@
 		"concurrently": "^5.0.0",
 		"contentful": "^7.10.0",
 		"cors": "^2.8.5",
+		"dayjs": "^1.8.17",
 		"express": "^4.17.1",
 		"grunt-ts": "^6.0.0-beta.22",
 		"http-proxy-middleware": "^0.20.0",

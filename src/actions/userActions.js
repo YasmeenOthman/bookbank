@@ -1,4 +1,6 @@
 import { FETCH_POSTS } from './types';
+import {MARK_NOTIFICATIONS_READ} from './types';
+
 import axios from 'axios';
 // GET ALL DATA FOR HOME PAGE
 var path = window.location.href;
@@ -14,3 +16,14 @@ export const fetchPosts= () => dispatch => {
                 })
                 
         }
+
+export const markNotificationsRead = (notificationIds) => dispatch => {
+    axios.post('/', notificationIds)
+    .then(res => {
+        dispatch({
+            type: MARK_NOTIFICATIONS_READ
+        })
+    })
+    .catch(err => console.log(err))
+}
+
