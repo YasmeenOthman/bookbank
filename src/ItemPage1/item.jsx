@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 	img: {
 		margin: 'auto',
 		display: 'block',
-		maxWidth: '100%'
+		maxWidth: '100%',
+		height: 450
 	},
 	formControl: {
 		margin: theme.spacing(1),

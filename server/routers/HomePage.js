@@ -158,6 +158,7 @@ router.route('/login').post((req, res) => {
 						email: user.email,
 						password: user.password
 					};
+					
 					let token = jwt.sign(payload, process.env.SECRET_KEY, {
 						expiresIn: '24h'
 					});

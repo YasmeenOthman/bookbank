@@ -4,6 +4,7 @@ import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import NavBar from '../HomePage/NavBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -69,7 +70,9 @@ const useStyles = makeStyles(theme => ({
     console.log(token);
     const decoded = jwt_decode(token);
     var email = decoded.email;
-    var username = decoded.userName
+    var username = decoded.userName;
+    var id = decoded.userId;
+    console.log(id)
     const classes = useStyles();
  
 
@@ -123,7 +126,9 @@ const useStyles = makeStyles(theme => ({
                     </Typography>
                     <br/>
                     <div >
+                    <Link href={`/profile/${id}/AddDonatedBook`}>
                     <Button variant="contained">Add A BOOK</Button>
+                    </Link>
                     <BottomNavigation value={value} onChange={handleChange}>
                   <BottomNavigationAction label="recent books added" value="recents" icon={<RestoreIcon />} />
                   </BottomNavigation>

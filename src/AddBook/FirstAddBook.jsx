@@ -140,7 +140,7 @@ const useStyles = makeStyles(theme => ({
 var token = localStorage.getItem('usertoken');
 if (token) {
 	const decoded = jwt_decode(token);
-	var userIdFromToken = decoded._id;
+	var userIdFromToken = decoded.userId;
 	console.log(userIdFromToken);
 }
 
@@ -195,7 +195,7 @@ export  const FirstAddBook = (props) => {
         axios.get(`http://localhost:8000/university/${univId}`)
         .then(res => {
           setAllbooksOfUniv(res.data);
-          console.log("All the books related to universityName",res.data)
+          console.log("All the books related to universityName11",res.data)
         })
         .catch(err => {
           console.log(err);
@@ -204,11 +204,16 @@ export  const FirstAddBook = (props) => {
    //-----------------------------To add newBook to Donated Books -----------------------------
   
    const handleSumbit = event => {
+    var path = window.location.href;
+		console.log(path)
+		var myPath = path.split('/');
+    var userid = myPath[4];
+    
     event.preventDefault();
     axios
-			.post('http://localhost:8000/profile/:userId/AddDonatedBook', {
+			.post(`http://localhost:8000/profile/${userid}/AddDonatedBook`, {
         userId: userIdFromToken,
-        bookId: allbooksOfUniv._id
+        bookId: searchItems._id
 			})
 			.then((response) => {
 				console.log(response.data);
@@ -217,6 +222,9 @@ export  const FirstAddBook = (props) => {
 				console.log(error);
 			});
    }
+   console.log("boook iiid",searchItems._id)
+   console.log("user iiid",userIdFromToken)
+
 
  
     //-----------------------------To get universityName according to UniversityID-----------------------------
@@ -295,15 +303,16 @@ export  const FirstAddBook = (props) => {
                 <Grid item xs={8} className={classes.linkGrid}>
                 <h3 style={{marginBottom:5}}>{item.bookName}</h3>
                 <h3 style={{marginBottom:5}}>{item.bookDescription}</h3>
-                <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit}>Add this Book </Button>
+                <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit}>Donate this Book </Button>
                 </Grid>
               </Grid>
               ))
               :
               <Grid  className={classes.searchItem} container>
+                <Link href={`/profile/${userIdFromToken}/addBlueprintDonatedBook`} style={{color: 'black'}}>
                 <Button style={{marginBottom:5}} variant="contained" color="primary" >Add New Book 
-                {/* <Link href={} style={{color: 'black'}}> </Link> */}
                 </Button>
+                </Link>
               </Grid>
               }
               

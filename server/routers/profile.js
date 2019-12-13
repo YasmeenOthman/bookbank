@@ -13,7 +13,7 @@ router.route('/:userId').get(function(req, res) {
 });
 
 //----------------- Add  new Book (bluePrint then donated) -------------
-router.route('/addBlueprintDonatedBook').post(function(req, res) {
+router.route('/:userId/addBlueprintDonatedBook').post(function(req, res) {
 	// var { name, description, imgUrl, uniId, userId } = req.body;
 	const dataFromClient = req.body;
 
