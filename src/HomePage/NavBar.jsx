@@ -54,10 +54,8 @@ const userStyles = makeStyles({
   loginDraw: {
    
   }
+
 });
-
-
-
 
 //-----------------nav bar class-------------
 export const NavBar = () => {
