@@ -144,4 +144,52 @@ const mapStateToProps = (state) => ({
 	posts: state.posts.items
 });
 
+return (
+	<Container style={{ marginBottom: 50 }}>
+		<h2 className={classes.h2}>University</h2>
+		{props.posts.data ? (
+			<div className={classes.root}>
+				{props.posts.data.universities.map((universitie) => (
+					<ButtonBase
+						focusRipple
+						key={universitie._id}
+						className={classes.image}
+						focusVisibleClassName={classes.focusVisible}
+						style={{
+							width: '25%'
+						}}
+					>
+						<span
+							className={classes.imageSrc}
+							style={{
+								backgroundImage: `url(${universitie.universityImg})`
+							}}
+						/>
+						<Link href={`/university/${universitie._id}`}>
+							<span className={classes.imageBackdrop} />
+							<span className={classes.imageButton}>
+								<Typography
+									component="span"
+									variant="subtitle1"
+									color="inherit"
+									className={classes.imageTitle}
+								>
+									{universitie.universityName}
+									<span className={classes.imageMarked} />
+								</Typography>
+							</span>
+						</Link>
+					</ButtonBase>
+				))}
+			</div>
+		) : (
+			<div />
+		)}
+	</Container>
+);
+
+const mapStateToProps = (state) => ({
+	posts: state.posts.items
+});
+
 export default connect(mapStateToProps, { fetchPosts })(UniversitySlide);
