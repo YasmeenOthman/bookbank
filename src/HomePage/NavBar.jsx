@@ -186,8 +186,8 @@ export const NavBar = () => {
 																<Link href="/Profile">Profile</Link>
 															</MenuItem>
 															<MenuItem onClick={handleClose}>
-																{/* <Link href="/Notification">Notification</Link> */}
-																< Notifications />
+																<Link href="/Notification">Notification</Link>
+																{/* < Notifications /> */}
 															</MenuItem>
 															<MenuItem onClick={logOutFun}>Logout</MenuItem>
 														</MenuList>
