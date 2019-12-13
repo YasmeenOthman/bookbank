@@ -37,11 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 //----------get the token from the local storage-----------
 var token = localStorage.getItem('usertoken');
-var userIdFromToken = '';
+// console.log(token);
+// var userIdFromToken = '';
 if (token) {
 	const decoded = jwt_decode(token);
-	// console.log(decoded)
-	userIdFromToken = decoded._id;
+	// console.log(decoded);
+	var userIdFromToken = decoded._id;
+	console.log(userIdFromToken);
 }
 
 export default function AddBook() {
@@ -59,7 +61,7 @@ export default function AddBook() {
 	const [ imageAsUrl, setImageAsUrl ] = React.useState('');
 
 	//---------------------handle media file-------------------------
-	console.log(imageAsFile);
+	// console.log(imageAsFile);
 	const handleImageAsFile = (e) => {
 		e.preventDefault();
 		const image = e.target.files[0];
@@ -138,7 +140,7 @@ export default function AddBook() {
 				description: description,
 				imgUrl: imageAsUrl,
 				universityId: universityId,
-				userId: '5def8dd49c5b52050c8ab00f'
+				userId: userIdFromToken
 			})
 			.then((response) => {
 				console.log(response.data);

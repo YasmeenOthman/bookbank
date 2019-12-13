@@ -65,7 +65,7 @@ router.route('/addBlueprintDonatedBook').post(function(req, res) {
 	});
 });
 
-//----------------- Add  new Book (bluePrint then donated) -------------
+//----------------- Add  new Book donated -------------
 router.route('/:userId/AddDonatedBook').post(function(req, res) {
 	const dataFromClient = req.body;
 
