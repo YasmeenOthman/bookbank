@@ -3,6 +3,7 @@ import { MARK_NOTIFICATIONS_READ } from '.././actions/types.js';
 const initialState = {
   notifications: []
 }
+
 export default function(state = initialState, action) {
   switch (action.type) {
       case MARK_NOTIFICATIONS_READ:
