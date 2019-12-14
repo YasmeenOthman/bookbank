@@ -21,16 +21,15 @@ router.route('/:univId').get(function(req, res) {
 	});
 });
 
-
 //----------------Books according to uni name Route --------------------------
-router.route("/name").get(function (req, res) {
-  const univname = req.params.universityName;
-  console.log(univname)
-  bookBankDB.getBooksOfUniversity(univname, function (err, booksOFTheUniversity) {
-    if (err) throw err;
-    //console.log(booksOFTheUniversity);
-    res.json(booksOFTheUniversity);
-  });
+router.route('/name').get(function(req, res) {
+	const univname = req.params.universityName;
+	console.log(univname);
+	bookBankDB.getBooksOfUniversity(univname, function(err, booksOFTheUniversity) {
+		if (err) throw err;
+		//console.log(booksOFTheUniversity);
+		res.json(booksOFTheUniversity);
+	});
 });
 
 //----------------- Item Page Route----------------------------
@@ -40,6 +39,7 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 
 	var itemPageData = {
 		bluePrintBook: {},
+		universityNameOfBook: '',
 		donatedBooks: [],
 		donatedBooksOwners: []
 	};
@@ -50,22 +50,30 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 		//console.log(bluePrintBook);
 		itemPageData['bluePrintBook'] = bluePrintBook;
 
-		//---- get donated books of that bluePrint book ----
-		bookBankDB.getDonatedBooks(bookId, function(err, donatedBooks) {
-			if (err) throw err;
+		bookBankDB.getUnivName(bluePrintBook.universityId, function(err, uniName) {
+			if (err) {
+				throw err;
+			}
+			itemPageData.universityNameOfBook = uniName;
+			console.log(uniName);
 
-			//console.log(donatedBooks);
-			itemPageData['donatedBooks'] = donatedBooks;
-
-			//get Users Id of the donated books
-			var usersId = donatedBooks.map(function(doc) {
-				return doc.userId;
-			});
-
-			bookBankDB.getDonatedBooksOwnersName(usersId, function(err, profiles) {
+			//---- get donated books of that bluePrint book ----
+			bookBankDB.getDonatedBooks(bookId, function(err, donatedBooks) {
 				if (err) throw err;
-				itemPageData['donatedBooksOwners'] = profiles;
-				res.json(itemPageData);
+
+				//console.log(donatedBooks);
+				itemPageData['donatedBooks'] = donatedBooks;
+
+				//get Users Id of the donated books
+				var usersId = donatedBooks.map(function(doc) {
+					return doc.userId;
+				});
+
+				bookBankDB.getDonatedBooksOwnersName(usersId, function(err, profiles) {
+					if (err) throw err;
+					itemPageData['donatedBooksOwners'] = profiles;
+					res.json(itemPageData);
+				});
 			});
 		});
 	});
