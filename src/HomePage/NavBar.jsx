@@ -63,9 +63,11 @@ export const NavBar = () => {
   //----------get the token from the local storage-----------
   var token = localStorage.getItem("usertoken");
   var username = "";
+  let id = '';
   if (token) {
     const decoded = jwt_decode(token);
-    username = decoded.userName
+    username = decoded.userName;
+    id = decoded.userId;
   }
 
   const isLogged = useSelector((state) => state.isLogged);
@@ -194,7 +196,7 @@ export const NavBar = () => {
                               onKeyDown={handleListKeyDown}
                             >
                               <MenuItem onClick={handleClose}>
-                                <Link href="/Profile/">Profile</Link>
+                              <Link href={`/Profile/${id}`}>Profile</Link>
                               </MenuItem>
                               <MenuItem onClick={handleClose}>
                                 <Link href="/Notification">Notification</Link>

@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         textAlign: 'center',
         background: '#77b747',
-        color: 'white'
+        color: 'white',
+        borderRadius: 4
     },
     wrapper: {
         width: 100 + theme.spacing(2),
@@ -48,6 +49,14 @@ const useStyles = makeStyles(theme => ({
         stroke: theme.palette.divider,
         strokeWidth: 1,
     },
+    chatInput: {
+        width: '99%',
+        height: 40
+        
+    },
+    chatContainer: {
+        height: 300
+    }
 }));
 const ChatBox = () => {
     const classes = useStyles();
@@ -108,19 +117,19 @@ const sendMessage =(event)=>{
                             <h1 className={classes.chatTitel}>CHAT</h1>
 
                             <div>
-
                              <ScrollToBottom>
-                                 
+                                 <div  className={classes.chatContainer}>
                                 {
                                     messages.map((message, i) => 
                                     <div key={i}>
                                        <p>{message.user}:{message.text}</p>
                                     </div>
                                     )} 
+                                   </div> 
                              </ScrollToBottom>
                                 <div>
-                                    <input value={message} onChange={(event)=> setMessage(event.target.value)}
-                                    onKeyPress={event => event.key === 'Enter' ? sendMessage(event): null}/>
+                                    <input placeholder="Type to chat ....." value={message} onChange={(event)=> setMessage(event.target.value)}
+                                    onKeyPress={event => event.key === 'Enter' ? sendMessage(event): null} className={classes.chatInput}/>
                                 </div>
                             </div>
                         </Paper>
