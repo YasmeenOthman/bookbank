@@ -109,10 +109,10 @@ export default function Item() {
 									<br />
 									<br />
 									<br />
-									<Typography variant="subtitle1">
+									{/* <Typography variant="subtitle1">
 										<b> University:</b> {book.universityId}
-									</Typography>
-									<br />
+									</Typography> */}
+									
 									<Typography variant="subtitle1">
 										<b>Description:</b> {book.bookDescription}
 									</Typography>

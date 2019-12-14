@@ -42,7 +42,7 @@ var token = localStorage.getItem('usertoken');
 if (token) {
 	const decoded = jwt_decode(token);
 	// console.log(decoded);
-	var userIdFromToken = decoded._id;
+	var userIdFromToken = decoded.userId;
 	console.log(userIdFromToken);
 }
 
@@ -135,7 +135,7 @@ export default function AddBook() {
 			userId: userIdFromToken
 		};
 		axios
-			.post('http://localhost:8000/profile/addBlueprintDonatedBook', {
+			.post(`http://localhost:8000/profile/${userIdFromToken}/addBlueprintDonatedBook`	, {
 				name: name,
 				description: description,
 				imgUrl: imageAsUrl,
