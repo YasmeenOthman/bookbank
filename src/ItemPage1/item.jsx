@@ -13,6 +13,7 @@ import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { functions } from 'firebase';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -32,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 	img: {
 		margin: 'auto',
 		display: 'block',
-		maxWidth: '100%'
+		maxWidth: '100%',
+		height: 450
 	},
 	formControl: {
 		margin: theme.spacing(1),
@@ -64,11 +66,13 @@ export default function Item() {
 	const [ owner, setOwner ] = React.useState('');
 	const [ book, setBook ] = useState([]);
 	const [ ownerBook, setOwnerBook ] = useState([]);
+
 	useEffect(() => {
 		var path = window.location.href;
-		console.log();
-		var univId = parseInt(path[32]);
-		var bookId = parseInt(path[path.length - 1]);
+		var myPath = path.split('/');
+		var univId = myPath[4];
+		var bookId = myPath[6];
+
 		axios
 			.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
 			.then((res) => {
@@ -127,7 +131,7 @@ export default function Item() {
 											onChange={handleChange}
 										>
 											{ownerBook.map((owner1) => (
-												<MenuItem value={20} key={owner1.id}>
+												<MenuItem value={20} key={owner1._id}>
 													{' '}
 													{owner1.userName}
 												</MenuItem>

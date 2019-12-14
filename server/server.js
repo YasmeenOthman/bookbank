@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+//const http = require("http-server")
 const app = express();
 //---------- for chat----------------
 const {addUser, removeUser, getUser, getUsersInRoom} = require('./users.js');

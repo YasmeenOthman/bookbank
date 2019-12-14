@@ -65,7 +65,7 @@ export default function NavCate() {
     >
       <h1 className={classes.h1}>BOOK BANK</h1>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['university', 'About Us', 'Contact Us'].map((text, index) => (
           <ListItem button key={text}>
             <Link href={"/" + text} className={classes.link}>
               <ListItemIcon><ArrowForwardIosIcon /></ListItemIcon>
@@ -75,7 +75,7 @@ export default function NavCate() {
         ))}
       </List>
       <Divider />
-      <List>
+      {/* <List>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
           <ListItem button key={text}>
             <Link href={"/" + text} className={classes.link}>
@@ -84,7 +84,7 @@ export default function NavCate() {
             </Link>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </div>
   );
   // eslint-disable-next-line
