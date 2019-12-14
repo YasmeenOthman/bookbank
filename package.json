@@ -72,7 +72,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server1": "nodemon ./src/loging/server.js",
-    "server": "nodemon server/server.js",
+    "server": "node server/server.js",
+    "server2": "nodemon server/server.js",
     "start-server": "node server/server.js"
   },
   "eslintConfig": {
