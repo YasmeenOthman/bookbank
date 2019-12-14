@@ -17,9 +17,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import NavCate from "./NavCate.jsx";
 import SearchAppBar from "./SearchAppBar.jsx";
+import ChatBox from './ChatBox.jsx'
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
-import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 
 
@@ -54,10 +54,8 @@ const userStyles = makeStyles({
   loginDraw: {
    
   }
+
 });
-
-
-
 
 //-----------------nav bar class-------------
 export const NavBar = () => {
@@ -67,16 +65,11 @@ export const NavBar = () => {
   var username = "";
   if (token) {
     const decoded = jwt_decode(token);
-    // console.log(decoded)
     username = decoded.userName
   }
 
-  // console.log(email)
   const isLogged = useSelector((state) => state.isLogged);
-
-
   const dispatch = useDispatch();
-  // dispatch(allData());
 
   //--------logOut Function///////////
   const logOutFun = () => {
@@ -109,19 +102,10 @@ export const NavBar = () => {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
-  // const prevOpen = React.useRef(open);
-  // React.useEffect(() => {
-  //   if (prevOpen.current === true && open === false) {
-  //     anchorRef.focus();
-  //   }
-  //   prevOpen.current = open;
-  // }, [open]);
-
   return (
+    <div>
     <AppBar position="static">
       {/* first nav bar */}
-
       <Toolbar className={classes.firstNav}>
         <div className={classes.root}>
           <Grid container>
@@ -166,7 +150,7 @@ export const NavBar = () => {
               alignItems="center"
             >
               {/* if statment for check user if login or not */}
-              {isLogged ? (
+              {token ? (
                 // log in icon and use name
                 <Grid item>
                   <Button
@@ -183,7 +167,6 @@ export const NavBar = () => {
                       src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg"
                     />
                     <p>{username}</p>
-                    {/* {token ? <p>{x}</p> : <p>username</p>} */}
                   </Button>
                   <Popper
                     className={classes.loginDraw}
@@ -211,7 +194,7 @@ export const NavBar = () => {
                               onKeyDown={handleListKeyDown}
                             >
                               <MenuItem onClick={handleClose}>
-                                <Link href="/Profile">Profile</Link>
+                                <Link href="/Profile/">Profile</Link>
                               </MenuItem>
                               <MenuItem onClick={handleClose}>
                                 <Link href="/Notification">Notification</Link>
@@ -271,6 +254,10 @@ export const NavBar = () => {
         </div>
       </Toolbar>
     </AppBar>
+    <div>
+     <ChatBox />
+    </div>
+  </div>  
   );
 }
 export default NavBar;
