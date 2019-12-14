@@ -13,7 +13,7 @@ router.route('/:userId').get(function(req, res) {
 });
 
 //----------------- Add  new Book (bluePrint then donated) -------------
-router.route('/addBlueprintDonatedBook').post(function(req, res) {
+router.route('/:userId/addBlueprintDonatedBook').post(function(req, res) {
 	// var { name, description, imgUrl, uniId, userId } = req.body;
 	const dataFromClient = req.body;
 
@@ -65,6 +65,28 @@ router.route('/addBlueprintDonatedBook').post(function(req, res) {
 	});
 });
 
+//----------------- Add  new Book donated -------------
+router.route('/:userId/AddDonatedBook').post(function(req, res) {
+	const dataFromClient = req.body;
+
+	var donatedBookInfo = {
+		userId: dataFromClient.userId,
+		bookId: dataFromClient.bookId,
+		availability: true,
+		createdAt: Date.now()
+	};
+
+	//-------------Create New DonatedBook doc-------------------
+	bookBankDB.saveDonatedBook(donatedBookInfo, function(err, newDonatedBook) {
+		if (err) {
+			throw err;
+		}
+
+		console.log('new donated book has been added ' + newDonatedBook);
+
+		res.json(newDonatedBook);
+	});
+});
 //-------------get bluePrint books of user's donated books -------------------
 router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 	const userId = req.params.userId;
@@ -83,6 +105,15 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 			}
 			res.json(bluePrintBooksdonatedByUser);
 		});
+	});
+});
+
+router.route('/:userId/requestedBook').get(function(req, res) {
+	const userId = req.params.userId;
+	bookBankDB.getRequestedBooks(userId, function(err, requestedBooks) {
+		if (err) throw err;
+		console.log(requestedBooks);
+		res.json(requestedBooks);
 	});
 });
 

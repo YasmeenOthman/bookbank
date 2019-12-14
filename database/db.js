@@ -142,7 +142,6 @@ var Profile = mongoose.model('profiles', profileSchema);
 var saveProfile = function(profile) {
 	var newProfile = new Profile({
 		userId: profile.userId,
-		userName: profile.userName,
 		universityId: profile.universityId,
 		userAvatar: profile.userAvatar
 	});
@@ -258,7 +257,7 @@ var getDonatedBooks = function(bluePrintId, callBack) {
 
 //-------- get usres names of donated books from profile collection -------
 var getDonatedBooksOwnersName = function(usersId, callBack) {
-	Profile.find({ userId: { $in: usersId } }, callBack);
+	User.find({ _id: { $in: usersId } }, callBack);
 };
 
 //----- Git user's Profile ---------
@@ -286,6 +285,13 @@ var getAllBooks = function(callBack) {
 	Book.find({}, callBack);
 };
 //--------------------------------------
+var getUnivName = function(univId, callBack) {
+	University.findOne({ _id: univId }).select('universityName').exec(callBack);
+};
+//--------------------------------------
+var getRequestedBooks = function(userId, callBack) {
+	RequestedBook.find({ ownerId: userId }, callBack);
+};
 
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
@@ -309,3 +315,5 @@ module.exports.getAllBluePrintBooksdonatedByUser = getAllBluePrintBooksdonatedBy
 module.exports.getAllBooks = getAllBooks;
 module.exports.saveRequestedBook = saveRequestedBook;
 module.exports.saveNotification = saveNotification;
+module.exports.getUnivName = getUnivName;
+module.exports.getRequestedBooks = getRequestedBooks;
