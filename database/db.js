@@ -285,6 +285,9 @@ var getAllBooks = function(callBack) {
 	Book.find({}, callBack);
 };
 //--------------------------------------
+var getUnivName = function(univId, callBack) {
+	University.findOne({ _id: univId }).select('universityName').exec(callBack);
+};
 
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
@@ -308,3 +311,4 @@ module.exports.getAllBluePrintBooksdonatedByUser = getAllBluePrintBooksdonatedBy
 module.exports.getAllBooks = getAllBooks;
 module.exports.saveRequestedBook = saveRequestedBook;
 module.exports.saveNotification = saveNotification;
+module.exports.getUnivName = getUnivName;
