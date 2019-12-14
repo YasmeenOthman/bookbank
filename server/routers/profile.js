@@ -108,4 +108,13 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 	});
 });
 
+router.route('/:userId/requestedBook').get(function(req, res) {
+	const userId = req.params.userId;
+	bookBankDB.getRequestedBooks(userId, function(err, requestedBooks) {
+		if (err) throw err;
+		console.log(requestedBooks);
+		res.json(requestedBooks);
+	});
+});
+
 module.exports = router;
