@@ -4,6 +4,7 @@ import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import NavBar from '../HomePage/NavBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -18,6 +19,7 @@ import jwt_decode from "jwt-decode";
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import RestoreIcon from '@material-ui/icons/Restore';
+import FullWidthTabs from './tabs.jsx'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -69,14 +71,17 @@ const useStyles = makeStyles(theme => ({
     console.log(token);
     const decoded = jwt_decode(token);
     var email = decoded.email;
-    var username = decoded.username
+    var username = decoded.userName;
+    var id = decoded.userId;
+    console.log(id)
     const classes = useStyles();
  
 
     useEffect(() => {
       var path = window.location.href;
-      console.log()
-      var userId = parseInt(path[path.length - 1]);
+      console.log(path)
+      var myPath = path.split('/');
+      var userId = myPath[4];
       axios.get(`http://localhost:8000/profile/${userId}`)
       .then(res => {
         setUser(res.data);
@@ -122,19 +127,13 @@ const useStyles = makeStyles(theme => ({
                     </Typography>
                     <br/>
                     <div >
+                    <Link href={`/profile/${id}/AddDonatedBook`}>
                     <Button variant="contained">Add A BOOK</Button>
-                    <BottomNavigation value={value} onChange={handleChange}>
-                  <BottomNavigationAction label="recent books added" value="recents" icon={<RestoreIcon />} />
-                  </BottomNavigation>
-
+                    </Link>
+                    <br/><br/><br/><br/>
+                      < FullWidthTabs />
                     </div>
                   </Grid>
-                  {/* <List >  */}
-                  {/* {ownerBook.map((user1) => ( */}
-                {/* <ListItem > */}
-                  {/* <ListItemText key={user1.id}/> {user1.bookName} </ListItem> */}
-                {/* ))} */}
-                 {/* </List> */}
                 </Grid>
               </Grid>
             </Grid>

@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import NavBar from '../../../HomePage/NavBar';
+import jwt_decode from "jwt-decode";
 // import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
@@ -17,7 +17,9 @@ const useStyles = makeStyles(theme => ({
             // background: 'rgb(0, 179, 0)',
             padding: theme.spacing(2),
             textAlign: 'center',
-            color: theme.palette.text.secondary
+            color: theme.palette.text.secondary,
+            width: 250,
+            margin: 'auto'
         },
         imgBook: {
             height: 250,
@@ -37,25 +39,25 @@ const useStyles = makeStyles(theme => ({
       })
 );
 
-export const ItemsPage  = () => {
+export const BooksDonated  = () => {
+  var token = localStorage.getItem("usertoken");
+    console.log(token);
+    const decoded = jwt_decode(token);
+    var id = decoded.userId;
+
   const [books, setbooks] = useState([]);
-  const [university,setUniversity]=useState([]);
   const classes = useStyles();
 
 	useEffect(() => {
-		var path = window.location.href;
+    var path = window.location.href;
 		console.log(path)
 		var myPath = path.split('/');
-		var univId = myPath[4];
+    var userId = myPath[4];
 
 		axios
-			.get(`http://localhost:8000/university/${univId}`)
+			.get(`http://localhost:8000/profile/${userId}/donatedBooksAsBluePrints`)
 			.then((res) => {
-				//console.log(res);
-				let universities = res.data.universities;
 				setbooks(res.data);
-				setUniversity(universities);
-				setUniversity(res.data);
 				console.log(res.data);
 			})
 			.catch((err) => {
@@ -65,12 +67,10 @@ export const ItemsPage  = () => {
 
 	return (
 		<div>
-			<NavBar />
 			<Container>
-				<h2 className={classes.root1}>University</h2>
 				<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
 					{books.map((book) => (
-						<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
+						<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
 							<Paper className={classes.paper}>
 								<img alt="img" src={book.bookCover} className={classes.imgBook} />
 								<Link
@@ -96,4 +96,4 @@ export const ItemsPage  = () => {
 	);
 };
 
-export default ItemsPage;
+export default BooksDonated;

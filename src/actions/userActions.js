@@ -1,10 +1,12 @@
 import { FETCH_POSTS } from './types';
+import {MARK_NOTIFICATIONS_READ} from './types';
+
 import axios from 'axios';
 // GET ALL DATA FOR HOME PAGE
-path[path.length - 1]
-var bookId = parseInt(path[path.length - 1]);
+var path = window.location.href;
+var userId = parseInt(path[path.length - 1]);
 export const fetchPosts= () => dispatch => {   
-            axios.get('http://localhost:8000/profile/:userId')
+            axios.get(`http://localhost:8000/profile/${userId}`)
                 .then(data => dispatch({
                     type: FETCH_POSTS,
                     payload: data
@@ -14,3 +16,14 @@ export const fetchPosts= () => dispatch => {
                 })
                 
         }
+
+export const markNotificationsRead = (notificationIds) => dispatch => {
+    axios.post('/', notificationIds)
+    .then(res => {
+        dispatch({
+            type: MARK_NOTIFICATIONS_READ
+        })
+    })
+    .catch(err => console.log(err))
+}
+
