@@ -108,9 +108,36 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 	});
 });
 
-router.route('/:userId/requestedBook').get(function(req, res) {
+//==============================================================
+//---------------Might face a sync issues here------------------
+//==============================================================
+
+//------------Get books requests from the user  ----------------
+router.route('/:userId/requestedBooks').get(function(req, res) {
 	const userId = req.params.userId;
 	bookBankDB.getRequestedBooks(userId, function(err, requestedBooks) {
+		if (err) throw err;
+		console.log(requestedBooks);
+
+		var requestersId = requestedBooks.map(function(requestedBook) {
+			return requestedBook.requesterId;
+		});
+
+		bookBankDB.findRequesterName(requestersId, function(err, requestersName) {
+			if (err) throw err;
+			console.log(requestersName);
+			res.json({
+				requestedBooks: requestedBooks,
+				namesOfRequesters: requestersName
+			});
+		});
+	});
+});
+
+//---------- Get Books that the user has requested -----------------
+router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
+	const userId = req.params.userId;
+	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooks) {
 		if (err) throw err;
 		console.log(requestedBooks);
 		res.json(requestedBooks);
