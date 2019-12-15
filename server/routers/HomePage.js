@@ -8,6 +8,7 @@ const path = require('path');
 var router = express.Router();
 const bookBankDB = require('../../database/db.js');
 
+//------------------Serving the Homepage ------------------
 router.route('/').get(function (req, res) {
   console.log('serving the Root rout');
   // console.log(req.body);
@@ -58,6 +59,27 @@ router.route('/').get(function (req, res) {
     });
   });
 });
+
+//------------------Get All Books (BluePrint books) ------------------
+router.route('/allBooks').get(function (req, res) {
+  var allBooksObj = {
+    allBluePrintBooks: [],
+    universities: []
+  };
+  bookBankDB.getAllBooks(function (err, allBooks) {
+    if (err) throw err;
+
+    allBooksObj.allBluePrintBooks = allBooks;
+
+    bookBankDB.getAllUniversities(function (err, univs) {
+      if (err) throw err;
+      // console.log(univs);
+      allBooksObj.universities = univs;
+      res.json(allBooksObj);
+    });
+  });
+});
+
 //----------------------------input validation-------------------------------------------
 const validateRegisterInput = require('../validation/signupValidation.js');
 const validateLoginInput = require('../validation/loginValidation.js');
@@ -82,37 +104,37 @@ router.route('/signup').post((req, res) => {
     email: body.email,
     password: body.password
   };
-  // console.log(userInfo.password);
   bookBankDB.User
     .findOne({
       email: body.email
     })
     .then((user) => {
-      if (!user) {
-        bcrypt.hash(body.password, 10, (err, hash) => {
-          if (err) console.log(err);
-          // console.log(hash);
-          userInfo.password = hash;
-          var user = new bookBankDB.User(userInfo);
-          user
-            .save()
-            .then((user) => {
-              res.json({ status: user.email + ' registered' }).catch((err) => {
-                res.send('error' + err);
-              });
-            })
-            .catch((err) => {
-              res.send('error' + err);
-            });
-        });
-      } else {
-        res.send({ error: 'this account is in use' });
-      }
+      if (user) { return res.status(400).json({ msg: 'user already exists! Plz login' }); }
+      var user = new bookBankDB.User(userInfo);
+      bcrypt.hash(body.password, 10, (err, hash) => {
+        if (err) throw (err);
+        user.password = hash;
+        console.log(hash)
+        user.save().then((user) => {
+          const payload = {
+            userId: user._id,
+            userName: user.userName,
+            email: user.email,
+          };
+          let token = jwt.sign(payload, process.env.SECRET_KEY, {
+            expiresIn: '24h'
+          }, (err, token) => {
+            if (err) res.json({ success: false, token: token, user: user });
+            res.json({ success: true, token: token, user: user })
+          });
+        })
+          .catch((err) => {
+            res.send('error' + err);
+          });
+      });
     })
-    .catch((err) => {
-      res.send('error' + err);
-    });
 });
+
 //--------------------------------------------
 //---------------login------------------------
 //--------------------------------------------
@@ -131,10 +153,12 @@ router.route('/login').post((req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
+            userId: user._id,
             userName: user.userName,
             email: user.email,
             password: user.password
           };
+
           let token = jwt.sign(payload, process.env.SECRET_KEY, {
             expiresIn: '24h'
           });
@@ -144,7 +168,7 @@ router.route('/login').post((req, res) => {
           res.json({ success: false, error: 'check your password' });
         }
       } else {
-        res.json({ success: false, error: 'could not log in,plz join our website' });
+        res.json({ success: false, error: "invalid email or password \n join our website" });
       }
     })
     .catch((err) => {
@@ -155,6 +179,21 @@ router.route('/login').post((req, res) => {
 //---- Populate data to data Base:
 
 // router.route('/save').get(function(req, res) {
+// 	bookBankDB.saveRequestedBook({
+// 		requesterId: '5def8c69e1fe8904f2920c80',
+// 		ownerId: '5def8dd49c5b52050c8ab00f',
+// 		bookId: '5df10a71f27be3042b978df6',
+// 		donatedBookId: '5df10a71f27be3042b978df7',
+// 		createdAt: Date.now()
+// 	});
+
+// bookBankDB.saveNotification({
+// 	senderId: '5def8c69e1fe8904f2920c80',
+// 	recipientId: '5def8dd49c5b52050c8ab00f',
+// 	text: 'Yasmin want to borrow your book',
+// 	isRead: false,
+// 	createdAt: Date.now()
+// });
 // bookBankDB.saveBook({
 // 	bookName: 'Java',
 // 	bookCover:
@@ -190,7 +229,7 @@ router.route('/login').post((req, res) => {
 // 	universityImg:
 // 		'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Islamic_Uni_Gaza.jpg/880px-Islamic_Uni_Gaza.jpg'
 // });
-// res.json('added successfully');
+// 	res.json('added successfully');
 // });
 
 module.exports = router;

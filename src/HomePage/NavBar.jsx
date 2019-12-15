@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
-
+import Notifications from "../Notify/Notification"
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -49,10 +49,10 @@ const userStyles = makeStyles({
 		}
 	},
 	userImg: {
-		marginRight: 10
+		marginRight: 10,
 	},
-	loginDraw: {
-
+	title: {
+		color: 'white',
 	}
 });
 
@@ -63,12 +63,15 @@ const userStyles = makeStyles({
 export const NavBar = () => {
 	// for login user
 	//----------get the token from the local storage-----------
-	var token = localStorage.getItem("usertoken");
-	var username = "";
+	var token = localStorage.getItem('usertoken');
+	var username = '';
+	var id = '';
 	if (token) {
 		const decoded = jwt_decode(token);
 		// console.log(decoded)
-		username = decoded.userName
+		username = decoded.userName;
+		id = decoded.userId;
+		// console.log(id)
 	}
 
 	// console.log(email)
@@ -166,7 +169,7 @@ export const NavBar = () => {
 							alignItems="center"
 						>
 							{/* if statment for check user if login or not */}
-							{isLogged ? (
+							{token ? (
 								// log in icon and use name
 								<Grid item>
 									<Button
@@ -211,18 +214,17 @@ export const NavBar = () => {
 															onKeyDown={handleListKeyDown}
 														>
 															<MenuItem onClick={handleClose}>
-																<Link href="/Profile">Profile</Link>
+																<Link href={`/Profile/${id}`}>Profile</Link>
 															</MenuItem>
 															<MenuItem onClick={handleClose}>
-																<Link href="/Notification">
-																	Notification
-                                </Link>
+																<Link href="/Notification">Notification</Link>
+																{/* < Notifications /> */}
 															</MenuItem>
 															<MenuItem
 																onClick={logOutFun}
 															>
 																Logout
-                              </MenuItem>
+                             							 </MenuItem>
 														</MenuList>
 													</ClickAwayListener>
 												</Paper>
@@ -253,9 +255,11 @@ export const NavBar = () => {
 							alignItems="center"
 						>
 							<NavCate />
-							<Typography variant="h6" noWrap>
-								BOOK BANK
-              </Typography>
+							<Link href="/">
+								<Typography variant="h6" noWrap className={classes.title}>
+									BOOK BANK
+							</Typography>
+							</Link>
 						</Grid>
 						<Grid
 							item
@@ -274,5 +278,5 @@ export const NavBar = () => {
 			</Toolbar>
 		</AppBar>
 	);
-}
+};
 export default NavBar;

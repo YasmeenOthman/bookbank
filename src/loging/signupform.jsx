@@ -12,20 +12,21 @@ class SignUp extends React.Component {
     var registerInfo = {
       userName: $("#username").val(),
       email: $("#email").val(),
-      password: $("#password").val()
+      password: $("#password").val(),
+
     };
-    // console.log(registerInfo);
     $.ajax({
       url: "http://localhost:8000/signup",
       method: "POST",
       data: registerInfo,
       dataType: "json",
-      success: function (data) {
-        alert("You sign up successfully ,plz login");
-        window.location.href = "http://localhost:3000/login";
+      success: (data) => {
+        localStorage.setItem('usertoken', data.token);
+        alert("You sign up successfully ,welcome to Book Bank");
+        window.location.href = "http://localhost:3000/";
       },
       error: function (err) {
-        alert("Already exist");
+        alert("Plz fill all the required feild");
       }
     });
   }
@@ -65,6 +66,22 @@ class SignUp extends React.Component {
               />
             </div>
             <br />
+
+            {/* <div className="field">
+              <label className="em">Image</label>
+
+              <span className="required" style={{ color: "red" }}>
+                *
+              </span>
+              <br />
+              <input
+                id="imgUrl"
+                placeholder="'Picture Url'"
+                style={{ width: 250, height: 30 }}
+              />
+            </div>
+            <br /> */}
+
             <div className="field">
               <label className="em">Email</label>
 

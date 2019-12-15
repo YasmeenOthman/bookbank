@@ -12,19 +12,20 @@ router.route('/:userId').get(function(req, res) {
 	});
 });
 
-router.route('/addBlueprintDonatedBook').post(function(req, res) {
+//----------------- Add  new Book (bluePrint then donated) -------------
+router.route('/:userId/addBlueprintDonatedBook').post(function(req, res) {
 	// var { name, description, imgUrl, uniId, userId } = req.body;
 	const dataFromClient = req.body;
 
 	// console.log(dataFromClient);
 
 	// console.log(req.body);
-	var dateOfCreation = Date.now();
+
 	var bluePrintBookInfo = {
 		bookName: dataFromClient.name,
-		bookCover: dataFromClient.description,
-		bookDescription: dataFromClient.imgUrl,
-		universityId: dataFromClient.uniId,
+		bookCover: dataFromClient.imgUrl,
+		bookDescription: dataFromClient.description,
+		universityId: dataFromClient.universityId,
 		createdAt: Date.now()
 	};
 
@@ -54,9 +55,57 @@ router.route('/addBlueprintDonatedBook').post(function(req, res) {
 				throw err;
 			}
 
-			console.log('new donated book has been added ', newDonatedBook);
-			res.json('New Book (BP and Donated has been added');
+			console.log('new donated book has been added ' + newDonatedBook);
+			var response = {
+				bluePrint: bluePrintBook,
+				Donated: newDonatedBook
+			};
+			res.json(response);
 		});
 	});
 });
+
+//----------------- Add  new Book donated -------------
+router.route('/:userId/AddDonatedBook').post(function(req, res) {
+	const dataFromClient = req.body;
+
+	var donatedBookInfo = {
+		userId: dataFromClient.userId,
+		bookId: dataFromClient.bookId,
+		availability: true,
+		createdAt: Date.now()
+	};
+
+	//-------------Create New DonatedBook doc-------------------
+	bookBankDB.saveDonatedBook(donatedBookInfo, function(err, newDonatedBook) {
+		if (err) {
+			throw err;
+		}
+
+		console.log('new donated book has been added ' + newDonatedBook);
+
+		res.json(newDonatedBook);
+	});
+});
+//-------------get bluePrint books of user's donated books -------------------
+router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
+	const userId = req.params.userId;
+	bookBankDB.getDonatedBooksAsBluePrintsForUser(userId, function(err, donatedBooksOfUser) {
+		if (err) {
+			throw err;
+		}
+		console.log(donatedBooksOfUser);
+		var bluePrintBooksId = donatedBooksOfUser.map(function(donatedBook) {
+			return donatedBook.bookId;
+		});
+
+		bookBankDB.getAllBluePrintBooksdonatedByUser(bluePrintBooksId, function(err, bluePrintBooksdonatedByUser) {
+			if (err) {
+				throw err;
+			}
+			res.json(bluePrintBooksdonatedByUser);
+		});
+	});
+});
+
 module.exports = router;

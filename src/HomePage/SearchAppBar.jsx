@@ -98,7 +98,7 @@ export const SearchAppBar = (posts) => {
       allBooks = posts.posts.data.recentBooks
   : allBooks = [];
 
-  console.log(allBooks)
+  // console.log(allBooks)
   const handleChange = event => setSearchValue(event.target.value);
   RegExp.quote = function(searchValue) {
     return searchValue.replace(/([.?*+^$[\]\\(){}|-])/gi, "\\$1");
@@ -112,6 +112,7 @@ export const SearchAppBar = (posts) => {
     }
 
   });
+  console.log(searchItems)
 
   return (
     <div>
@@ -146,7 +147,7 @@ export const SearchAppBar = (posts) => {
               <img alt='logo' src={item.bookCover} className={classes.BookImg}></img>
               </Grid>
               <Grid item xs={8} className={classes.linkGrid}>
-              <Link className={classes.searchLink}>{item.bookName}</Link>
+              <Link className={classes.searchLink} href={`/university/${item.universityId}/book/${item._id}`}>{item.bookName}</Link>
               </Grid>
             </Grid>
             ))}

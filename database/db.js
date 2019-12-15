@@ -75,6 +75,33 @@ var saveDonatedBook = function(donatedBook, callBack) {
 };
 
 //=======================================================
+//-------------------Requested Book Schema---------------
+//=======================================================
+var requestedBooksSchema = mongoose.Schema({
+	requesterId: { type: String }, // the user who sent the request.
+	ownerId: { type: String }, // the who donated the book
+	bookId: { type: String }, // Id of the BluePrint book
+	donatedBookId: { type: String },
+	createdAt: { type: Date, default: Date.now }
+});
+
+//-------------------Requested Book Model-------------------------
+let RequestedBook = mongoose.model('requested-books', requestedBooksSchema);
+
+var saveRequestedBook = function(requestedBook, callBack) {
+	// console.log('in save function');
+	var newRequestedBook = new RequestedBook({
+		requesterId: requestedBook.requesterId,
+		ownerId: requestedBook.ownerId,
+		bookId: requestedBook.bookId,
+		donatedBookId: requestedBook.donatedBookId,
+		createdAt: requestedBook.createdAt
+	});
+
+	newRequestedBook.save(callBack);
+};
+
+//=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
 var userSchema = mongoose.Schema({
@@ -115,7 +142,6 @@ var Profile = mongoose.model('profiles', profileSchema);
 var saveProfile = function(profile) {
 	var newProfile = new Profile({
 		userId: profile.userId,
-		userName: profile.userName,
 		universityId: profile.universityId,
 		userAvatar: profile.userAvatar
 	});
@@ -155,10 +181,42 @@ var saveUniversity = function(uni) {
 };
 
 //=======================================================
+//-------------------Notification Schema-------------------
+//=======================================================
+
+var notificationSchema = mongoose.Schema({
+	senderId: { type: String },
+	recipientId: { type: String }, // it represents ownerId when request book ... borrowerId when accept request
+	text: { type: String },
+	isRead: { type: Boolean },
+	createdAt: { type: Date, default: Date.now }
+});
+
+//-------------------Notification Model----------------------
+var Notification = mongoose.model('notifications', notificationSchema);
+
+var saveNotification = function(notification) {
+	var newNotification = new Notification({
+		senderId: notification.senderId,
+		recipientId: notification.recipientId,
+		text: notification.text,
+		isRead: notification.isRead,
+		createdAt: notification.createdAt
+	});
+
+	newNotification.save(function(err, noti) {
+		if (err) {
+			throw err;
+		}
+		console.log('this Notification has been was added', noti);
+	});
+};
+
+//=======================================================
 //-------------------My function ------------------------
 //=======================================================
 
-//-------------------Find 4 random universities ---------
+//----------Find 4 random universities ---------
 var findRandomUnis = function(callback) {
 	University.find().random(4, true, callback);
 };
@@ -189,7 +247,7 @@ var getBooksOfUniversity = function(univId, callBack) {
 
 //---------get bluePrint book from its Id ---------
 var getbluePrintBook = function(bluePrintId, callBack) {
-	Book.findOne({ id: bluePrintId }).exec(callBack);
+	Book.findOne({ _id: bluePrintId }).exec(callBack);
 };
 
 //--------- get the donated books from the bluePrint Book Id ---------
@@ -199,17 +257,36 @@ var getDonatedBooks = function(bluePrintId, callBack) {
 
 //-------- get usres names of donated books from profile collection -------
 var getDonatedBooksOwnersName = function(usersId, callBack) {
-	Profile.find({ userId: { $in: usersId } }, callBack);
+	User.find({ _id: { $in: usersId } }, callBack);
 };
 
 //----- Git user's Profile ---------
 var getUserProfie = function(userId, callBack) {
-	Profile.findOne({ id: userId }).exec(callBack);
+	Profile.findOne({ _id: userId }).exec(callBack);
 };
 
 // -------- get all Universities ---------
 var getAllUniversities = function(callBack) {
 	University.find({}).exec(callBack);
+};
+
+//-------get donated books as BluePrint books for a specific user -------------
+var getDonatedBooksAsBluePrintsForUser = function(userId, callBack) {
+	DonatedBook.find({ userId: userId }, callBack);
+};
+//--------------------------------------
+
+var getAllBluePrintBooksdonatedByUser = function(bluePrintBooksId, callBack) {
+	Book.find({ _id: { $in: bluePrintBooksId } }, callBack);
+};
+//--------------------------------------
+
+var getAllBooks = function(callBack) {
+	Book.find({}, callBack);
+};
+//--------------------------------------
+var getUnivName = function(univId, callBack) {
+	University.findOne({ _id: univId }).select('universityName').exec(callBack);
 };
 
 module.exports.saveBook = saveBook;
@@ -229,3 +306,9 @@ module.exports.getbluePrintBook = getbluePrintBook;
 module.exports.getUserProfie = getUserProfie;
 module.exports.getAllUniversities = getAllUniversities;
 module.exports.User = User;
+module.exports.getDonatedBooksAsBluePrintsForUser = getDonatedBooksAsBluePrintsForUser;
+module.exports.getAllBluePrintBooksdonatedByUser = getAllBluePrintBooksdonatedByUser;
+module.exports.getAllBooks = getAllBooks;
+module.exports.saveRequestedBook = saveRequestedBook;
+module.exports.saveNotification = saveNotification;
+module.exports.getUnivName = getUnivName;
