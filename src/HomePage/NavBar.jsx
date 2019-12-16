@@ -25,37 +25,39 @@ import Notifications from "../Notify/Notification"
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
-  root: {
-    width: 1170,
-    margin: "0 auto"
-  },
+	root: {
+		width: 1170,
+		margin: "0 auto"
+	},
 
-  firstNav: {
-    background: "white",
-    zIndex: 10
-  },
-  secondNav: {
-    background: "#77b748",
-    borderBottom: "2px solid #428611",
-    minHeight: 50
-  },
-  button: {
-    color: "gray",
-    fontSize: 11,
-    borderRadius: 0,
-    marginRight: 5,
-    "&:hover": {
-      backgroundColor: "transparent"
-    }
-  },
-  userImg: {
-    marginRight: 10,
-  },
-  title: {
+	firstNav: {
+		background: "white",
+		zIndex: 10
+	},
+	secondNav: {
+		background: "#77b748",
+		borderBottom: "2px solid #428611",
+		minHeight: 50
+	},
+	button: {
+		color: "gray",
+		fontSize: 11,
+		borderRadius: 0,
+		marginRight: 5,
+		"&:hover": {
+			backgroundColor: "transparent"
+		}
+	},
+	userImg: {
+		marginRight: 10,
+	},
+	title: {
 		color: 'white',
-  }
-
+	}
 });
+
+
+
 
 //-----------------nav bar class-------------
 export const NavBar = () => {
@@ -66,41 +68,45 @@ export const NavBar = () => {
 	var id = '';
 	if (token) {
 		const decoded = jwt_decode(token);
-		console.log(decoded)
+		// console.log(decoded)
 		username = decoded.userName;
-	id = decoded.userId;
-		console.log(id)
+		id = decoded.userId;
+		// console.log(id)
 	}
 
 	// console.log(email)
 	const isLogged = useSelector((state) => state.isLogged);
+
 
 	const dispatch = useDispatch();
 	// dispatch(allData());
 
 	//--------logOut Function///////////
 	const logOutFun = () => {
-		dispatch(logoutStatus());
-		var token = localStorage.removeItem('usertoken');
-		console.log(token);
-	};
+		dispatch(logoutStatus())
+		var token = localStorage.removeItem("usertoken");
+		console.log(token)
+	}
 	const classes = userStyles();
-	const [ open, setOpen ] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
 
 	const handleToggle = () => {
-		setOpen((prevOpen) => !prevOpen);
+		setOpen(prevOpen => !prevOpen);
 	};
 
 	const handleClose = (event) => {
-		if (anchorRef.current && anchorRef.current.contains(event.target)) {
+		if (
+			anchorRef.current &&
+			anchorRef.current.contains(event.target)
+		) {
 			return;
 		}
 		setOpen(false);
 	};
 
 	function handleListKeyDown(event) {
-		if (event.key === 'Tab') {
+		if (event.key === "Tab") {
 			event.preventDefault();
 			setOpen(false);
 		}
@@ -122,26 +128,46 @@ export const NavBar = () => {
 			<Toolbar className={classes.firstNav}>
 				<div className={classes.root}>
 					<Grid container>
-						<Grid container item xs={6} direction="row" justify="flex-start" alignItems="center">
+						<Grid
+							container
+							item
+							xs={6}
+							direction="row"
+							justify="flex-start"
+							alignItems="center"
+						>
 							<Grid item>
-								<Link href="#" style={{ textDecoration: 'none' }}>
-									<Button startIcon={<MailOutlineIcon />} className={classes.button}>
-										{' '}
-										Contact{' '}
+								<Link href="#" style={{ textDecoration: "none" }}>
+									<Button
+										startIcon={<MailOutlineIcon />}
+										className={classes.button}
+									>
+										{" "}
+										Contact{" "}
 									</Button>
 								</Link>
 							</Grid>
 							<Grid item>
-								<Link href="#" style={{ textDecoration: 'none' }}>
-									<Button startIcon={<AndroidIcon />} className={classes.button}>
-										{' '}
-										Mobile App{' '}
+								<Link href="#" style={{ textDecoration: "none" }}>
+									<Button
+										startIcon={<AndroidIcon />}
+										className={classes.button}
+									>
+										{" "}
+										Mobile App{" "}
 									</Button>
 								</Link>
 							</Grid>
 						</Grid>
 
-						<Grid container item xs={6} direction="row" justify="flex-end" alignItems="center">
+						<Grid
+							container
+							item
+							xs={6}
+							direction="row"
+							justify="flex-end"
+							alignItems="center"
+						>
 							{/* if statment for check user if login or not */}
 							{token ? (
 								// log in icon and use name
@@ -149,7 +175,7 @@ export const NavBar = () => {
 									<Button
 										className={classes.button}
 										ref={anchorRef}
-										aria-controls={open ? 'menu-list-grow' : undefined}
+										aria-controls={open ? "menu-list-grow" : undefined}
 										aria-haspopup="true"
 										onClick={handleToggle}
 									>
@@ -175,7 +201,9 @@ export const NavBar = () => {
 												{...TransitionProps}
 												style={{
 													transformOrigin:
-														placement === 'bottom' ? 'center top' : 'center bottom'
+														placement === "bottom"
+															? "center top"
+															: "center bottom"
 												}}
 											>
 												<Paper>
@@ -192,7 +220,11 @@ export const NavBar = () => {
 																<Link href="/Notification">Notification</Link>
 																{/* < Notifications /> */}
 															</MenuItem>
-															<MenuItem onClick={logOutFun}>Logout</MenuItem>
+															<MenuItem
+																onClick={logOutFun}
+															>
+																Logout
+                             							 </MenuItem>
 														</MenuList>
 													</ClickAwayListener>
 												</Paper>
@@ -201,9 +233,9 @@ export const NavBar = () => {
 									</Popper>
 								</Grid>
 							) : (
-								// link to go to log in page
-								<Link href="/login">Log In</Link>
-							)}
+									// link to go to log in page
+									<Link href="/login">Log In</Link>
+								)}
 						</Grid>
 					</Grid>
 				</div>
@@ -224,12 +256,20 @@ export const NavBar = () => {
 						>
 							<NavCate />
 							<Link href="/">
-							<Typography variant="h6" noWrap className= {classes.title}>
-								BOOK BANK
+								<Typography variant="h6" noWrap className={classes.title}>
+									BOOK BANK
 							</Typography>
 							</Link>
 						</Grid>
-						<Grid item xs={4} lg={3} xl={3} container justify="flex-start" alignItems="center">
+						<Grid
+							item
+							xs={4}
+							lg={3}
+							xl={3}
+							container
+							justify="flex-start"
+							alignItems="center"
+						>
 							{/* Search component */}
 							<SearchAppBar />
 						</Grid>
