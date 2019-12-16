@@ -296,7 +296,7 @@ var getRequestedBooks = function(userId, callBack) {
 };
 //----------find requester name for a requeted book ----------
 var findRequesterName = function(requestersId, callBack) {
-	User.findOne({ _id: { $in: requestersId } }).select('userName').exec(callBack);
+	User.find({ _id: { $in: requestersId } }).select('userName').exec(callBack);
 };
 //-------------get books the user has requested -------------------------
 var getBooksRequestedByTheUser = function(userId, callBack) {
