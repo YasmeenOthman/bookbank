@@ -325,6 +325,11 @@ var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
 	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: true }).exec(callBack);
 };
 
+//------------get bluePrint books of requested books -----------
+var getBluePrintBooks = function(donatedBooksId, callBack) {
+	Book.find({ _id: { $in: donatedBooksId } }).exec(callBack);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -354,3 +359,4 @@ module.exports.findRequesterName = findRequesterName;
 module.exports.updateRequestedBookToAccepted = updateRequestedBookToAccepted;
 module.exports.updateRequestedBookToIgnored = updateRequestedBookToIgnored;
 module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
+module.exports.getBluePrintBooks = getBluePrintBooks;
