@@ -79,7 +79,6 @@ export default function RequestedByMe() {
                 <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                     <Typography gutterBottom variant="subtitle1">
-                      hi
                       {book.bookName}
                    {/* Your request for {book.bookName} is {request()}; */}
                    </Typography> 
