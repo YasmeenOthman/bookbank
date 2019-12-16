@@ -220,7 +220,8 @@ export  const FirstAddBook = (props) => {
 			})
 			.catch((error) => {
 				console.log(error);
-			});
+      });
+      alert("New Book Add")
    }
    console.log("boook iiid",searchItems._id)
    console.log("user iiid",userIdFromToken)
@@ -301,7 +302,13 @@ export  const FirstAddBook = (props) => {
                 <img alt='logo' src={item.bookCover} className={classes.BookImg}></img>
                 </Grid>
                 <Grid item xs={8} className={classes.linkGrid}>
-                <h3 style={{marginBottom:5}}>{item.bookName}</h3>
+                <Link
+									href={`/university/${item.universityId}/book/${item._id}`}
+									style={{ color: 'black' }}
+								>
+								   <h3 style={{marginBottom:5}}>{item.bookName}</h3>
+								</Link>
+                <br/>
                 <h3 style={{marginBottom:5}}>{item.bookDescription}</h3>
                 <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit}>Donate this Book </Button>
                 </Grid>
