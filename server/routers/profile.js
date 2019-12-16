@@ -134,13 +134,51 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 	});
 });
 
-//---------- Get Books that the user has requested -----------------
+//----------Get Books requested by the user-----------------
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
-	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooks) {
+	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
-		console.log(requestedBooks);
-		res.json(requestedBooks);
+		console.log(requestedBooksByTheUser);
+
+		var ownersIdOfTheRequestedBooks = requestedBooksByTheUser.map(function(book) {
+			return book.requesterId;
+		});
+
+		//------find owners name of the requestd books the user-----------------
+		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
+			if (err) throw err;
+			console.log(ownersName);
+			res.json({
+				requestedBooks: requestedBooksByTheUser,
+				namesOfOwners: ownersName
+			});
+		});
+	});
+});
+//-------------ACCEPT BOOK REQUEST--------------
+router.route('/:userId/booksRequestedByTheUser/:donatedBookId/AcceptRequest').post(function(req, res) {
+	const userId = req.params.userId;
+	const donatedBookId = req.params.donatedBookId;
+	bookBankDB.updateRequestedBookToAccepted(userId, donatedBookId, function(err, requestedBookAccepted) {
+		if (err) throw err;
+		// res.json(requestedBookAcceped);
+		console.log(requestedBookAccepted);
+		var acceptedDonatedBookId = requestedBookAccepted.donatedBookId;
+		bookBankDB.makeDonatedBookUnavailable(acceptedDonatedBookId, function(err, donatedBook) {
+			if (err) throw err;
+			res.json(donatedBook);
+		});
+	});
+});
+
+//-------------IGNORE BOOK REQUEST--------------
+router.route('/:userId/booksRequestedByTheUser/:donatedBookId/IgnoreRequest').post(function(req, res) {
+	const userId = req.params.userId;
+	const donatedBookId = req.params.donatedBookId;
+	bookBankDB.updateRequestedBookToIgnored(userId, donatedBookId, function(err, requestedBookIgnored) {
+		if (err) throw err;
+		res.json(requestedBookIgnored);
 	});
 });
 
