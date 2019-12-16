@@ -135,7 +135,7 @@ export default function AddBook() {
 			userId: userIdFromToken
 		};
 		axios
-			.post(`http://localhost:8000/profile/${userIdFromToken}/addBlueprintDonatedBook`	, {
+			.post(`http://localhost:8000/profile/${userIdFromToken}/addBlueprintDonatedBook`, {
 				name: name,
 				description: description,
 				imgUrl: imageAsUrl,

@@ -9,75 +9,75 @@ var router = express.Router();
 const bookBankDB = require('../../database/db.js');
 
 //------------------Serving the Homepage ------------------
-router.route('/').get(function(req, res) {
-	console.log('serving the Root rout');
-	// console.log(req.body);
-	var homePageData = {
-		universities: [],
-		recentBooks: [],
-		totalUsers: 0,
-		totalDonatedBooks: 0,
-		totalUniversities: 0
-	};
+router.route('/').get(function (req, res) {
+  console.log('serving the Root rout');
+  // console.log(req.body);
+  var homePageData = {
+    universities: [],
+    recentBooks: [],
+    totalUsers: 0,
+    totalDonatedBooks: 0,
+    totalUniversities: 0
+  };
 
-	// --------- Find 4 random universities ---------
-	bookBankDB.findRandomUnis(function(err, randomUnis) {
-		if (err) throw err;
-		// console.log(randomUnis);
-		homePageData.universities = randomUnis;
-		//--------- Find  recently added Books ---------
-		bookBankDB.findRecentlyAddedBooks(function(err, books) {
-			if (err) throw err;
-			//console.log(books);
-			homePageData.recentBooks = books;
-			//--------- Find Number of Donated Books ---------
-			bookBankDB.countDonatedBooks(function(err, numberOfDonatedBooks) {
-				if (err) {
-					throw err;
-				}
-				//console.log(numberOfDonatedBooks);
-				homePageData.totalDonatedBooks = numberOfDonatedBooks;
-				//--------- Find Number of Universities ---------
-				bookBankDB.countUniversities(function(err, numberOfUnis) {
-					if (err) {
-						throw err;
-					}
-					//console.log(numberOfUnis);
-					homePageData.totalUniversities = numberOfUnis;
-					//--------- Find Number of Users ---------
-					bookBankDB.countUsers(function(err, numberOfUsers) {
-						if (err) {
-							throw err;
-						}
-						// console.log(numberOfUsers);
-						homePageData.totalUsers = numberOfUsers;
-						//now homePageData have all the data from the database.
-						res.json(homePageData);
-					});
-				});
-			});
-		});
-	});
+  // --------- Find 4 random universities ---------
+  bookBankDB.findRandomUnis(function (err, randomUnis) {
+    if (err) throw err;
+    // console.log(randomUnis);
+    homePageData.universities = randomUnis;
+    //--------- Find  recently added Books ---------
+    bookBankDB.findRecentlyAddedBooks(function (err, books) {
+      if (err) throw err;
+      //console.log(books);
+      homePageData.recentBooks = books;
+      //--------- Find Number of Donated Books ---------
+      bookBankDB.countDonatedBooks(function (err, numberOfDonatedBooks) {
+        if (err) {
+          throw err;
+        }
+        //console.log(numberOfDonatedBooks);
+        homePageData.totalDonatedBooks = numberOfDonatedBooks;
+        //--------- Find Number of Universities ---------
+        bookBankDB.countUniversities(function (err, numberOfUnis) {
+          if (err) {
+            throw err;
+          }
+          //console.log(numberOfUnis);
+          homePageData.totalUniversities = numberOfUnis;
+          //--------- Find Number of Users ---------
+          bookBankDB.countUsers(function (err, numberOfUsers) {
+            if (err) {
+              throw err;
+            }
+            // console.log(numberOfUsers);
+            homePageData.totalUsers = numberOfUsers;
+            //now homePageData have all the data from the database.
+            res.json(homePageData);
+          });
+        });
+      });
+    });
+  });
 });
 
 //------------------Get All Books (BluePrint books) ------------------
-router.route('/allBooks').get(function(req, res) {
-	var allBooksObj = {
-		allBluePrintBooks: [],
-		universities: []
-	};
-	bookBankDB.getAllBooks(function(err, allBooks) {
-		if (err) throw err;
+router.route('/allBooks').get(function (req, res) {
+  var allBooksObj = {
+    allBluePrintBooks: [],
+    universities: []
+  };
+  bookBankDB.getAllBooks(function (err, allBooks) {
+    if (err) throw err;
 
-		allBooksObj.allBluePrintBooks = allBooks;
+    allBooksObj.allBluePrintBooks = allBooks;
 
-		bookBankDB.getAllUniversities(function(err, univs) {
-			if (err) throw err;
-			// console.log(univs);
-			allBooksObj.universities = univs;
-			res.json(allBooksObj);
-		});
-	});
+    bookBankDB.getAllUniversities(function (err, univs) {
+      if (err) throw err;
+      // console.log(univs);
+      allBooksObj.universities = univs;
+      res.json(allBooksObj);
+    });
+  });
 });
 
 //----------------------------input validation-------------------------------------------
@@ -90,90 +90,90 @@ const validateLoginInput = require('../validation/loginValidation.js');
 process.env.SECRET_KEY = 'secret';
 
 router.route('/signup').post((req, res) => {
-	let body = req.body;
+  let body = req.body;
 
-	// Form validation
-	const { errors, isValid } = validateRegisterInput(body);
-	// Check validation
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
+  // Form validation
+  const { errors, isValid } = validateRegisterInput(body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
-	var userInfo = {
-		userName: body.userName,
-		email: body.email,
-		password: body.password
-	};
-	// console.log(userInfo.password);
-	bookBankDB.User
-		.findOne({
-			email: body.email
-		})
-		.then((user) => {
-			if (!user) {
-				bcrypt.hash(body.password, 10, (err, hash) => {
-					if (err) console.log(err);
-					// console.log(hash);
-					userInfo.password = hash;
-					var user = new bookBankDB.User(userInfo);
-					user
-						.save()
-						.then((user) => {
-							res.json({ status: user.email + ' registered' }).catch((err) => {
-								res.send('error' + err);
-							});
-						})
-						.catch((err) => {
-							res.send('error' + err);
-						});
-				});
-			} else {
-				res.send({ error: 'this account is in use' });
-			}
-		})
-		.catch((err) => {
-			res.send('error' + err);
-		});
+  var userInfo = {
+    userName: body.userName,
+    email: body.email,
+    password: body.password
+  };
+  bookBankDB.User
+    .findOne({
+      email: body.email
+    })
+    .then((user) => {
+      if (user) { return res.status(400).json({ msg: 'user already exists! Plz login' }); }
+      var user = new bookBankDB.User(userInfo);
+      bcrypt.hash(body.password, 10, (err, hash) => {
+        if (err) throw (err);
+        user.password = hash;
+        console.log(hash)
+        user.save().then((user) => {
+          const payload = {
+            userId: user._id,
+            userName: user.userName,
+            email: user.email,
+          };
+          let token = jwt.sign(payload, process.env.SECRET_KEY, {
+            expiresIn: '24h'
+          }, (err, token) => {
+            if (err) res.json({ success: false, token: token, user: user });
+            res.json({ success: true, token: token, user: user })
+          });
+        })
+          .catch((err) => {
+            res.send('error' + err);
+          });
+      });
+    })
 });
+
 //--------------------------------------------
 //---------------login------------------------
 //--------------------------------------------
 router.route('/login').post((req, res) => {
-	// Form validation
-	const { errors, isValid } = validateLoginInput(req.body);
-	// Check validation
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
-	bookBankDB.User
-		.findOne({
-			email: req.body.email
-		})
-		.then((user) => {
-			if (user) {
-				if (bcrypt.compareSync(req.body.password, user.password)) {
-					const payload = {
-						userId: user._id,
-						userName: user.userName,
-						email: user.email,
-						password: user.password
-					};
-					
-					let token = jwt.sign(payload, process.env.SECRET_KEY, {
-						expiresIn: '24h'
-					});
-					// console.log(token);
-					res.json({ success: true, message: 'Authentication successful!', token: token, user: user });
-				} else {
-					res.json({ success: false, error: 'check your password' });
-				}
-			} else {
-				res.json({ success: false, error: 'could not log in,plz join our website' });
-			}
-		})
-		.catch((err) => {
-			res.send('error: ' + err);
-		});
+  // Form validation
+  const { errors, isValid } = validateLoginInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  bookBankDB.User
+    .findOne({
+      email: req.body.email
+    })
+    .then((user) => {
+      if (user) {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          const payload = {
+            userId: user._id,
+            userName: user.userName,
+            email: user.email,
+            password: user.password
+          };
+
+          let token = jwt.sign(payload, process.env.SECRET_KEY, {
+            expiresIn: '24h'
+          });
+          // console.log(token);
+          res.json({ success: true, message: 'Authentication successful!', token: token, user: user });
+        } else {
+          res.json({ success: false, error: 'check your password' });
+        }
+      } else {
+        res.json({ success: false, error: "invalid email or password \n join our website" });
+      }
+    })
+    .catch((err) => {
+      res.send('error: ' + err);
+    });
 });
 
 //---- Populate data to data Base:

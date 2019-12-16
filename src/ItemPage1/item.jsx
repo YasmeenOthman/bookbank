@@ -66,6 +66,7 @@ export default function Item() {
 	const [ owner, setOwner ] = React.useState('');
 	const [ book, setBook ] = useState([]);
 	const [ ownerBook, setOwnerBook ] = useState([]);
+	const [ univName, setUnivName ] = React.useState('');
 
 	useEffect(() => {
 		var path = window.location.href;
@@ -79,6 +80,8 @@ export default function Item() {
 				// console.log(res.data);
 				setBook(res.data.bluePrintBook);
 				// console.log(res.data.donatedBooksOwners);
+				setUnivName(res.data.universityNameOfBook.universityName);
+
 				setOwnerBook(res.data.donatedBooksOwners);
 			})
 			.catch((err) => {
@@ -109,10 +112,10 @@ export default function Item() {
 									<br />
 									<br />
 									<br />
-									{/* <Typography variant="subtitle1">
-										<b> University:</b> {book.universityId}
-									</Typography> */}
-									
+									<Typography variant="subtitle1">
+										<b> University:</b> {univName}
+									</Typography>
+									<br />
 									<Typography variant="subtitle1">
 										<b>Description:</b> {book.bookDescription}
 									</Typography>

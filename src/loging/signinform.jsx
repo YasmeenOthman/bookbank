@@ -1,16 +1,8 @@
 import React from 'react';
-// import { render } from "react-dom";
 import $ from 'jquery';
 import jwt_decode from 'jwt-decode';
 import SignUp from './signupform';
 import Home from './../HomePage/Home';
-
-// import e from "express";
-// import { Provider } from "react-redux";
-// import store from "./store";
-// import { connect } from "react-redux";
-// import { increment, decrement, reset } from "./actionCreators";
-
 class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
@@ -110,30 +102,13 @@ class SignIn extends React.Component {
 					this.setState({
 						component: <Home />
 					});
-					// const decoded = jwt_decode(data.token);
-					// this.setState({
-					//   email: decoded.password
 
-					// });
 				} else {
 					alert(data.error);
 				}
 			}
 		});
 	}
-
-	// getUser(event) {
-	//   event.preventDefault();
-	//   const token = localStorage.getItem("usertoken");
-	//   // if (token === undefined) {
-	//   const decoded = jwt_decode(token);
-	//   if (decoded.password === this.state.password) {
-	//     alert("welcome")
-	//   } else {
-	//     alert("Wrong password or email");
-	//   }
-	// }
-	// }
 	render() {
 		return this.state.component;
 	}
