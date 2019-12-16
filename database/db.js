@@ -296,7 +296,7 @@ var getRequestedBooks = function(userId, callBack) {
 };
 //-------------get books the user has requested -------------------------
 var getBooksRequestedByTheUser = function(userId, callBack) {
-	RequestedBook.find({ senderId: userId }, callBack);
+  RequestedBook.find({ requesterId: userId }, callBack);
 };
 
 //----------find requester name for a requeted book ----------
