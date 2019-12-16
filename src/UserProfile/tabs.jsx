@@ -52,14 +52,16 @@ const useStyles = makeStyles(theme => ({
     width: 900
   }
 }));
-var token = localStorage.getItem("usertoken");
+
+
+export default function FullWidthTabs() {
+  var token = localStorage.getItem("usertoken");
 console.log(token);
 const decoded = jwt_decode(token);
 var email = decoded.email;
 var username = decoded.userName;
 var id = decoded.userId;
 
-export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -102,7 +104,7 @@ export default function FullWidthTabs() {
           <BooksRequested />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-             {/* <BooksRequestedbyme />  */}
+            {/* <BooksRequestedbyme />  */}
         </TabPanel>
       </SwipeableViews>
     </div>
