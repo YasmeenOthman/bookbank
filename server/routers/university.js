@@ -79,4 +79,22 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 	});
 });
 
+//------------- create a requested book ----------------------------
+router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
+	var requestedBook = req.body;
+	var bookId = req.params.bookId;
+	var requestedBookInfo = {
+		requesterId: requestedBook.requesterId,
+		ownerId: requestedBook.ownerId,
+		bookId: bookId,
+		donatedBookId: requestedBook.donatedBookId,
+		isAccepted: false,
+		createdAt: Date.now()
+	};
+	bookBankDB.saveRequestedBook(requestedBookInfo, function(err, requestedBook) {
+		if (err) throw err;
+		console.log(requestedBook);
+	});
+});
+
 module.exports = router;

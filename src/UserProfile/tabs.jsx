@@ -8,10 +8,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
+import Container from '@material-ui/core/Container';
 //components import
-// import Notifications from './Notifications.jsx';
-import BooksDonated from './BooksDonated.jsx';
+import BooksRequested from './BooksRequested.jsx';
+// import BooksRequestedbyme from './BooksrequestedByme'
+// import Notifications from '.././Notify/Notification.js'
+import BooksDonated from './BooksDonated.jsx'
+import jwt_decode from "jwt-decode";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,11 +49,19 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 1200,
+    width: 900
   }
 }));
 
+
 export default function FullWidthTabs() {
+  var token = localStorage.getItem("usertoken");
+console.log(token);
+const decoded = jwt_decode(token);
+var email = decoded.email;
+var username = decoded.userName;
+var id = decoded.userId;
+
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -64,6 +75,7 @@ export default function FullWidthTabs() {
   };
 
   return (
+    <Container>
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
@@ -76,7 +88,8 @@ export default function FullWidthTabs() {
           aria-label="full width tabs example"
         >
           <Tab label="Books Donated" {...a11yProps(0)} />
-          <Tab label="Notifications" {...a11yProps(1)} />
+          <Tab label="Books Requests" {...a11yProps(1)} />
+          <Tab label="Books Requested By me" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -88,9 +101,13 @@ export default function FullWidthTabs() {
           <BooksDonated />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {/* <Notification /> */}
+          <BooksRequested />
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+            {/* <BooksRequestedbyme />  */}
         </TabPanel>
       </SwipeableViews>
     </div>
+    </Container>
   );
 }
