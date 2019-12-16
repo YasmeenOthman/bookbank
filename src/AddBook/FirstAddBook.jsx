@@ -141,7 +141,7 @@ var token = localStorage.getItem('usertoken');
 if (token) {
 	const decoded = jwt_decode(token);
 	var userIdFromToken = decoded.userId;
-	console.log(userIdFromToken);
+	// console.log(userIdFromToken);
 }
 
 export  const FirstAddBook = (props) => {
@@ -169,13 +169,11 @@ export  const FirstAddBook = (props) => {
         return hero.bookName.match(regex);
       }
     }
-    }
-
-    );
-    console.log(searchItems)
+    });
+    // console.log("Seaaaacrh",searchItems)
 
     //-----------------------------To get all universities for dropdownList-----------------------------
-
+    
     useEffect( () => {
         axios.get(`http://localhost:8000/university/`)
         .then(res => {
@@ -186,8 +184,10 @@ export  const FirstAddBook = (props) => {
         })
       }, []);
 
+
+
    //-----------------------------To get all books related to universityName-----------------------------
-     
+   
         const onUniChange = event => {
         console.log("The University is:  ",event.target.value);
         setChoosenUniv(event.target.value);
@@ -201,6 +201,8 @@ export  const FirstAddBook = (props) => {
           console.log(err);
         })
     }
+  
+
    //-----------------------------To add newBook to Donated Books -----------------------------
   
    const handleSumbit = event => {
@@ -213,16 +215,17 @@ export  const FirstAddBook = (props) => {
     axios
 			.post(`http://localhost:8000/profile/${userid}/AddDonatedBook`, {
         userId: userIdFromToken,
-        bookId: searchItems._id
+        bookId: searchItems.bookId
 			})
 			.then((response) => {
 				console.log(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
-			});
+      });
+      alert("You added New Book")
    }
-   console.log("boook iiid",searchItems._id)
+   console.log("boook iiid",searchItems.bookId)
    console.log("user iiid",userIdFromToken)
 
 
@@ -259,7 +262,7 @@ export  const FirstAddBook = (props) => {
                 onChange={onUniChange}
               >
                 {allUnivs.map((univ) => (
-                <MenuItem key={univ.id} value={univ.universityName}>{univ.universityName}</MenuItem>
+                <MenuItem key={univ._id} value={univ.universityName}>{univ.universityName}</MenuItem>
                  ))}
               </Select>
               <div>
@@ -317,8 +320,6 @@ export  const FirstAddBook = (props) => {
               }
               
             </div>
-
-        
              </div>
             </div>
           </form>  
