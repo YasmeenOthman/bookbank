@@ -29,7 +29,7 @@ marginleft: 10,
 export default function RequestedByMe() {
 
   const [books, setbooks] = useState([]);
-  const [university,setUniversity]=useState([]);
+  const [owner,setOwners]=useState([]);
   const classes = useStyles();
   var token = localStorage.getItem("usertoken");
   const decoded = jwt_decode(token);
@@ -37,15 +37,15 @@ export default function RequestedByMe() {
   var username = decoded.userName;
   var id = decoded.userId;
   
-  var request = function () {
-    if (books.isAccepted === true) {
-      return "Accepted"
-    } else if (books.isAccepted === false && books.isIgnored === false) {
-      return "Ignored"
-    } else {
-      return "pending"
-    }
-  }
+  // var request = function () {
+  //   if (books.isAccepted === true) {
+  //     return "Accepted"
+  //   } else if (books.isAccepted === false && books.isIgnored === false) {
+  //     return "Ignored"
+  //   } else {
+  //     return "pending"
+  //   }
+  // }
 
 
 	useEffect(() => {
@@ -57,10 +57,10 @@ export default function RequestedByMe() {
 		axios
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
-				//console.log(res);
-				let universities = res.data.universities;
-				setbooks(res.data);
-				console.log(res.data);
+        setOwners(res.data.namesOfOwners);
+        setbooks(res.data.requestedBooks)
+        // setbooks(res.data)
+				console.log('nouuuur', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -71,34 +71,113 @@ export default function RequestedByMe() {
   return (
     <Container>
     <div className={classes.root}>
-     
-                {books.map((book) => (
-                 <Paper className={classes.paper}>
-                 <Grid container spacing={2}>
-                   <Grid item xs={12} sm container>
-                <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                    <Typography gutterBottom variant="subtitle1">
-                      {book.bookName}
-                   {/* Your request for {book.bookName} is {request()}; */}
-                   </Typography> 
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" component="label" className={classes.button1}>
-                  Accept
-                </Button>
-                <Button variant="contained" component="label" className={classes.button2}>
-                  Ignore
-                </Button>
-                </Grid>
-                </Grid>
-                </Grid>
-        </Grid>
-      </Paper>
-      
-                ))
-                }      
+                 
+                 { !books.isAccepted ? (
+                    owner.map((owner1) => (
+                      <Paper className={classes.paper}>
+                      <Grid container spacing={2}>
+                      <Grid item xs={12} sm container>
+                   <Grid item xs container direction="column" spacing={2}>
+                   <Grid item xs>
+                       <Typography gutterBottom variant="subtitle1">
+                           {`${owner1.userName} accepted your request`}                              
+                       </Typography> 
+                   </Grid>
+                   <Grid item>
+                       <Button variant="contained" component="label" className={classes.button1}>
+                     Accept
+                   </Button>
+                   <Button variant="contained" component="label" className={classes.button2}>
+                     Ignore
+                   </Button>
+                   </Grid>
+                   </Grid>
+                   </Grid>
+                 </Grid>
+                 </Paper>
+                    ))
+                 ) : (
+                  owner.map((owner1) => (
+                    <Paper className={classes.paper}>
+                    <Grid container spacing={2}>
+                          <Grid item xs={12} sm container>
+                       <Grid item xs container direction="column" spacing={2}>
+                       <Grid item xs>
+                           <Typography gutterBottom variant="subtitle1">
+                               {`${owner1.userName} ignored your request`}                              
+                           </Typography> 
+                       </Grid>
+                       <Grid item>
+                           <Button variant="contained" component="label" className={classes.button1}>
+                         Accept
+                       </Button>
+                       <Button variant="contained" component="label" className={classes.button2}>
+                         Ignore
+                       </Button>
+                       </Grid>
+                       </Grid>
+                       </Grid>
+               </Grid>
+               </Paper>
+                  ))
+                 )}
+                   
     </div>
-    </Container>
-  );
+    </Container> 
+  )
 }
+       
+    
+                    /* { book.isAccepted ? 
+                    (
+                      owner.map((owner1) => (
+                        <Grid container spacing={2}>
+                          <Grid item xs={12} sm container>
+                       <Grid item xs container direction="column" spacing={2}>
+                       <Grid item xs>
+                           <Typography gutterBottom variant="subtitle1">
+                               {`${owner1.userName} accepted your request`}                              
+                           </Typography> 
+                       </Grid>
+                       <Grid item>
+                           <Button variant="contained" component="label" className={classes.button1}>
+                         Accept
+                       </Button>
+                       <Button variant="contained" component="label" className={classes.button2}>
+                         Ignore
+                       </Button>
+                       </Grid>
+                       </Grid>
+                       </Grid>
+               </Grid>
+                      )
+                    ) : (
+                      owner.map((owner1) => (
+                        <Grid container spacing={2}>
+                          <Grid item xs={12} sm container>
+                       <Grid item xs container direction="column" spacing={2}>
+                       <Grid item xs>
+                           <Typography gutterBottom variant="subtitle1">
+                               {`${owner1.userName} accepted your request`}                              
+                           </Typography> 
+                       </Grid>
+                       <Grid item>
+                           <Button variant="contained" component="label" className={classes.button1}>
+                         Accept
+                       </Button>
+                       <Button variant="contained" component="label" className={classes.button2}>
+                         Ignore
+                       </Button>
+                       </Grid>
+                       </Grid>
+                       </Grid>
+               </Grid>
+                      ))
+                    )
+                   )
+                } 
+                      </Paper>      
+    </div>
+    </Container> 
+  );
+} */
