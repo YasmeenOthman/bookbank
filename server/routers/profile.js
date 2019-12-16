@@ -123,12 +123,22 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 			return requestedBook.requesterId;
 		});
 
+		var bluePrintBooksId = requestedBooks.map(function(requestedBook) {
+			return requestedBook.bookId;
+		});
+
 		bookBankDB.findRequesterName(requestersId, function(err, requestersName) {
 			if (err) throw err;
 			console.log(requestersName);
-			res.json({
-				requestedBooks: requestedBooks,
-				namesOfRequesters: requestersName
+
+			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
+				if (err) throw err;
+				console.log(bluePrintBooks);
+				res.json({
+					requestedBooks: requestedBooks,
+					namesOfRequesters: requestersName,
+					bluePrintBooks: bluePrintBooks
+				});
 			});
 		});
 	});
@@ -145,13 +155,23 @@ router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 			return book.requesterId;
 		});
 
+		var bluePrintBooksId = requestedBooksByTheUser.map(function(book) {
+			return book.bookId;
+		});
+
 		//------find owners name of the requestd books the user-----------------
 		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
 			if (err) throw err;
 			console.log(ownersName);
-			res.json({
-				requestedBooks: requestedBooksByTheUser,
-				namesOfOwners: ownersName
+
+			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
+				if (err) throw err;
+				console.log(bluePrintBooks);
+				res.json({
+					requestedBooks: requestedBooksByTheUser,
+					namesOfOwners: ownersName,
+					bluePrintBooks: bluePrintBooks
+				});
 			});
 		});
 	});
