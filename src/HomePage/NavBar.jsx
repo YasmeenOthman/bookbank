@@ -16,6 +16,7 @@ import MenuList from "@material-ui/core/MenuList";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import NavCate from "./NavCate.jsx";
+import ChatBox from './ChatBox.jsx';
 import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
@@ -122,6 +123,7 @@ export const NavBar = () => {
 	// }, [open]);
 
 	return (
+		<div>
 		<AppBar position="static">
 			{/* first nav bar */}
 
@@ -277,6 +279,10 @@ export const NavBar = () => {
 				</div>
 			</Toolbar>
 		</AppBar>
+		    <div>
+			<ChatBox />
+		   </div>
+		   </div>
 	);
 };
 export default NavBar;
