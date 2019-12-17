@@ -115,9 +115,15 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 //------------Get books requests from the user  ----------------
 router.route('/:userId/requestedBooks').get(function(req, res) {
 	const userId = req.params.userId;
+	var data = {
+		requestedBooksfromUser: [],
+		requesters: [],
+		bluePrintBooks: []
+	};
 	bookBankDB.getRequestedBooks(userId, function(err, requestedBooks) {
 		if (err) throw err;
 		console.log(requestedBooks);
+		data.requestedBooksfromUser = requestedBooks;
 
 		var requestersId = requestedBooks.map(function(requestedBook) {
 			return requestedBook.requesterId;
@@ -130,15 +136,13 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 		bookBankDB.findRequesterName(requestersId, function(err, requestersName) {
 			if (err) throw err;
 			console.log(requestersName);
+			data.requesters = requestersName;
 
 			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
 				if (err) throw err;
 				console.log(bluePrintBooks);
-				res.json({
-					requestedBooks: requestedBooks,
-					namesOfRequesters: requestersName,
-					bluePrintBooks: bluePrintBooks
-				});
+				data.bluePrintBooks = bluePrintBooks;
+				res.json(data);
 			});
 		});
 	});
@@ -147,14 +151,23 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 //----------Get Books requested by the user-----------------
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
+	var data = {
+		requestedBooks: [],
+		namesOfOwners: [],
+		bluePrintBooks: []
+	};
 	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
 		console.log(requestedBooksByTheUser);
+		// res.json(requestedBooksByTheUser);
+		data.requestedBooks = requestedBooksByTheUser;
 
+		//------get owners Id------------
 		var ownersIdOfTheRequestedBooks = requestedBooksByTheUser.map(function(book) {
-			return book.requesterId;
+			return book.ownerId;
 		});
 
+		//------get IDs of bluePrint books---------------
 		var bluePrintBooksId = requestedBooksByTheUser.map(function(book) {
 			return book.bookId;
 		});
@@ -163,21 +176,21 @@ router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
 			if (err) throw err;
 			console.log(ownersName);
+			data.namesOfOwners = ownersName;
 
+			//---------find bluePrint books that the user requested ------
 			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
 				if (err) throw err;
 				console.log(bluePrintBooks);
-				res.json({
-					requestedBooks: requestedBooksByTheUser,
-					namesOfOwners: ownersName,
-					bluePrintBooks: bluePrintBooks
-				});
+				data.bluePrintBooks = bluePrintBooks;
+
+				res.json(data);
 			});
 		});
 	});
 });
 //-------------ACCEPT BOOK REQUEST--------------
-router.route('/:userId/booksRequestedByTheUser/:donatedBookId/AcceptRequest').post(function(req, res) {
+router.route('/:userId/requestedBooks/:donatedBookId/AcceptRequest').post(function(req, res) {
 	const userId = req.params.userId;
 	const donatedBookId = req.params.donatedBookId;
 	bookBankDB.updateRequestedBookToAccepted(userId, donatedBookId, function(err, requestedBookAccepted) {
@@ -187,13 +200,16 @@ router.route('/:userId/booksRequestedByTheUser/:donatedBookId/AcceptRequest').po
 		var acceptedDonatedBookId = requestedBookAccepted.donatedBookId;
 		bookBankDB.makeDonatedBookUnavailable(acceptedDonatedBookId, function(err, donatedBook) {
 			if (err) throw err;
-			res.json(donatedBook);
+			res.json({
+				requestedBookAccepted: requestedBookAccepted,
+				donatedBook: donatedBook
+			});
 		});
 	});
 });
 
 //-------------IGNORE BOOK REQUEST--------------
-router.route('/:userId/booksRequestedByTheUser/:donatedBookId/IgnoreRequest').post(function(req, res) {
+router.route('/:userId/requestedBooks/:donatedBookId/IgnoreRequest').post(function(req, res) {
 	const userId = req.params.userId;
 	const donatedBookId = req.params.donatedBookId;
 	bookBankDB.updateRequestedBookToIgnored(userId, donatedBookId, function(err, requestedBookIgnored) {
