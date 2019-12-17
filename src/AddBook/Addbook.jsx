@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	textfield: {
 		minWidth: 350
+	},
+	img1:{
+		maxWidth: 150,
 	}
 }));
 
@@ -59,6 +62,7 @@ export default function AddBook() {
 	//------------------variables for handle media-------------------
 	const [ imageAsFile, setImageAsFile ] = React.useState('');
 	const [ imageAsUrl, setImageAsUrl ] = React.useState('');
+	const [ preview, setPreview ] = React.useState('');
 
 	//---------------------handle media file-------------------------
 	// console.log(imageAsFile);
@@ -66,6 +70,7 @@ export default function AddBook() {
 		e.preventDefault();
 		const image = e.target.files[0];
 		setImageAsFile((imageFile) => image);
+		
 	};
 
 	//-----------------Get url from Firebase-------------------------
@@ -76,6 +81,7 @@ export default function AddBook() {
 		//---------error handling------
 		if (imageAsFile === '') {
 			console.error(`not an image, the image file is a ${typeof imageAsFile}`);
+
 		}
 
 		//------uploadTask variable-----
@@ -106,6 +112,7 @@ export default function AddBook() {
 
 	/// To get Universities Name from Database
 	React.useEffect(() => {
+		
 		axios
 			.get(`http://localhost:8000/university/`)
 			.then((res) => {
@@ -131,7 +138,6 @@ export default function AddBook() {
 			description: description,
 			imgUrl: imageAsUrl,
 			universityId: universityId,
-			// userId: '5def8dd49c5b52050c8ab00f'
 			userId: userIdFromToken
 		};
 		axios
@@ -148,6 +154,7 @@ export default function AddBook() {
 			.catch((error) => {
 				console.log(error);
 			});
+			alert("You added New Book")
 		console.log('All information of Book from front-end side: ', InfoBook);
 	};
 
@@ -222,18 +229,22 @@ export default function AddBook() {
 					</div>
 					<br />
 					<br />
-					<Typography>Please Upload the image of the Book Then save it</Typography>
+					<Typography>Please Choose the image of the Book </Typography>
 					<Button variant="contained" component="label">
-						Upload File
-						<input type="file" onChange={handleImageAsFile} style={{ display: 'none' }} />
+						
+						<input type="file" onChange={handleImageAsFile}  />
 					</Button>
 					<Button variant="contained" onClick={handleFireBaseUpload}>
-						Save Photo
+						Upload Photo
 					</Button>
+					<br/>
+					<br/>
+					<div>
+					<img src={imageAsUrl} className={classes.img1}/>
+					</div>
 					<br />
 					<br />
-					<br />
-					<Button variant="contained" type="submit">
+					<Button variant="contained" type="submit" >
 						Add Book
 					</Button>
 				</form>

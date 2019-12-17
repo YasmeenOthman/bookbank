@@ -231,7 +231,7 @@ var findRecentlyAddedBooks = function(callback) {
 
 //--------- count Donated Books ---------
 var countDonatedBooks = function(callBack) {
-	DonatedBook.count({}, callBack);
+	DonatedBook.count({ availability: true }, callBack);
 };
 
 //--------- count Universities ---------
@@ -256,7 +256,7 @@ var getbluePrintBook = function(bluePrintId, callBack) {
 
 //--------- get the donated books from the bluePrint Book Id ---------
 var getDonatedBooks = function(bluePrintId, callBack) {
-	DonatedBook.find({ bookId: bluePrintId }).sort({ createdAt: 'asc' }).exec(callBack);
+	DonatedBook.find({ bookId: bluePrintId, availability: true }).sort({ createdAt: 'asc' }).exec(callBack);
 };
 
 //-------- get usres names of donated books from profile collection -------
@@ -294,16 +294,42 @@ var getUnivName = function(univId, callBack) {
 var getRequestedBooks = function(userId, callBack) {
 	RequestedBook.find({ ownerId: userId }, callBack);
 };
+//----------find requesters name / owners name for a requeted book ----------
+var findRequesterName = function(Ids, callBack) {
+	User.find({ _id: { $in: Ids } }).select('userName').exec(callBack);
+};
 //-------------get books the user has requested -------------------------
-var getBooksRequestedByTheUser = function(userId, callBack) {
-	RequestedBook.find({ senderId: userId }, callBack);
+var getBooksRequestedByTheUser = function(userIds, callBack) {
+	RequestedBook.find({ requesterId: userIds }, callBack);
+};
+//-------------updated requested Book to be Accepted-------------------------
+var updateRequestedBookToAccepted = function(ownerId, requestedDonatedBookId, callBack) {
+	RequestedBook.findOneAndUpdate(
+		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
+		{ isAccepted: true },
+		{ new: true }
+	).exec(callBack);
 };
 
-//----------find requester name for a requeted book ----------
-var findRequesterName = function(requestersId, callBack) {
-	console.log('Naaaammmmeee');
-	User.findOne({ _id: { $in: requestersId } }).select('userName').exec(callBack);
+//-------------updated requested Book to be IGNORED-------------------------
+var updateRequestedBookToIgnored = function(ownerId, requestedDonatedBookId, callBack) {
+	RequestedBook.findOneAndUpdate(
+		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
+		{ isIgnored: true },
+		{ new: true }
+	).exec(callBack);
 };
+
+//-------------updated DONATED Book to be unavailable-------------------------
+var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
+	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: true }).exec(callBack);
+};
+
+//------------get bluePrint books of requested books -----------
+var getBluePrintBooks = function(bluePrintBooksId, callBack) {
+	Book.find({ _id: { $in: bluePrintBooksId } }).exec(callBack);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -330,3 +356,7 @@ module.exports.getUnivName = getUnivName;
 module.exports.getRequestedBooks = getRequestedBooks;
 module.exports.getBooksRequestedByTheUser = getBooksRequestedByTheUser;
 module.exports.findRequesterName = findRequesterName;
+module.exports.updateRequestedBookToAccepted = updateRequestedBookToAccepted;
+module.exports.updateRequestedBookToIgnored = updateRequestedBookToIgnored;
+module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
+module.exports.getBluePrintBooks = getBluePrintBooks;
