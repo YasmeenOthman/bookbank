@@ -22,6 +22,7 @@ import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 import Notifications from "../Notify/Notification"
+import ChatBox from "./ChatBox"
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -122,6 +123,7 @@ export const NavBar = () => {
 	// }, [open]);
 
 	return (
+		<div>
 		<AppBar position="static">
 			{/* first nav bar */}
 
@@ -277,6 +279,10 @@ export const NavBar = () => {
 				</div>
 			</Toolbar>
 		</AppBar>
+		<div>
+		<ChatBox/>
+		</div>
+		</div>
 	);
 };
 export default NavBar;
