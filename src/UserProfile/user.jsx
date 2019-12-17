@@ -194,8 +194,6 @@ function UserProfile(props) {
                     </div>
                   </Grid>
                 </Grid>
-
-              </Grid>
             </Grid>
           </Grid>
         </Paper>
