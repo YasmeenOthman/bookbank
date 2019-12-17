@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
       margin: 'auto'
   },
   imgBook: {
-      height: 250,
+      height: 55,
       marginBottom: 10,
       maxWidth: '100%'
   },
