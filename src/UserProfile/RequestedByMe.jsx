@@ -29,7 +29,9 @@ marginleft: 10,
 export default function RequestedByMe() {
 
   const [books, setbooks] = useState([]);
+  const [data, setData] = useState([])
   const [owner,setOwners]=useState([]);
+  const [blueprint,setblueprints]=useState([]);
   const classes = useStyles();
   var token = localStorage.getItem("usertoken");
   const decoded = jwt_decode(token);
@@ -58,7 +60,9 @@ export default function RequestedByMe() {
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
         setOwners(res.data.namesOfOwners);
-        setbooks(res.data.requestedBooks)
+        setbooks(res.data.requestedBooks);
+        setData (res.data)
+
         // setbooks(res.data)
 				console.log('nouuuur', res.data);
 			})
@@ -67,11 +71,11 @@ export default function RequestedByMe() {
 			});
 	}, []);
       
-
+  
   return (
     <Container>
     <div className={classes.root}>
-                 
+                 {console.log("data", data)}
                  { !books.isAccepted ? (
                     owner.map((owner1) => (
                       <Paper className={classes.paper}>
@@ -80,7 +84,7 @@ export default function RequestedByMe() {
                    <Grid item xs container direction="column" spacing={2}>
                    <Grid item xs>
                        <Typography gutterBottom variant="subtitle1">
-                           {`${owner1.userName} accepted your request`}                              
+                           {`${owner1.userName} accepted your request for`}                              
                        </Typography> 
                    </Grid>
                    <Grid item>
