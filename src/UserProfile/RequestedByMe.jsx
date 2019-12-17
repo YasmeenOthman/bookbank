@@ -11,25 +11,42 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+      flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
-    
+      // background: 'rgb(0, 179, 0)',
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+      width: 250,
+      margin: 'auto'
   },
-  button1: {
-marginleft: 10,
+  imgBook: {
+      height: 55,
+      marginBottom: 10,
+      maxWidth: '100%'
+  },
+  h2: {
+      color: 'gray',
+      marginBottom: 20
+  },
+  root1:{
+    marginTop: 50,
+    textAlign: 'center',
+    marginBottom: 100,
+    fontSize:30
   }
-}));
+})
+);
 
 
 
 export default function RequestedByMe() {
 
   const [books, setbooks] = useState([]);
+  const [data, setData] = useState([])
   const [owner,setOwners]=useState([]);
+  const [blueprint,setblueprints]=useState([]);
   const classes = useStyles();
   var token = localStorage.getItem("usertoken");
   const decoded = jwt_decode(token);
@@ -58,7 +75,10 @@ export default function RequestedByMe() {
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
         setOwners(res.data.namesOfOwners);
-        setbooks(res.data.requestedBooks)
+        setbooks(res.data.requestedBooks);
+        setblueprints(res.data.bluePrintBooks)
+        setData (res.data)
+
         // setbooks(res.data)
 				console.log('nouuuur', res.data);
 			})
@@ -67,117 +87,48 @@ export default function RequestedByMe() {
 			});
 	}, []);
       
-
+  var bookname = blueprint.bookName;
   return (
-    <Container>
-    <div className={classes.root}>
-                 
+    <div>
                  { !books.isAccepted ? (
-                    owner.map((owner1) => (
-                      <Paper className={classes.paper}>
-                      <Grid container spacing={2}>
-                      <Grid item xs={12} sm container>
-                   <Grid item xs container direction="column" spacing={2}>
-                   <Grid item xs>
-                       <Typography gutterBottom variant="subtitle1">
-                           {`${owner1.userName} accepted your request`}                              
-                       </Typography> 
-                   </Grid>
-                   <Grid item>
-                       <Button variant="contained" component="label" className={classes.button1}>
-                     Accept
-                   </Button>
-                   <Button variant="contained" component="label" className={classes.button2}>
-                     Ignore
-                   </Button>
-                   </Grid>
-                   </Grid>
-                   </Grid>
-                 </Grid>
-                 </Paper>
-                    ))
-                 ) : (
-                  owner.map((owner1) => (
+               
+                   blueprint.map((book1) => (
+                    <Container>
+                    <Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+                    <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
                     <Paper className={classes.paper}>
-                    <Grid container spacing={2}>
-                          <Grid item xs={12} sm container>
-                       <Grid item xs container direction="column" spacing={2}>
-                       <Grid item xs>
-                           <Typography gutterBottom variant="subtitle1">
-                               {`${owner1.userName} ignored your request`}                              
-                           </Typography> 
-                       </Grid>
-                       <Grid item>
-                           <Button variant="contained" component="label" className={classes.button1}>
-                         Accept
-                       </Button>
-                       <Button variant="contained" component="label" className={classes.button2}>
-                         Ignore
-                       </Button>
-                       </Grid>
-                       </Grid>
-                       </Grid>
-               </Grid>
-               </Paper>
-                  ))
-                 )}
-                   
-    </div>
-    </Container> 
-  )
-}
-       
+                      <img alt="img" src={book1.bookCover} className={classes.imgBook} />
+                
+                        <h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
+         
+                        <Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
+                          Status: Accepted
+                        </Button>
     
-                    /* { book.isAccepted ? 
-                    (
-                      owner.map((owner1) => (
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} sm container>
-                       <Grid item xs container direction="column" spacing={2}>
-                       <Grid item xs>
-                           <Typography gutterBottom variant="subtitle1">
-                               {`${owner1.userName} accepted your request`}                              
-                           </Typography> 
-                       </Grid>
-                       <Grid item>
-                           <Button variant="contained" component="label" className={classes.button1}>
-                         Accept
-                       </Button>
-                       <Button variant="contained" component="label" className={classes.button2}>
-                         Ignore
-                       </Button>
-                       </Grid>
-                       </Grid>
-                       </Grid>
-               </Grid>
-                      )
-                    ) : (
-                      owner.map((owner1) => (
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} sm container>
-                       <Grid item xs container direction="column" spacing={2}>
-                       <Grid item xs>
-                           <Typography gutterBottom variant="subtitle1">
-                               {`${owner1.userName} accepted your request`}                              
-                           </Typography> 
-                       </Grid>
-                       <Grid item>
-                           <Button variant="contained" component="label" className={classes.button1}>
-                         Accept
-                       </Button>
-                       <Button variant="contained" component="label" className={classes.button2}>
-                         Ignore
-                       </Button>
-                       </Grid>
-                       </Grid>
-                       </Grid>
-               </Grid>
-                      ))
-                    )
-                   )
-                } 
-                      </Paper>      
-    </div>
-    </Container> 
-  );
-} */
+                    </Paper>
+                  </Grid>
+                  </Grid>
+                </Container>
+                   ))
+                 ):(
+                  blueprint.map((book1) => (
+                    <Container>
+                    <Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+                    <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
+                    <Paper className={classes.paper}>
+                      <img alt="img" src={book1.bookCover} className={classes.imgBook} />
+         
+                        <h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
+       
+                        <Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
+                          Status: Ignored
+                        </Button>
+                    </Paper>
+                  </Grid>
+                  </Grid>
+                  </Container>
+                   ))
+                 )}
+</div>           
+        )
+ }
