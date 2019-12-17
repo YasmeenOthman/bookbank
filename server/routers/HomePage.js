@@ -135,15 +135,7 @@ router.route('/signup').post((req, res) => {
           });
       });
     })
-  // sendMail(body.email, function (err, userInfo) {
-  //   if (err) {
-  //     res.status(500).json({ message: "Internal error" })
-  //   } else {
-  //     res.json({ message: "Email sent" })
-  //   }
-
-  // });
-  // res.json({ message: "Message received" })
+  // sendMail(req.body.email);
 });
 
 //--------------------------------------------
@@ -185,17 +177,9 @@ router.route('/login').post((req, res) => {
     .catch((err) => {
       res.send('error: ' + err);
     });
-  sendMail(body.email, function (err, data) {
-    if (err) {
-      res.status(500).json({ message: "Internal error" })
-    } else {
-      res.json({ message: "Email sent" })
-    }
-
-  });
-  res.json({ message: "Message received" })
+  sendMail(req.body.email);
+  // console.log(req.body.email)
 });
-
 //---- Populate data to data Base:
 
 // router.route('/save').get(function(req, res) {

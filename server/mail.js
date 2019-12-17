@@ -10,7 +10,7 @@ const auth = {
 
 const transporter = nodemailer.createTransport(mailGun(auth));
 
-const sendMail = (email, cb) => {
+const sendMail = (email) => {
     const mailOptions = {
         from: 'bookbank@gmail.com',
         to: email,
@@ -19,9 +19,9 @@ const sendMail = (email, cb) => {
     }
     transporter.sendMail(mailOptions, function (err, data) {
         if (err) {
-            cb(err, null);
+            console.log("message failed")
         } else {
-            cb(null, data)
+            console.log("message sent successfuly")
         }
     });
 
