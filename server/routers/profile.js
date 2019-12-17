@@ -172,7 +172,7 @@ router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 			return book.bookId;
 		});
 
-		//------find owners name of the requestd books the user-----------------
+		//------find OWNERS name of the requestd books the user-----------------
 		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
 			if (err) throw err;
 			console.log(ownersName);
