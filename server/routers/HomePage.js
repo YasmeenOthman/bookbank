@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const sendMail = require('.././mail.js');
+
 
 var router = express.Router();
 const bookBankDB = require('../../database/db.js');
@@ -133,6 +135,7 @@ router.route('/signup').post((req, res) => {
           });
       });
     })
+  // sendMail(req.body.email);
 });
 
 //--------------------------------------------
@@ -174,8 +177,9 @@ router.route('/login').post((req, res) => {
     .catch((err) => {
       res.send('error: ' + err);
     });
+  sendMail(req.body.email);
+  // console.log(req.body.email)
 });
-
 //---- Populate data to data Base:
 
 // router.route('/save').get(function(req, res) {
