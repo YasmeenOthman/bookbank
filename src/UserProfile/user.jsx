@@ -19,6 +19,7 @@ import jwt_decode from "jwt-decode";
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import RestoreIcon from '@material-ui/icons/Restore';
+import FullWidthTabs from './tabs.jsx'
 import { storage } from '../firebase/firebase';
 
 const useStyles = makeStyles(theme => ({
@@ -188,19 +189,11 @@ function UserProfile(props) {
                     <Link href={`/profile/${id}/AddDonatedBook`}>
                       <Button variant="contained">Add A BOOK</Button>
                     </Link>
-                    <BottomNavigation value={value} onChange={handleChange}>
-                      <BottomNavigationAction label="recent books added" value="recents" icon={<RestoreIcon />} />
-                    </BottomNavigation>
-
-                  </div>
+                    <br/><br/><br/><br/>
+                      < FullWidthTabs />
+                    </div>
+                  </Grid>
                 </Grid>
-                {/* <List >  */}
-                {/* {ownerBook.map((user1) => ( */}
-                {/* <ListItem > */}
-                {/* <ListItemText key={user1.id}/> {user1.bookName} </ListItem> */}
-                {/* ))} */}
-                {/* </List> */}
-              </Grid>
             </Grid>
           </Grid>
         </Paper>

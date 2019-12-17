@@ -82,6 +82,8 @@ var requestedBooksSchema = mongoose.Schema({
 	ownerId: { type: String }, // the who donated the book
 	bookId: { type: String }, // Id of the BluePrint book
 	donatedBookId: { type: String },
+	isAccepted: { type: Boolean, default: false },
+	isIgnored: { type: Boolean, default: false },
 	createdAt: { type: Date, default: Date.now }
 });
 
@@ -95,6 +97,8 @@ var saveRequestedBook = function(requestedBook, callBack) {
 		ownerId: requestedBook.ownerId,
 		bookId: requestedBook.bookId,
 		donatedBookId: requestedBook.donatedBookId,
+		isAccepted: requestedBook.isAccepted,
+		isIgnored: requestedBook.isIgnored,
 		createdAt: requestedBook.createdAt
 	});
 
@@ -275,20 +279,31 @@ var getDonatedBooksAsBluePrintsForUser = function(userId, callBack) {
 	DonatedBook.find({ userId: userId }, callBack);
 };
 //--------------------------------------
-
 var getAllBluePrintBooksdonatedByUser = function(bluePrintBooksId, callBack) {
 	Book.find({ _id: { $in: bluePrintBooksId } }, callBack);
 };
-//--------------------------------------
-
+//------------get all books in the system --------------------------
 var getAllBooks = function(callBack) {
 	Book.find({}, callBack);
 };
-//--------------------------------------
+//------------get the university name --------------------------
 var getUnivName = function(univId, callBack) {
 	University.findOne({ _id: univId }).select('universityName').exec(callBack);
 };
+//------------get books requested from the user --------------------------
+var getRequestedBooks = function(userId, callBack) {
+	RequestedBook.find({ ownerId: userId }, callBack);
+};
+//-------------get books the user has requested -------------------------
+var getBooksRequestedByTheUser = function(userId, callBack) {
+	RequestedBook.find({ senderId: userId }, callBack);
+};
 
+//----------find requester name for a requeted book ----------
+var findRequesterName = function(requestersId, callBack) {
+	console.log('Naaaammmmeee');
+	User.findOne({ _id: { $in: requestersId } }).select('userName').exec(callBack);
+};
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -312,3 +327,6 @@ module.exports.getAllBooks = getAllBooks;
 module.exports.saveRequestedBook = saveRequestedBook;
 module.exports.saveNotification = saveNotification;
 module.exports.getUnivName = getUnivName;
+module.exports.getRequestedBooks = getRequestedBooks;
+module.exports.getBooksRequestedByTheUser = getBooksRequestedByTheUser;
+module.exports.findRequesterName = findRequesterName;

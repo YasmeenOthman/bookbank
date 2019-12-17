@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
 import NavBar from '.././HomePage/NavBar';
+import axios from 'axios';
 // import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) =>
@@ -90,35 +91,45 @@ const useStyles = makeStyles((theme) =>
 	})
 );
 export const Universityitems = (props) => {
-	useEffect(() => {
-		props.fetchPosts();
-	}, []);
+  const [university,setUniversity]=useState([]);
 	const classes = useStyles();
+	useEffect(() => {
+	axios
+			.get(`http://localhost:8000/university`)
+			.then((res) => {
+				//console.log(res);
+				setUniversity(res.data);
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
 
 	return (
 		<div>
 			<NavBar />
 			<Container style={{ marginBottom: 50 }}>
 				<h2 className={classes.h2}>Universities</h2>
-				{props.posts.data ? (
 					<div className={classes.root}>
-						{props.posts.data.universities.map((universitie) => (
+						{university.map((university) => (
 							<ButtonBase
 								focusRipple
-								key={universitie._id}
+								key={university._id}
 								className={classes.image}
 								focusVisibleClassName={classes.focusVisible}
 								style={{
-									width: '25%'
+									width: '35%'
 								}}
 							>
 								<span
 									className={classes.imageSrc}
 									style={{
-										backgroundImage: `url(${universitie.universityImg})`
+										backgroundImage: `url(${university.universityImg})`
 									}}
 								/>
-								<Link href={`/university/${universitie._id}`}>
+								<Link href={`/university/${university._id}`}>
 									<span className={classes.imageBackdrop} />
 									<span className={classes.imageButton}>
 										<Typography
@@ -127,7 +138,7 @@ export const Universityitems = (props) => {
 											color="inherit"
 											className={classes.imageTitle}
 										>
-											{universitie.universityName}
+											{university.universityName}
 											<span className={classes.imageMarked} />
 										</Typography>
 									</span>
@@ -135,15 +146,9 @@ export const Universityitems = (props) => {
 							</ButtonBase>
 						))}
 					</div>
-				) : (
-					<div />
-				)}
 			</Container>
 		</div>
 	);
 };
-const mapStateToProps = (state) => ({
-	posts: state.posts.items
-});
 
-export default connect(mapStateToProps, { fetchPosts })(Universityitems);
+export default Universityitems;
