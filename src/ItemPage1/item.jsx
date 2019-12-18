@@ -67,24 +67,24 @@ const theme = createMuiTheme({
 
 export default function Item() {
 	const classes = useStyles();
-	const [ owner, setOwner ] = React.useState('');
-	const [ book, setBook ] = useState([]);
-	const [ ownerBook, setOwnerBook ] = useState([]);
-	const [ univName, setUnivName ] = React.useState('');
-	const [ ownerId, setOwnerId ] = React.useState('');
-	const [ donatedBooks, setDonatedBooks] = React.useState('');
+	const [owner, setOwner] = React.useState('');
+	const [book, setBook] = useState([]);
+	const [ownerBook, setOwnerBook] = useState([]);
+	const [univName, setUnivName] = React.useState('');
+	const [ownerId, setOwnerId] = React.useState('');
+	const [donatedBooks, setDonatedBooks] = React.useState('');
 
 
 	//----------get the token from the local storage-----------
-		var token = localStorage.getItem('usertoken');
-		// console.log(token);
-		// var userIdFromToken = '';
-		if (token) {
+	var token = localStorage.getItem('usertoken');
+	// console.log(token);
+	// var userIdFromToken = '';
+	if (token) {
 		const decoded = jwt_decode(token);
 		// console.log(decoded);
 		var userIdFromToken = decoded.userId;
 		console.log(userIdFromToken);
-		}
+	}
 
 	useEffect(() => {
 		var path = window.location.href;
@@ -103,20 +103,20 @@ export default function Item() {
 
 				setDonatedBooks(res.data.donatedBooks);
 				// setOwnerId(res.data.donatedBooksOwners._id);
-				console.log("Donateeeed",res.data.donatedBooksOwners);
+				console.log("Donateeeed", res.data.donatedBooksOwners);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	} 
-	, []);
+	}
+		, []);
 
 	const handleChange = (event) => {
 		setOwnerId(event.target.value);
 	};
- 
 
-	const handleRequest =(event) => {
+
+	const handleRequest = (event) => {
 		var path = window.location.href;
 		var myPath = path.split('/');
 		var univId = myPath[4];
@@ -124,33 +124,34 @@ export default function Item() {
 		event.preventDefault();
 
 		// console.log(ownerId);
-		console.log("before and after") 
+		console.log("before and after")
 		// setOwnerId("test");
 		console.log(ownerId)
 		//------The choosen donated book Id--------
 		var choosenDonatedBookId = "";
-		for( var i = 0 ; i< donatedBooks.length; i++) {
-			if(ownerId === donatedBooks[i].userId){
+		for (var i = 0; i < donatedBooks.length; i++) {
+			if (ownerId === donatedBooks[i].userId) {
 				choosenDonatedBookId = donatedBooks[i]._id;
 			}
-		} 
+		}
 		//--------send requested book info-----------
-			axios
-				.post(`http://localhost:8000/university/${univId}/book/${bookId}/sendBookRequest`, {
-					requesterId: userIdFromToken,
-					ownerId: ownerId,
-					bookId: bookId,
-					donatedBookId: choosenDonatedBookId								
-				})
-				.then((response) => {
-					console.log(response.data);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-				alert("Your Request is sent Successfully ")
-			// console.log('All information of Book from front-end side: ', InfoBook);
-		};
+		axios
+			.post(`http://localhost:8000/university/${univId}/book/${bookId}/sendBookRequest`, {
+				requesterId: userIdFromToken,
+				ownerId: ownerId,
+				bookId: bookId,
+				donatedBookId: choosenDonatedBookId
+			})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+		alert("Your Request is sent Successfully ")
+
+		// console.log('All information of Book from front-end side: ', InfoBook);
+	};
 
 
 	return (
@@ -194,11 +195,11 @@ export default function Item() {
 											value={owner}
 											onChange={handleChange}
 										>
-											{ownerBook.map((owner1,i) => (
-												<MenuItem key ={i} value={owner1._id} >
+											{ownerBook.map((owner1, i) => (
+												<MenuItem key={i} value={owner1._id} >
 													{' '}
 													{owner1.userName}
-													 {console.log("The id of choosen owner in dropDownList",owner1._id)} 
+													{console.log("The id of choosen owner in dropDownList", owner1._id)}
 												</MenuItem>
 											))}
 
@@ -207,7 +208,7 @@ export default function Item() {
 								</Grid>
 								<Grid item>
 									<div>
-							
+
 										<Button variant="contained" onClick={handleRequest}>Send Request For Owner</Button>
 									</div>
 								</Grid>
