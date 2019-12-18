@@ -100,7 +100,7 @@ export const UniversitySlide = (props) => {
 
 	return (
 		<Container style={{ marginBottom: 50 }}>
-			<h2 className={classes.h2}>University</h2>
+			<h2 className={classes.h2}>Universities</h2>
 			{props.posts.data ? (
 				<div className={classes.root}>
 					{props.posts.data.universities.map((universitie) => (
