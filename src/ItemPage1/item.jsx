@@ -12,58 +12,52 @@ import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
+import Container from '@material-ui/core/Container'
 import { useState, useEffect } from 'react';
 import { functions } from 'firebase';
 import jwt_decode from 'jwt-decode';
+import color from '@material-ui/core/colors/lime';
 import { awaitExpression } from '@babel/types';
 
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		padding: '80px'
+		marginTop: 100
 	},
-	root1: {
-		margin: theme.spacing(2)
+	contantDiv: {
+		padding: 20
 	},
-	paper: {
-		padding: theme.spacing(2),
-		margin: 'auto',
-		maxWidth: 1500
+	bookName: {
+		fontSize: 50,
+		color: ' #484848',
+		textAlign: 'center'
 	},
-	image: {
-		width: '80%'
+	textStyle: {
+		fontSize: 25,
+		color: 'gray',
+		marginBottom: 60
 	},
 	img: {
-		margin: 'auto',
-		display: 'block',
-		maxWidth: '100%',
-		height: 450
+		width: 300,
+		height: 500,
+		borderRadius: 15,
+		border: '4px solid #77b747',
+		boxShadow: '5px 5px 2px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
 	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 300
+	reqButton: {
+		color: 'rgb(255, 255, 255)',
+		backgroundColor: '#77b747',
+		borderBottom: '2px solid #5a982b'
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(2)
+	},
+	label: {
+		marginTop: 30
 	}
 }));
-const theme = createMuiTheme({
-	typography: {
-		subtitle1: {
-			fontSize: 20
-		},
-		body1: {
-			fontSize: 26
-		},
-		h5: {
-			fontSize: 30
-		},
-		subtitle2: {
-			fontSize: 26
-		}
-	}
-});
+
 
 export default function Item() {
 	const classes = useStyles();
@@ -74,14 +68,10 @@ export default function Item() {
 	const [ownerId, setOwnerId] = React.useState('');
 	const [donatedBooks, setDonatedBooks] = React.useState('');
 
-
 	//----------get the token from the local storage-----------
 	var token = localStorage.getItem('usertoken');
-	// console.log(token);
-	// var userIdFromToken = '';
 	if (token) {
 		const decoded = jwt_decode(token);
-		// console.log(decoded);
 		var userIdFromToken = decoded.userId;
 		console.log(userIdFromToken);
 	}
@@ -95,14 +85,10 @@ export default function Item() {
 		axios
 			.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
 			.then((res) => {
-				// console.log(res.data);
 				setBook(res.data.bluePrintBook);
-				// console.log(res.data.donatedBooksOwners);
 				setUnivName(res.data.universityNameOfBook.universityName);
 				setOwnerBook(res.data.donatedBooksOwners);
-
 				setDonatedBooks(res.data.donatedBooks);
-				// setOwnerId(res.data.donatedBooksOwners._id);
 				console.log("Donateeeed", res.data.donatedBooksOwners);
 			})
 			.catch((err) => {
@@ -149,16 +135,12 @@ export default function Item() {
 				console.log(error);
 			});
 		alert("Your Request is sent Successfully ")
-
-		// console.log('All information of Book from front-end side: ', InfoBook);
 	};
-
-
 	return (
-		<ThemeProvider theme={theme}>
+		<div>
+			<NavBar />
 			<div className={classes.root}>
-				<NavBar />
-				<Paper className={classes.paper}>
+				<Container >
 					<Grid container spacing={4}>
 						<Grid item>
 							<ButtonBase className={classes.image}>
@@ -166,33 +148,27 @@ export default function Item() {
 							</ButtonBase>
 						</Grid>
 						<Grid item xs={12} sm container>
-							<Grid item xs container direction="column" spacing={9}>
+							<Grid item xs container direction="column" spacing={9} className={classes.contantDiv}>
 								<Grid item xs>
-									<Typography gutterBottom variant="h5">
+									<Typography gutterBottom variant="h5" className={classes.bookName}>
 										{book.bookName}
 									</Typography>
-									<br />
-									<br />
-									<br />
-									<Typography variant="subtitle1">
+									<Typography variant="subtitle1" className={classes.textStyle}>
 										<b> University:</b> {univName}
 									</Typography>
-									<br />
-									<Typography variant="subtitle1">
+									<Typography variant="subtitle1" className={classes.textStyle}>
 										<b>Description:</b> {book.bookDescription}
 									</Typography>
-									<br />
-									<Typography variant="subtitle1">
-										<b>Choose the Owner name you want to borrow the book from:</b>
-									</Typography>
-									<br />
 
 									<FormControl className={classes.formControl}>
-										<InputLabel id="demo-simple-select-label">Owner</InputLabel>
+										<Typography variant="subtitle1">
+											<b>Choose the Owner name you want to borrow the book from:</b>
+										</Typography>
+										<InputLabel id="demo-simple-select-label" className={classes.label}>Owner</InputLabel>
 										<Select
 											labelId="demo-simple-select-label"
 											id="demo-simple-select"
-											value={owner}
+											value={ownerId}
 											onChange={handleChange}
 										>
 											{ownerBook.map((owner1, i) => (
@@ -208,15 +184,14 @@ export default function Item() {
 								</Grid>
 								<Grid item>
 									<div>
-
-										<Button variant="contained" onClick={handleRequest}>Send Request For Owner</Button>
+										<Button variant="contained" onClick={handleRequest} className={classes.reqButton}>Send Request For Owner</Button>
 									</div>
 								</Grid>
 							</Grid>
 						</Grid>
 					</Grid>
-				</Paper>
+				</Container>
 			</div>
-		</ThemeProvider>
+		</div>
 	);
 }

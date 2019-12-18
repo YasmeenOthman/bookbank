@@ -16,13 +16,14 @@ import MenuList from "@material-ui/core/MenuList";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import NavCate from "./NavCate.jsx";
+import ChatBox from './ChatBox.jsx';
 import SearchAppBar from "./SearchAppBar.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutStatus } from "../actions";
 import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 import Notifications from "../Notify/Notification"
-import ChatBox from "./ChatBox"
+
 
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
@@ -69,18 +70,17 @@ export const NavBar = () => {
 	var id = '';
 	if (token) {
 		const decoded = jwt_decode(token);
-		// console.log(decoded)
 		username = decoded.userName;
 		id = decoded.userId;
-		// console.log(id)
+		
 	}
 
-	// console.log(email)
+	
 	const isLogged = useSelector((state) => state.isLogged);
 
 
 	const dispatch = useDispatch();
-	// dispatch(allData());
+	
 
 	//--------logOut Function///////////
 	const logOutFun = () => {
@@ -279,10 +279,10 @@ export const NavBar = () => {
 				</div>
 			</Toolbar>
 		</AppBar>
-		<div>
-		<ChatBox/>
-		</div>
-		</div>
+		    <div>
+			<ChatBox />
+		   </div>
+		   </div>
 	);
 };
 export default NavBar;
