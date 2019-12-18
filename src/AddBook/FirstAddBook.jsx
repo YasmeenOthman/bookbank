@@ -23,10 +23,10 @@ import jwt_decode from 'jwt-decode';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
-        minWidth: 350
+        minWidth: '100%'
     },
     textfield: {
-        minWidth: 350
+        minWidth: '100%'
     },
     root: {
         flexGrow: 1,
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
       searchBar: {
         background: 'transparent',
         boxShadow: 'none',
-        minWidth: 300,
+        minWidth: '100%',
         paddingLeft: 0
       },
       paper: {
@@ -73,11 +73,19 @@ const useStyles = makeStyles(theme => ({
       inputRoot: {
         color: 'inherit',
       },
+      formStyle: {
+        margin: 'auto',
+        width: '40%',
+        marginTop: 40
+      },
+      textfield: {
+        minWidth: '100%',
+        backgroundColor: 'rgb(203, 231, 255)'
+      },
       result: {
         position: 'absolute',
         background: 'white',
         color: 'gray',
-        boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
         borderRadius: 4
       },
       inputInput: {
@@ -85,7 +93,7 @@ const useStyles = makeStyles(theme => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          width: 290,
+          width: '100%',
         },
       },
       imgBook: {
@@ -99,11 +107,8 @@ const useStyles = makeStyles(theme => ({
     result: {
       position: 'absolute',
       background: 'white',
-      // color: 'gray',
-      boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
       borderRadius: 4,
       width: '20%',
-      // right: '22%',
       height:'100%'
     },
     BookImg: {
@@ -120,6 +125,12 @@ const useStyles = makeStyles(theme => ({
     searchImg: {
       borderRight: '4px solid #77b748'
     },
+    h2: {
+      textAlign: 'center',
+      marginTop: 100,
+      fontSize: 40,
+      color: 'gray'
+    },
     linkGrid: {
       paddingLeft: 15
     },
@@ -128,7 +139,7 @@ const useStyles = makeStyles(theme => ({
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 290,
+        width: '100%',
         // '&:focus': {
         //   width: 200,
         // },
@@ -242,12 +253,10 @@ export  const FirstAddBook = (props) => {
       return (
        <div>
           <NavBar />
-          <br/>
+
           <Container>
-          <h2>Add New Book</h2>
-          <br />
-          <br />
-          <br />
+          <h2 className={classes.h2}>Add New Book</h2>
+          <div className={classes.formStyle}>
           <form noValidate autoComplete="off" >
               <div>
               <FormControl variant="filled" className={classes.formControl}>
@@ -256,6 +265,7 @@ export  const FirstAddBook = (props) => {
               </InputLabel>
 
               <Select
+                className={classes.textfield}
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
                 value={choosenUniv}
@@ -266,8 +276,7 @@ export  const FirstAddBook = (props) => {
                  ))}
               </Select>
               <div>
-              <br/>
-              <br/>
+
               
             </div>
             </FormControl>
@@ -291,9 +300,7 @@ export  const FirstAddBook = (props) => {
               />
             </div>    
           </Toolbar>
-          <br/>
-          <br/>
-          <br/>
+
           <div className={classes.result}>
           
             <div >
@@ -310,7 +317,7 @@ export  const FirstAddBook = (props) => {
 								>
 								   <h3 style={{marginBottom:5}}>{item.bookName}</h3>
 								</Link>
-                <br/>
+
                 <h3 style={{marginBottom:5}}>{item.bookDescription}</h3>
                 <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit}>Donate this Book </Button>
                 </Grid>
@@ -328,7 +335,8 @@ export  const FirstAddBook = (props) => {
             </div>
              </div>
             </div>
-          </form>  
+          </form> 
+          </div> 
           </Container>
    
        </div>
