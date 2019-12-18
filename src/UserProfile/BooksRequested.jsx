@@ -29,12 +29,13 @@ marginleft: 10,
 export default function BooksRequested() {
   const classes = useStyles();
   const [books, setbooks] = useState([]);
-  const [university,setUniversity]=useState([]);
+  const [requester,setrequester]=useState([]);
+  const [request,setrequest]=useState([]);
   var token = localStorage.getItem("usertoken");
   const decoded = jwt_decode(token);
   var email = decoded.email;
   var username = decoded.userName;
-  var id = decoded.userId;
+  var userIdFromToken = decoded.userId;
 
   useEffect(() => {
     var path = window.location.href;
@@ -47,26 +48,52 @@ export default function BooksRequested() {
       .then((res) => {
         //console.log(res);
         // let universities = res.data.universities;
-        setbooks(res.data);
-        console.log(res.data);
+        setbooks(res.data.bluePrintBooks);
+        setrequester(res.data.requesters);
+        setrequest(res.data.request)
+        // console.log(res.data);
+        console.log('nour',requester)
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const handleSumbit = (event) => {
+		event.preventDefault();
+		axios
+			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${booksId}/AcceptRequest`, {
+        userId: userIdFromToken,
+        
+			})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+			alert("You added New Book")
+		console.log('All information of Book from front-end side: ', InfoBook);
+	};
+ 
   return (
-    <div className={classes.root}>
-     
-                {/* {books.map((book) => ( */}
+    <div>
+    <div className={classes.root}>         
                  <Paper className={classes.paper}>
                  <Grid container spacing={2}>
                    <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
-                    <Typography gutterBottom variant="subtitle1">
-                    {/* {book.requester} requested {book.bookName} */}
-                   </Typography> 
+                <Typography gutterBottom variant="subtitle1">
+                {requester.map((requester1) => (
+                  requester1.userName
+                    
+                ))}  requested {books.map((book1) => (
+                    book1.bookName
+                    
+                ))}
+
+              </Typography>
                 </Grid>
                 <Grid item>
                     <Button variant="contained" component="label" className={classes.button1}>
@@ -79,10 +106,9 @@ export default function BooksRequested() {
                 </Grid>
                 </Grid>
         </Grid>
-      </Paper>
-      
-              {/* )) */}
-            {/* }     */}
+      </Paper>     
+                  
     </div>
-  );
+    </div>
+  )
 }
