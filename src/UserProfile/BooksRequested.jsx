@@ -28,6 +28,7 @@ marginleft: 10,
 
 export default function BooksRequested() {
   const classes = useStyles();
+  const [data, setdata] = useState([]);
   const [books, setbooks] = useState([]);
   const [requester,setrequester]=useState([]);
   const [request,setrequest]=useState([]);
@@ -37,7 +38,7 @@ export default function BooksRequested() {
   var email = decoded.email;
   var username = decoded.userName;
   var userIdFromToken = decoded.userId;
-
+ 
   useEffect(() => {
     var path = window.location.href;
     console.log(path)
@@ -47,10 +48,12 @@ export default function BooksRequested() {
     axios
       .get(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks`)
       .then((res) => {
+
         setbooks(res.data.bluePrintBooks);
         setrequester(res.data.requesters);
         setrequest(res.data.request)
         setBlueprint(res.data.requestedBooksfromUser)
+        setdata(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -58,11 +61,12 @@ export default function BooksRequested() {
   }, []);
 
   // const handleaccept = (event) => {
+  //   console.log(Blueprint)
 	// 	event.preventDefault();
 	// 	axios
 	// 		.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
   //       userId: userIdFromToken,
-  //       donatedBookId: bookdonatedId
+  //       donatedBookId: blueprint.requestedBooksfromUser.bookdonatedId
 	// 		})
 	// 		.then((response) => {
 	// 			console.log(response.data);
@@ -83,11 +87,9 @@ export default function BooksRequested() {
                 <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
                 {requester.map((requester1) => (
-                  requester1.userName
-                    
+                  requester1.userName                    
                 ))}  requested {books.map((book1) => (
-                    book1.bookName
-                    
+                    book1.bookName   
                 ))}
 
               </Typography>
