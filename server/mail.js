@@ -1,32 +1,34 @@
 const nodemailer = require('nodemailer');
-const mailGun = require('nodemailer-mailgun-transport');
 
-const auth = {
-    auth: {
-        api_key: process.env.API_KEY || 'f0cb9bca8f9b1c11225fc9e56ef58699-f8b3d330-0fc98cc6',
-        domain: process.env.DOMAIN || 'sandboxd8dc88001eea44219b996d0dc2160593.mailgun.org'
-    }
-};
-
-const transporter = nodemailer.createTransport(mailGun(auth));
-
-const sendMail = (email) => {
-    const mailOptions = {
-        from: 'bookbank@gmail.com',
-        to: email,
-        subject: 'Book bank support',
-        text: 'Welcome to Book bank website,you have been registered successfully'
-    }
-    transporter.sendMail(mailOptions, function (err, data) {
-        if (err) {
-            console.log("message failed")
-        } else {
-            console.log("message sent successfuly")
+module.exports = function sendEmail(userEmail) {
+    let transport = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        secure: false,
+        auth: {
+            user: "bookbank.cohort7@gmail.com",
+            pass: "rbkcohort7"
         }
     });
 
-}
+    const message = {
+        from: 'bookbank.rbk@gmail.com',
+        to: userEmail,
+        subject: 'Welcome to Book Bank',
+        text: `test email!`,
+        html: `<h1 style ="font-family:Helvetica; color:black;"> Weclome to Book bank website! </h1>
+    
+        <h3 style ="font-family:Helvetica; color:black;"> you have been registered successfully, enjoy sharing your books! </h3>
+    <p>book bank team</p>
+          </h3>`
 
-module.exports = sendMail;
-
-
+    };
+    transport.sendMail(message, function (err, info) {
+        if (err) {
+            console.log("not done")
+            console.log(err);
+        } else {
+            console.log("done")
+            console.log(info);
+        }
+    });
+};  
