@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
       },
       inputRoot: {
+        width: 490,
         color: 'inherit',
       },
       formStyle: {
@@ -140,6 +141,15 @@ const useStyles = makeStyles(theme => ({
       color: 'white',
       background: '#76b646',
       borderBottom: '2px solid #438e0a'
+    },
+    paragraf:{
+      marginTop: 20,
+      color: 'navy'
+    },
+    subBut: {
+      width: 493,
+    marginLeft: -10,
+    marginBottom: 5
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
@@ -287,7 +297,7 @@ export  const FirstAddBook = (props) => {
               
             </div>
             </FormControl>
-            <Typography>
+            <Typography className={classes.paragraf}>
               Enter the Name of Book
               </Typography>
             <Toolbar className={classes.allSearch}>
@@ -326,7 +336,7 @@ export  const FirstAddBook = (props) => {
 								</Link>
 
                 <h3 style={{marginBottom:5}}>{item.bookDescription}</h3>
-                <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit}>Donate this Book </Button>
+                <Button style={{marginBottom:5}} variant="contained" color="primary" onClick={handleSumbit} className={classes.subBut}>Donate this Book </Button>
                 </Grid>
               </Grid>
               ))
