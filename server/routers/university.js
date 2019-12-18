@@ -13,13 +13,22 @@ router.route('/').get(function (req, res) {
 });
 
 //----------------Items Page Route --------------------------
-router.route('/:univId').get(function (req, res) {
-	const univId = req.params.univId;
-	bookBankDB.getBooksOfUniversity(univId, function (err, booksOFTheUniversity) {
-		if (err) throw err;
-		//console.log(booksOFTheUniversity);
-		res.json(booksOFTheUniversity);
-	});
+router.route('/:univId').get(function(req, res) {
+  const univId = req.params.univId;
+  var dataOfUniversityPage = {
+    universityName: '',
+    universityBooks: []
+  };
+  bookBankDB.getUniversityName(univId, function(err, univObj) {
+    if (err) throw err;
+    dataOfUniversityPage.universityName = univObj.universityName;
+    bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
+      if (err) throw err;
+      //console.log(booksOFTheUniversity);
+      dataOfUniversityPage.universityBooks = booksOFTheUniversity;
+      res.json(dataOfUniversityPage);
+    });
+  });
 });
 
 //----------------Books according to uni name Route --------------------------

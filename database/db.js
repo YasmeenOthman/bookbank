@@ -333,6 +333,12 @@ var getBluePrintBooks = function (bluePrintBooksId, callBack) {
 var getOwnerEmailOfRequestedBook = function (ownerId, callBack) {
 	User.findOne({ _id: ownerId }).exec(callBack);
 }
+
+//-----------get university name from its Id----------------
+var getUniversityName = function(univId, callBack) {
+  University.findOne({ _id: univId }).exec(callBack);
+};
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -364,3 +370,4 @@ module.exports.updateRequestedBookToIgnored = updateRequestedBookToIgnored;
 module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
 module.exports.getBluePrintBooks = getBluePrintBooks;
 module.exports.getOwnerEmailOfRequestedBook = getOwnerEmailOfRequestedBook;
+module.exports.getUniversityName = getUniversityName;
