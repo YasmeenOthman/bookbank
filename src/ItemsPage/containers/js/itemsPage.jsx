@@ -11,35 +11,48 @@ import NavBar from '../../../HomePage/NavBar';
 
 const useStyles = makeStyles(theme => ({
         root: {
-            flexGrow: 1,
+			flexGrow: 1,
+			
         },
         paper: {
-            // background: 'rgb(0, 179, 0)',
             padding: theme.spacing(2),
             textAlign: 'center',
-            color: theme.palette.text.secondary
+			color: theme.palette.text.secondary,
+			background: '#dcdcdc',
+			borderRadius: 15,
+			boxShadow: '4px 5px 9px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
         },
         imgBook: {
-            height: 250,
+            height: 330,
             marginBottom: 10,
+			maxWidth: '100%',
+            borderRadius: 15,
+            width: '100%',
             maxWidth: '100%'
         },
         h2: {
             color: 'gray',
             marginBottom: 20
-        },
+		},
+		button :{
+			color: 'white',
+			background: '#76b646',
+			borderBottom: '2px solid #438e0a',
+			marginTop: 15
+		},
         root1:{
-          marginTop: 50,
+          marginTop: 135,
           textAlign: 'center',
-          marginBottom: 100,
-          fontSize:30
+          marginBottom: 50,
+		  fontSize:50,
+		  color: '#5d5959'
         }
       })
 );
 
 export const ItemsPage  = () => {
   const [books, setbooks] = useState([]);
-  const [university,setUniversity]=useState([]);
+  const [universityName,setuniversityName]=useState('');
   const classes = useStyles();
 
 	useEffect(() => {
@@ -53,10 +66,8 @@ export const ItemsPage  = () => {
 			.then((res) => {
 				//console.log(res);
 				let universities = res.data.universities;
-				setbooks(res.data);
-				setUniversity(universities);
-				setUniversity(res.data);
-				console.log(res.data);
+				setbooks(res.data.universityBooks);
+				setuniversityName(res.data.universityName)
 			})
 			.catch((err) => {
 				console.log(err);
@@ -67,8 +78,8 @@ export const ItemsPage  = () => {
 		<div>
 			<NavBar />
 			<Container>
-				<h2 className={classes.root1}>University</h2>
-				<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+				<h2 className={classes.root1}>{universityName} Books</h2>
+				<Grid container direction="row"  spacing={3}>
 					{books.map((book) => (
 						<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
 							<Paper className={classes.paper}>
@@ -83,7 +94,7 @@ export const ItemsPage  = () => {
 									href={`/university/${book.universityId}/book/${book._id}`}
 									style={{ color: 'white' }}
 								>
-									<Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
+									<Button  className={classes.button}>
 										View More
 									</Button>
 								</Link>

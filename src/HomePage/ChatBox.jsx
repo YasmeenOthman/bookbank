@@ -5,7 +5,6 @@ import Slide from '@material-ui/core/Slide';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import jwt_decode from "jwt-decode";
-// import ScrollToBottom from 'react-scroll-to-bottom';
 import io from 'socket.io-client';
 let socket;
 const useStyles = makeStyles(theme => ({
@@ -117,7 +116,7 @@ const sendMessage =(event)=>{
                             <h1 className={classes.chatTitel}>CHAT</h1>
 
                             <div>
-                             {/* <ScrollToBottom> */}
+                             
                                  <div  className={classes.chatContainer}>
                                 {
                                     messages.map((message, i) => 
@@ -126,7 +125,7 @@ const sendMessage =(event)=>{
                                     </div>
                                     )} 
                                    </div> 
-                             {/* </ScrollToBottom> */}
+                             
                                 <div>
                                     <input placeholder="Type to chat ....." value={message} onChange={(event)=> setMessage(event.target.value)}
                                     onKeyPress={event => event.key === 'Enter' ? sendMessage(event): null} className={classes.chatInput}/>

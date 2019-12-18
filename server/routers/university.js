@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const bookBankDB = require('../../database/db.js');
+const sendMail = require('.././sendRequestMail.js');
 
 //---------------- Universities Page --------------------------
 router.route('/').get(function(req, res) {
@@ -82,6 +83,7 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 //------------- create a requested book ----------------------------
 router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
 	var requestedBook = req.body;
+	// console.log(requestedBook)
 	var bookId = req.params.bookId;
 	var requestedBookInfo = {
 		requesterId: requestedBook.requesterId,
@@ -94,6 +96,18 @@ router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
 	bookBankDB.saveRequestedBook(requestedBookInfo, function(err, requestedBook) {
 		if (err) throw err;
 		console.log(requestedBook);
+		var ownerId = requestedBook.ownerId;
+		bookBankDB.getOwnerEmailOfRequestedBook(ownerId, function(err, ownerDoc) {
+			if (err) throw err;
+			console.log('owner info of the requested book');
+			var ownerEmail = ownerDoc.email;
+			console.log(ownerEmail);
+			// res.json({
+			// 	requestedBook: requestedBook,
+			// 	ownerEmail: ownerEmail
+			// });
+			sendMail(ownerEmail);
+		});
 	});
 });
 

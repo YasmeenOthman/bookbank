@@ -3,7 +3,7 @@ import NavBar from './NavBar.jsx';
 import BigImag from './BigImag';
 import UniversitySlide from './UniversitySlide';
 import LastBook from './LastBook.jsx';
-
+import Footer from './Footer.jsx';
 
 
 
@@ -20,7 +20,8 @@ export const Home = () => {
       <LastBook />
       {/* University Component */}
       <UniversitySlide />
-
+       {/* Footer Component */}
+       <Footer />
     </div>
   );
 }
