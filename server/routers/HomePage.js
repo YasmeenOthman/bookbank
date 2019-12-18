@@ -135,7 +135,8 @@ router.route('/signup').post((req, res) => {
           });
       });
     })
-  // sendMail(req.body.email);
+  //send a verification email to  new users
+  sendMail(req.body.email);
 });
 
 //--------------------------------------------
@@ -177,7 +178,7 @@ router.route('/login').post((req, res) => {
     .catch((err) => {
       res.send('error: ' + err);
     });
-  sendMail(req.body.email);
+  //   sendMail(req.body.email);
   // console.log(req.body.email)
 });
 //---- Populate data to data Base:

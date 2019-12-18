@@ -26,7 +26,7 @@ class SignUp extends React.Component {
         window.location.href = "http://localhost:3000/";
       },
       error: function (err) {
-        alert("Plz fill all the required feild");
+        alert("invalid email or password,Plz make sure to fill all the fields");
       }
     });
   }
