@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
 export default function RequestedByMe() {
 	const [ books, setbooks ] = useState([]);
 	const [ data, setData ] = useState([]);
-	const [ owner, setOwners ] = useState([]);
-	const [ blueprint, setblueprints ] = useState([]);
+	const [ owners, setOwners ] = useState([]);
+	const [ bluePrints, setblueprints ] = useState([]);
 	const [ requestedBooks, setRequestedBooks ] = useState([]);
 
 	const classes = useStyles();
@@ -51,16 +51,6 @@ export default function RequestedByMe() {
 	var email = decoded.email;
 	var username = decoded.userName;
 	var id = decoded.userId;
-
-	// var request = function () {
-	//   if (books.isAccepted === true) {
-	//     return "Accepted"
-	//   } else if (books.isAccepted === false && books.isIgnored === false) {
-	//     return "Ignored"
-	//   } else {
-	//     return "pending"
-	//   }
-	// }
 
 	var prepareData = function(requestedBooks, namesOfOwners, bluePrintBooks) {
 		var requestedBooksData = [];
@@ -88,63 +78,87 @@ export default function RequestedByMe() {
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
 				setOwners(res.data.namesOfOwners);
+
 				setbooks(res.data.requestedBooks);
 				setblueprints(res.data.bluePrintBooks);
 				setData(res.data);
-
-				// setbooks(res.data)
-				var allData = prepareData(books, owner, blueprint);
-				setRequestedBooks(allData);
-				setRequestedBooks([ 1, 2, 3 ]);
-
-				console.log(requestedBooks);
-				console.log('nouuuur', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
 
-	var bookname = blueprint.bookName;
 	return (
 		<div>
-			{books.isAccepted ? (
-				requestedBooks.map((book1) => (
-					<Container>
-						<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
-							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
-								<Paper className={classes.paper}>
-									<img alt="img" src={book1.bookCover} className={classes.imgBook} />
-
-									<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
-									<h3 style={{ marginBottom: 5 }}>{book1.ownerName}</h3>
-
-									<Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
-										Status: Accepted
-									</Button>
-								</Paper>
+			{!books.isAccepted ? (
+				<div>
+					{owners.map((owner) => (
+						<Container>
+							<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+								{/* <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={owner._id}> */}
+								<h3 key={owner._id} style={{ marginBottom: 5 }}>
+									this Book is Requested From: {owner.userName}
+								</h3>
+								{/* </Grid> */}
 							</Grid>
-						</Grid>
-					</Container>
-				))
+						</Container>
+					))}
+					{bluePrints.map((book1) => (
+						<Container>
+							<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+								<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book1._id}>
+									<Paper className={classes.paper}>
+										<img alt="img" src={book1.bookCover} className={classes.imgBook} />
+
+										<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
+										{/* <h3 style={{ marginBottom: 5 }}>{book1.ownerName}</h3> */}
+
+										<Button
+											style={{ color: 'Black', border: '1px solid white' }}
+											variant="outlined"
+										>
+											Status: Pending
+										</Button>
+									</Paper>
+								</Grid>
+							</Grid>
+						</Container>
+					))}
+				</div>
 			) : (
-				requestedBooks.map((book1) => (
-					<Container>
-						<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
-							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
-								<Paper className={classes.paper}>
-									<img alt="img" src={book1.bookCover} className={classes.imgBook} />
-
-									<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
-
-									<Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
-										Status: Ignored
-									</Button>
-								</Paper>
+				<div>
+					{owners.map((owner) => (
+						<Container>
+							<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+								{/* <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={owner._id}> */}
+								<h3 key={owner._id} style={{ marginBottom: 5 }}>
+									this Booke is Requested From: {owner.userName}
+								</h3>
+								{/* </Grid> */}
 							</Grid>
-						</Grid>
-					</Container>
-				))
+						</Container>
+					))}
+					{requestedBooks.map((book1) => (
+						<Container>
+							<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+								<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
+									<Paper className={classes.paper}>
+										<img alt="img" src={book1.bookCover} className={classes.imgBook} />
+
+										<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
+
+										<Button
+											style={{ color: 'Black', border: '1px solid white' }}
+											variant="outlined"
+										>
+											Status: Accepted
+										</Button>
+									</Paper>
+								</Grid>
+							</Grid>
+						</Container>
+					))}
+				</div>
 			)}
 		</div>
 	);
