@@ -105,7 +105,7 @@ export default function RequestedByMe() {
 			});
 	}, []);
 
-	var bookname = blueprint.bookName;
+	// var bookname = blueprint.bookName;
 	return (
 		<div>
 			{books.isAccepted ? (
