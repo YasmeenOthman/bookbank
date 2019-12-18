@@ -43,20 +43,20 @@ export const Footer = () => {
               <p>Nazeh M.Taha</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
-              <p>Nazeh M.Taha</p>
+              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <p>Nour Saqqa</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
-              <p>Nazeh M.Taha</p>
+              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <p>Alaa Al Agha</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
-              <p>Nazeh M.Taha</p>
+              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <p>Tasnim Zakarneh</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
-              <p>Nazeh M.Taha</p>
+              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <p>Yasmeen Othman</p>
             </Grid>
           </Grid>
         </Container>

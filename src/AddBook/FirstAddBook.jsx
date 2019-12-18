@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center'
 	},
 	inputRoot: {
+		width: 490,
 		color: 'inherit'
 	},
 	formStyle: {
@@ -124,9 +125,9 @@ const useStyles = makeStyles((theme) => ({
 		cursor: 'pointer',
 		color: 'gray'
 	},
-	searchImg: {
-		borderRight: '4px solid #77b748'
-	},
+	// searchImg: {
+	// 	borderRight: '4px solid #77b748'
+	// },
 	h2: {
 		textAlign: 'center',
 		marginTop: 100,
@@ -142,6 +143,15 @@ const useStyles = makeStyles((theme) => ({
 		color: 'white',
 		background: '#76b646',
 		borderBottom: '2px solid #438e0a'
+	},
+	paragraf: {
+		marginTop: 20,
+		color: 'navy'
+	},
+	subBut: {
+		width: 493,
+		marginLeft: -10,
+		marginBottom: 5
 	},
 	inputInput: {
 		padding: theme.spacing(1, 1, 1, 7),
