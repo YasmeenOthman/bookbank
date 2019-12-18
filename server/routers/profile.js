@@ -131,6 +131,7 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 //----------Get Books requested by the user-----------------
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
+	console.log('hereeeeeeeeeeeeeeeeeeeeee');
 	var data = {
 		requestedBooks: [],
 		namesOfOwners: [],

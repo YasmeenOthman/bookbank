@@ -22,6 +22,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FullWidthTabs from './tabs.jsx'
 import { storage } from '../firebase/firebase';
 
+import Container from '@material-ui/core/Container'
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -151,9 +152,12 @@ function UserProfile(props) {
     setValue(newValue);
   };
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root} >
-        <NavBar />
+    <div>
+      <NavBar />
+      
+    <Container>
+      
+        
         <Paper className={classes.paper}>
           <Grid container spacing={4}>
             <Grid item>
@@ -197,8 +201,9 @@ function UserProfile(props) {
             </Grid>
           </Grid>
         </Paper>
-      </div>
-    </ThemeProvider>
+      
+    </Container>
+    </div>
   );
 }
 
