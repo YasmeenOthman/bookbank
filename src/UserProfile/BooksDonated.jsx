@@ -58,7 +58,7 @@ export const BooksDonated  = () => {
 			.get(`http://localhost:8000/profile/${userId}/donatedBooksAsBluePrints`)
 			.then((res) => {
 				setbooks(res.data);
-				console.log(res.data);
+				console.log("data of donated books",res.data);
 			})
 			.catch((err) => {
 				console.log(err);

@@ -28,49 +28,74 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1)
 	},
 	formControl: {
-		minWidth: 350
+		minWidth: '100%'
 	},
 	textfield: {
-		minWidth: 350
+		minWidth: '100%',
+		backgroundColor: 'rgb(203, 231, 255)'
 	},
-	img1:{
+	img1: {
 		maxWidth: 150,
+	},
+	h2: {
+		textAlign: 'center',
+		marginTop: 100,
+		fontSize: 40,
+		color: 'gray'
+	},
+	formStyle: {
+		margin: 'auto',
+		width: '40%',
+		marginTop: 40
+	},
+	imgLink: {
+		marginTop: 50,
+		marginBottom: 10,
+		color: 'navy'
+	},
+	imgInput: {
+		background: '#bbd5eb',
+		padding: 10,
+		width: '67%'
+	},
+	submitBut: {
+		width: '100%',
+		marginTop: 12,
+		color: 'white',
+		background: '#76b646',
+		borderBottom: '2px solid #438e0a'
 	}
 }));
 
 //----------get the token from the local storage-----------
 var token = localStorage.getItem('usertoken');
-// console.log(token);
-// var userIdFromToken = '';
 if (token) {
 	const decoded = jwt_decode(token);
-	// console.log(decoded);
 	var userIdFromToken = decoded.userId;
 	console.log(userIdFromToken);
 }
 
 export default function AddBook() {
 	const classes = useStyles();
-	const [ university, setUni ] = React.useState('');
-	const [ name, setName ] = React.useState('');
-	const [ description, setDesc ] = React.useState('');
-	// const [ imgUrl, setimgUrl ] = React.useState('');
-	const [ univs, setUnivs ] = React.useState([]);
+	const [university, setUni] = React.useState('');
+	const [name, setName] = React.useState('');
+	const [description, setDesc] = React.useState('');
+	const [univs, setUnivs] = React.useState([]);
 	const inputLabel = React.useRef(null);
-	const [ labelWidth, setLabelWidth ] = React.useState(0);
+	const [labelWidth, setLabelWidth] = React.useState(0);
 
 	//------------------variables for handle media-------------------
-	const [ imageAsFile, setImageAsFile ] = React.useState('');
-	const [ imageAsUrl, setImageAsUrl ] = React.useState('');
-	const [ preview, setPreview ] = React.useState('');
+	const [imageAsFile, setImageAsFile] = React.useState('');
+	const [imageAsUrl, setImageAsUrl] = React.useState('');
+	const [preview, setPreview] = React.useState('');
 
 	//---------------------handle media file-------------------------
-	// console.log(imageAsFile);
+
 	const handleImageAsFile = (e) => {
 		e.preventDefault();
 		const image = e.target.files[0];
 		setImageAsFile((imageFile) => image);
-		
+
 	};
 
 	//-----------------Get url from Firebase-------------------------
@@ -112,7 +137,7 @@ export default function AddBook() {
 
 	/// To get Universities Name from Database
 	React.useEffect(() => {
-		
+
 		axios
 			.get(`http://localhost:8000/university/`)
 			.then((res) => {
@@ -154,7 +179,7 @@ export default function AddBook() {
 			.catch((error) => {
 				console.log(error);
 			});
-			alert("You added New Book")
+		alert("You added New Book")
 		console.log('All information of Book from front-end side: ', InfoBook);
 	};
 
@@ -175,79 +200,75 @@ export default function AddBook() {
 
 	return (
 		<div>
-			<br />
+			
 			<NavBar />
 			<Container>
-				<h2>Add New Book</h2>
-				<br />
-				<br />
-				<br />
-				<form noValidate autoComplete="off" onSubmit={handleSumbit}>
-					<div>
-						<br />
+				<h2 className={classes.h2}>Add New Book</h2>
+
+				<div className={classes.formStyle}>
+					<form noValidate autoComplete="off" onSubmit={handleSumbit}>
 						<div>
+
+							<div>
+								<TextField
+									className={classes.textfield}
+									id="standard-basic"
+									label="Enter the Name of Book"
+									margin="normal"
+									variant="filled"
+									value={name}
+									onChange={onNameChange}
+								/>
+							</div>
+
 							<TextField
 								className={classes.textfield}
-								id="filled-full-width"
-								label="Enter the Name of Book"
+								id="standard-basic"
+								label="Description"
+								multiline={true}
+								rows={2}
 								margin="normal"
 								variant="filled"
-								value={name}
-								onChange={onNameChange}
+								onChange={onDescChange}
+								value={description}
 							/>
+
+							<FormControl variant="filled" className={classes.formControl}>
+								<InputLabel>University</InputLabel>
+
+								<Select
+									labelId="demo-simple-select-filled-label"
+									id="demo-simple-select-filled"
+									value={university}
+									onChange={onUniChange}
+									className={classes.textfield}
+								>
+									{univs.map((univ1) => (
+										<MenuItem key={univ1._id} value={univ1.universityName}>
+											{univ1.universityName}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
 						</div>
 
-						<TextField
-							className={classes.textfield}
-							id="filled-full-width"
-							label="Description"
-							multiline={true}
-							rows={2}
-							margin="normal"
-							variant="filled"
-							onChange={onDescChange}
-							value={description}
-						/>
-						<br />
-						<br />
-						<FormControl variant="filled" className={classes.formControl}>
-							<InputLabel>University</InputLabel>
+						<Typography className={classes.imgLink}>Please Choose the image of the Book </Typography>
 
-							<Select
-								labelId="demo-simple-select-filled-label"
-								id="demo-simple-select-filled"
-								value={university}
-								onChange={onUniChange}
-							>
-								{univs.map((univ1) => (
-									<MenuItem key={univ1._id} value={univ1.universityName}>
-										{univ1.universityName}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-					<br />
-					<br />
-					<Typography>Please Choose the image of the Book </Typography>
-					<Button variant="contained" component="label">
-						
-						<input type="file" onChange={handleImageAsFile}  />
+						<input type="file" onChange={handleImageAsFile} className={classes.imgInput} />
+
+						<Button variant="contained" onClick={handleFireBaseUpload}>
+							Upload Photo
 					</Button>
-					<Button variant="contained" onClick={handleFireBaseUpload}>
-						Upload Photo
+
+						<div>
+							<img src={imageAsUrl} className={classes.img1} />
+						</div>
+
+						<Button variant="contained" type="submit" className={classes.submitBut}>
+							Add Book
 					</Button>
-					<br/>
-					<br/>
-					<div>
-					<img src={imageAsUrl} className={classes.img1}/>
-					</div>
-					<br />
-					<br />
-					<Button variant="contained" type="submit" >
-						Add Book
-					</Button>
-				</form>
+					</form>
+				</div>
 			</Container>
 		</div>
 	);
