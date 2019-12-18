@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) =>
 		image: {
 			position: 'relative',
 			height: 200,
-			border: '3px solid #77B747',
 			[theme.breakpoints.down('xs')]: {
 				width: '100% !important', // Overrides inline-style
 				height: 100
@@ -42,6 +41,7 @@ const useStyles = makeStyles((theme) =>
 		focusVisible: {},
 		imageButton: {
 			position: 'absolute',
+			borderRadius: 15,
 			left: 0,
 			right: 0,
 			top: 0,
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) =>
 		},
 		imageSrc: {
 			position: 'absolute',
+			borderRadius: 15,
 			left: 0,
 			right: 0,
 			top: 0,
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) =>
 		},
 		imageBackdrop: {
 			position: 'absolute',
+			borderRadius: 15,
 			left: 0,
 			right: 0,
 			top: 0,
@@ -84,9 +86,11 @@ const useStyles = makeStyles((theme) =>
 			transition: theme.transitions.create('opacity')
 		},
 		h2: {
-			color: 'gray',
-			marginBottom: 20,
-			marginTop: 60
+			color: '#5d5959',
+			fontSize: 50,
+			marginTop: 135,
+			textAlign: 'center',
+			marginBottom: 50
 		}
 	})
 );
@@ -110,8 +114,9 @@ export const Universityitems = (props) => {
 	return (
 		<div>
 			<NavBar />
-			<Container style={{ marginBottom: 50 }}>
+			<Container >
 				<h2 className={classes.h2}>Universities</h2>
+
 					<div className={classes.root}>
 						{university.map((university) => (
 							<ButtonBase
@@ -120,7 +125,10 @@ export const Universityitems = (props) => {
 								className={classes.image}
 								focusVisibleClassName={classes.focusVisible}
 								style={{
-									width: '35%'
+									width: '24%',
+									margin: '10px 10px 10px 0',
+									borderRadius: 15,
+									boxShadow: '4px 5px 9px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
 								}}
 							>
 								<span
