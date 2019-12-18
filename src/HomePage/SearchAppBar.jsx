@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) =>
       right: '22%'
     },
     BookImg: {
-      height: 100,
+      height: 115,
       width: '85%'
     },
     searchItem: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) =>
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 120,
+        width: 200,
         '&:focus': {
           width: 200,
         },

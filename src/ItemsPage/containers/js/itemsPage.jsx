@@ -79,7 +79,7 @@ export const ItemsPage  = () => {
 			<NavBar />
 			<Container>
 				<h2 className={classes.root1}>{universityName} Books</h2>
-				<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+				<Grid container direction="row"  spacing={3}>
 					{books.map((book) => (
 						<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
 							<Paper className={classes.paper}>
