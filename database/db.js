@@ -110,7 +110,7 @@ var saveRequestedBook = function(requestedBook, callBack) {
 //=======================================================
 var userSchema = mongoose.Schema({
 	userName: { type: String },
-	email: { type: String, unique: true },
+	email: { type: String },
 	password: { type: String }
 });
 //-------------------User Model-------------------------
