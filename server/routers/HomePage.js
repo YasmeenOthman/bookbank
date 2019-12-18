@@ -178,7 +178,7 @@ router.route('/login').post((req, res) => {
     .catch((err) => {
       res.send('error: ' + err);
     });
-  //   sendMail(req.body.email);
+  sendMail(req.body.email);
   // console.log(req.body.email)
 });
 //---- Populate data to data Base:
