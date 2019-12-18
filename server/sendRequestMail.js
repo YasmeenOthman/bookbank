@@ -15,10 +15,10 @@ module.exports = function sendEmail(userEmail) {
         from: 'bookbank.rbk@gmail.com',
         to: userEmail,
         subject: 'Welcome to Book Bank',
-        text: `test email!`,
+        // text: `test email!`,
         html: `<h1 style ="font-family:Helvetica; color:black;"> Weclome to Book bank website! </h1>
     
-        <h3 style ="font-family:Helvetica; color:black;"> you have been registered successfully, enjoy sharing your books! </h3>
+        <h3 style ="font-family:Helvetica; color:black;"> One of your book has been requested by ${userEmail}! </h3>
     <p>book bank team</p>
           </h3>`
 
