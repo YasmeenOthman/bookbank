@@ -85,8 +85,10 @@ const useStyles = makeStyles((theme) =>
 		},
 		h2: {
 			color: 'gray',
-			marginBottom: 20,
-			marginTop: 60
+			marginTop: 100,
+			marginBottom: 40,
+			borderBottom: '2px solid gray',
+			paddingBottom: 18
 		}
 	})
 );

@@ -123,24 +123,82 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 			return requestedBook.requesterId;
 		});
 
+		var bluePrintBooksId = requestedBooks.map(function(requestedBook) {
+			return requestedBook.bookId;
+		});
+
 		bookBankDB.findRequesterName(requestersId, function(err, requestersName) {
 			if (err) throw err;
 			console.log(requestersName);
-			res.json({
-				requestedBooks: requestedBooks,
-				namesOfRequesters: requestersName
+
+			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
+				if (err) throw err;
+				console.log(bluePrintBooks);
+				res.json({
+					requestedBooks: requestedBooks,
+					namesOfRequesters: requestersName,
+					bluePrintBooks: bluePrintBooks
+				});
 			});
 		});
 	});
 });
 
-//---------- Get Books that the user has requested -----------------
+//----------Get Books requested by the user-----------------
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
-	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooks) {
+	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
-		console.log(requestedBooks);
-		res.json(requestedBooks);
+		console.log(requestedBooksByTheUser);
+
+		var ownersIdOfTheRequestedBooks = requestedBooksByTheUser.map(function(book) {
+			return book.requesterId;
+		});
+
+		var bluePrintBooksId = requestedBooksByTheUser.map(function(book) {
+			return book.bookId;
+		});
+
+		//------find owners name of the requestd books the user-----------------
+		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
+			if (err) throw err;
+			console.log(ownersName);
+
+			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
+				if (err) throw err;
+				console.log(bluePrintBooks);
+				res.json({
+					requestedBooks: requestedBooksByTheUser,
+					namesOfOwners: ownersName,
+					bluePrintBooks: bluePrintBooks
+				});
+			});
+		});
+	});
+});
+//-------------ACCEPT BOOK REQUEST--------------
+router.route('/:userId/booksRequestedByTheUser/:donatedBookId/AcceptRequest').post(function(req, res) {
+	const userId = req.params.userId;
+	const donatedBookId = req.params.donatedBookId;
+	bookBankDB.updateRequestedBookToAccepted(userId, donatedBookId, function(err, requestedBookAccepted) {
+		if (err) throw err;
+		// res.json(requestedBookAcceped);
+		console.log(requestedBookAccepted);
+		var acceptedDonatedBookId = requestedBookAccepted.donatedBookId;
+		bookBankDB.makeDonatedBookUnavailable(acceptedDonatedBookId, function(err, donatedBook) {
+			if (err) throw err;
+			res.json(donatedBook);
+		});
+	});
+});
+
+//-------------IGNORE BOOK REQUEST--------------
+router.route('/:userId/booksRequestedByTheUser/:donatedBookId/IgnoreRequest').post(function(req, res) {
+	const userId = req.params.userId;
+	const donatedBookId = req.params.donatedBookId;
+	bookBankDB.updateRequestedBookToIgnored(userId, donatedBookId, function(err, requestedBookIgnored) {
+		if (err) throw err;
+		res.json(requestedBookIgnored);
 	});
 });
 

@@ -12,54 +12,50 @@ import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
+import Container from '@material-ui/core/Container'
 import { useState, useEffect } from 'react';
 import { functions } from 'firebase';
+import jwt_decode from 'jwt-decode';
+import color from '@material-ui/core/colors/lime';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		padding: '80px'
+		marginTop: 100
+	},	
+	contantDiv: {
+		padding: 20
 	},
-	root1: {
-		margin: theme.spacing(2)
+	bookName: {
+		fontSize: 50,
+		color: ' #484848',
+		textAlign: 'center'
 	},
-	paper: {
-		padding: theme.spacing(2),
-		margin: 'auto',
-		maxWidth: 1500
-	},
-	image: {
-		width: '80%'
+	textStyle:{
+        fontSize: 25,
+		color: 'gray',
+        marginBottom: 60
 	},
 	img: {
-		margin: 'auto',
-		display: 'block',
-		maxWidth: '100%',
-		height: 450
+		width: 300,
+		height: 500,
+		borderRadius: 15,
+		border: '4px solid #77b747',
+		boxShadow: '5px 5px 2px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
 	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 300
+	reqButton: {
+		color: 'rgb(255, 255, 255)',
+		backgroundColor: '#77b747',
+		borderBottom: '2px solid #5a982b'
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(2)
+	},
+	label: {
+		marginTop: 30
 	}
 }));
-const theme = createMuiTheme({
-	typography: {
-		subtitle1: {
-			fontSize: 20
-		},
-		body1: {
-			fontSize: 26
-		},
-		h5: {
-			fontSize: 30
-		},
-		subtitle2: {
-			fontSize: 26
-		}
-	}
-});
+
 
 export default function Item() {
 	const classes = useStyles();
@@ -67,6 +63,16 @@ export default function Item() {
 	const [ book, setBook ] = useState([]);
 	const [ ownerBook, setOwnerBook ] = useState([]);
 	const [ univName, setUnivName ] = React.useState('');
+	const [ ownerId, setOwnerId ] = React.useState('');
+	const [ donatedBooks, setDonatedBooks] = React.useState('');
+
+	//----------get the token from the local storage-----------
+	var token = localStorage.getItem('usertoken');
+	if (token) {
+	const decoded = jwt_decode(token);
+	var userIdFromToken = decoded.userId;
+	console.log(userIdFromToken);
+	}
 
 	useEffect(() => {
 		var path = window.location.href;
@@ -77,26 +83,63 @@ export default function Item() {
 		axios
 			.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
 			.then((res) => {
-				// console.log(res.data);
 				setBook(res.data.bluePrintBook);
-				// console.log(res.data.donatedBooksOwners);
 				setUnivName(res.data.universityNameOfBook.universityName);
-
 				setOwnerBook(res.data.donatedBooksOwners);
+				setDonatedBooks(res.data.donatedBooks);
+				console.log("Donateeeed",res.data.donatedBooksOwners);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	} 
+	, []);
+
 
 	const handleChange = (event) => {
-		setOwner(event.target.value);
+		setOwnerId(event.target.value);
 	};
+ 
+
+	const handleRequest =(event) => {
+		var path = window.location.href;
+		var myPath = path.split('/');
+		var univId = myPath[4];
+		var bookId = myPath[6];
+		event.preventDefault();
+
+		// console.log(ownerId);
+		console.log("before and after") 
+		// setOwnerId("test");
+		console.log(ownerId)
+		//------The choosen donated book Id--------
+		var choosenDonatedBookId = "";
+		for( var i = 0 ; i< donatedBooks.length; i++) {
+			if(ownerId === donatedBooks[i].userId){
+				choosenDonatedBookId = donatedBooks[i]._id;
+			}
+		} 
+		//--------send requested book info-----------
+			axios
+				.post(`http://localhost:8000/university/${univId}/book/${bookId}/sendBookRequest`, {
+					requesterId: userIdFromToken,
+					ownerId: ownerId,
+					bookId: bookId,
+					donatedBookId: choosenDonatedBookId								
+				})
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+				alert("Your Request is sent Successfully ")
+		};
 	return (
-		<ThemeProvider theme={theme}>
+		<div>
+          <NavBar />
 			<div className={classes.root}>
-				<NavBar />
-				<Paper className={classes.paper}>
+				<Container >
 					<Grid container spacing={4}>
 						<Grid item>
 							<ButtonBase className={classes.image}>
@@ -104,57 +147,50 @@ export default function Item() {
 							</ButtonBase>
 						</Grid>
 						<Grid item xs={12} sm container>
-							<Grid item xs container direction="column" spacing={9}>
+							<Grid item xs container direction="column" spacing={9} className={classes.contantDiv}>
 								<Grid item xs>
-									<Typography gutterBottom variant="h5">
+									<Typography gutterBottom variant="h5" className={classes.bookName}>
 										{book.bookName}
 									</Typography>
-									<br />
-									<br />
-									<br />
-									<Typography variant="subtitle1">
+									<Typography variant="subtitle1" className={classes.textStyle}>
 										<b> University:</b> {univName}
 									</Typography>
-									<br />
-									<Typography variant="subtitle1">
+									<Typography variant="subtitle1" className={classes.textStyle}>
 										<b>Description:</b> {book.bookDescription}
 									</Typography>
-									<br />
+
+									<FormControl className={classes.formControl}>
 									<Typography variant="subtitle1">
 										<b>Choose the Owner name you want to borrow the book from:</b>
 									</Typography>
-									<br />
-
-									<FormControl className={classes.formControl}>
-										<InputLabel id="demo-simple-select-label">Owner</InputLabel>
+										<InputLabel id="demo-simple-select-label" className={classes.label}>Owner</InputLabel>
 										<Select
 											labelId="demo-simple-select-label"
 											id="demo-simple-select"
-											value={owner}
+											value={ownerId}
 											onChange={handleChange}
 										>
-											{ownerBook.map((owner1) => (
-												<MenuItem value={20} key={owner1._id}>
+											{ownerBook.map((owner1,i) => (
+												<MenuItem key ={i} value={owner1._id} >
 													{' '}
 													{owner1.userName}
+													 {console.log("The id of choosen owner in dropDownList",owner1._id)} 
 												</MenuItem>
 											))}
+
 										</Select>
 									</FormControl>
 								</Grid>
 								<Grid item>
-									<div>
-										<Button variant="contained" className={classes.root1}>
-											Send Message
-										</Button>
-										<Button variant="contained">Send Request For Owner</Button>
+									<div>	
+									<Button variant="contained" onClick={handleRequest} className={classes.reqButton}>Send Request For Owner</Button>
 									</div>
 								</Grid>
 							</Grid>
 						</Grid>
 					</Grid>
-				</Paper>
+				</Container>
 			</div>
-		</ThemeProvider>
+			</div>
 	);
 }

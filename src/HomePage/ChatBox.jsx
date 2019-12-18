@@ -5,7 +5,6 @@ import Slide from '@material-ui/core/Slide';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import jwt_decode from "jwt-decode";
-
 import io from 'socket.io-client';
 let socket;
 const useStyles = makeStyles(theme => ({

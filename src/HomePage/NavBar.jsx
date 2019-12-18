@@ -24,6 +24,7 @@ import { allData } from "../actions";
 import jwt_decode from "jwt-decode";
 import Notifications from "../Notify/Notification"
 
+
 //---------------styling for navbar--------------
 const userStyles = makeStyles({
 	root: {
@@ -69,18 +70,17 @@ export const NavBar = () => {
 	var id = '';
 	if (token) {
 		const decoded = jwt_decode(token);
-		// console.log(decoded)
 		username = decoded.userName;
 		id = decoded.userId;
-		// console.log(id)
+		
 	}
 
-	// console.log(email)
+	
 	const isLogged = useSelector((state) => state.isLogged);
 
 
 	const dispatch = useDispatch();
-	// dispatch(allData());
+	
 
 	//--------logOut Function///////////
 	const logOutFun = () => {
