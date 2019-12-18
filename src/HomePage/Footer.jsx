@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
     padding: 40,
     borderTop: '2px solid #77b748',
     marginTop: 150,
-    background: '#f6f7f9'
+    background: '#f6f7f9',
+    textAlign: 'center'
   },
   imgAva: {
     height: 80,
@@ -36,7 +37,7 @@ export const Footer = () => {
     <div>
       <div className={classes.root}>
         <Container>
-          <Grid container spacing={3}>
+          <Grid container justify="center" alignItems="center" spacing={3}>
             <Grid item xs>
               <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
               <p>Nazeh M.Taha</p>

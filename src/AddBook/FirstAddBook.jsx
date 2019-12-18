@@ -134,6 +134,13 @@ const useStyles = makeStyles(theme => ({
     linkGrid: {
       paddingLeft: 15
     },
+    submitBut: {
+      width: '100%',
+      marginTop: 12,
+      color: 'white',
+      background: '#76b646',
+      borderBottom: '2px solid #438e0a'
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
       transition: theme.transitions.create('width'),
@@ -326,7 +333,7 @@ export  const FirstAddBook = (props) => {
               :
               <Grid  className={classes.searchItem} container>
                 <Link href={`/profile/${userIdFromToken}/addBlueprintDonatedBook`} style={{color: 'black'}}>
-                <Button style={{marginBottom:5}} variant="contained" color="primary" >Add New Book 
+                <Button style={{marginBottom:5}} variant="contained" color="primary" className={classes.submitBut}>Add New Book 
                 </Button>
                 </Link>
               </Grid>
