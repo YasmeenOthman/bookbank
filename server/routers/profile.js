@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var bookBankDB = require('../../database/db.js');
+
 router.route('/:userId').get(function(req, res) {
 	var userId = req.params.userId;
 	bookBankDB.getUserProfie(userId, function(err, profile) {
 		if (err) throw err;
-		console.log(profile);
+		console.log('the returned profile', profile);
 		res.json(profile);
 	});
 });
@@ -67,14 +68,14 @@ router.route('/:userId/AddDonatedBook').post(function(req, res) {
 		if (err) {
 			throw err;
 		}
-		console.log('new donated book has been added ' + newDonatedBook);
+		console.log('new donated book has been added ', newDonatedBook);
 		res.json(newDonatedBook);
 	});
 });
 //-------------get bluePrint books of user's donated books -------------------
 router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 	const userId = req.params.userId;
-	bookBankDB.getDonatedBooksAsBluePrintsForUser(userId, function(err, donatedBooksOfUser) {
+	bookBankDB.getDonatedBooksOfUser(userId, function(err, donatedBooksOfUser) {
 		if (err) {
 			throw err;
 		}
@@ -164,12 +165,13 @@ router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 				if (err) throw err;
 				console.log(bluePrintBooks);
 				data.bluePrintBooks = bluePrintBooks;
-
-				res.json(data);
+				var allData = prepareData(requestedBooksByTheUser, ownersName, bluePrintBooks);
+				res.json(allData);
 			});
 		});
 	});
 });
+
 //-------------ACCEPT BOOK REQUEST--------------
 router.route('/:userId/requestedBooks/:donatedBookId/AcceptRequest').post(function(req, res) {
 	const userId = req.params.userId;
@@ -195,6 +197,24 @@ router.route('/:userId/requestedBooks/:donatedBookId/IgnoreRequest').post(functi
 	bookBankDB.updateRequestedBookToIgnored(userId, donatedBookId, function(err, requestedBookIgnored) {
 		if (err) throw err;
 		res.json(requestedBookIgnored);
+	});
+});
+//----------------edit profile picture ---------------
+router.route('/:userId/editeProfilePic').post(function(req, res) {
+	const userId = req.params.userId;
+	const userAvatar = req.body.userAvatar;
+	const profileId = req.body.profileId;
+	// const newProfile = {
+	// 	userId: userId,
+	// 	universityId: '',
+	// 	userAvatar: userAvatar
+	// };
+	bookBankDB.editProfile(profileId, userAvatar, function(err, profile) {
+		if (err) {
+			throw err;
+		}
+		console.log('this profile was edited', profile);
+		res.json(profile);
 	});
 });
 module.exports = router;

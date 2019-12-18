@@ -143,19 +143,14 @@ var profileSchema = mongoose.Schema({
 //-------------------Profile Model-------------------------
 var Profile = mongoose.model('profiles', profileSchema);
 
-var saveProfile = function(profile) {
+var saveProfile = function(profile, callBack) {
 	var newProfile = new Profile({
 		userId: profile.userId,
 		universityId: profile.universityId,
 		userAvatar: profile.userAvatar
 	});
 
-	newProfile.save(function(err, res) {
-		if (err) {
-			throw err;
-		}
-		console.log('this profile has been was added', res);
-	});
+	newProfile.save(callBack);
 };
 
 //=======================================================
@@ -266,7 +261,7 @@ var getDonatedBooksOwnersName = function(usersId, callBack) {
 
 //----- Git user's Profile ---------
 var getUserProfie = function(userId, callBack) {
-	Profile.findOne({ _id: userId }).exec(callBack);
+	Profile.findOne({ userId: userId }).exec(callBack);
 };
 
 // -------- get all Universities ---------
@@ -275,7 +270,7 @@ var getAllUniversities = function(callBack) {
 };
 
 //-------get donated books as BluePrint books for a specific user -------------
-var getDonatedBooksAsBluePrintsForUser = function(userId, callBack) {
+var getDonatedBooksOfUser = function(userId, callBack) {
 	DonatedBook.find({ userId: userId }, callBack);
 };
 //--------------------------------------
@@ -329,7 +324,14 @@ var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
 var getBluePrintBooks = function(bluePrintBooksId, callBack) {
 	Book.find({ _id: { $in: bluePrintBooksId } }).exec(callBack);
 };
-
+//-----------get university name from its Id----------------
+var getUniversityName = function(univId, callBack) {
+	University.findOne({ _id: univId }).exec(callBack);
+};
+//--------edit Profile---------------
+var editProfile = function(profileId, userAvatar, callBack) {
+	Profile.findByIdAndUpdate({ _id: profileId }, { userAvatar: userAvatar }, { new: true }).exec(callBack);
+};
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
@@ -347,7 +349,7 @@ module.exports.getbluePrintBook = getbluePrintBook;
 module.exports.getUserProfie = getUserProfie;
 module.exports.getAllUniversities = getAllUniversities;
 module.exports.User = User;
-module.exports.getDonatedBooksAsBluePrintsForUser = getDonatedBooksAsBluePrintsForUser;
+module.exports.getDonatedBooksOfUser = getDonatedBooksOfUser;
 module.exports.getAllBluePrintBooksdonatedByUser = getAllBluePrintBooksdonatedByUser;
 module.exports.getAllBooks = getAllBooks;
 module.exports.saveRequestedBook = saveRequestedBook;
@@ -360,3 +362,5 @@ module.exports.updateRequestedBookToAccepted = updateRequestedBookToAccepted;
 module.exports.updateRequestedBookToIgnored = updateRequestedBookToIgnored;
 module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
 module.exports.getBluePrintBooks = getBluePrintBooks;
+module.exports.getUniversityName = getUniversityName;
+module.exports.editProfile = editProfile;

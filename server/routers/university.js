@@ -14,21 +14,21 @@ router.route('/').get(function(req, res) {
 //----------------Items Page Route --------------------------
 router.route('/:univId').get(function(req, res) {
 	const univId = req.params.univId;
-	bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
-		if (err) throw err;
-		//console.log(booksOFTheUniversity);
-		res.json(booksOFTheUniversity);
-	});
-});
+	var dataOfUniversityPage = {
+		universityName: '',
+		universityBooks: []
+	};
 
-//----------------Books according to uni name Route --------------------------
-router.route('/name').get(function(req, res) {
-	const univname = req.params.universityName;
-	console.log(univname);
-	bookBankDB.getBooksOfUniversity(univname, function(err, booksOFTheUniversity) {
+	bookBankDB.getUniversityName(univId, function(err, univObj) {
 		if (err) throw err;
-		//console.log(booksOFTheUniversity);
-		res.json(booksOFTheUniversity);
+		dataOfUniversityPage.universityName = univObj.universityName;
+
+		bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
+			if (err) throw err;
+			//console.log(booksOFTheUniversity);
+			dataOfUniversityPage.universityBooks = booksOFTheUniversity;
+			res.json(dataOfUniversityPage);
+		});
 	});
 });
 

@@ -91,14 +91,14 @@ const useStyles = makeStyles((theme) =>
 	})
 );
 export const Universityitems = (props) => {
-  const [university,setUniversity]=useState([]);
+	const [ university, setUniversity ] = useState([]);
 	const classes = useStyles();
 	useEffect(() => {
-	axios
+		axios
 			.get(`http://localhost:8000/university`)
 			.then((res) => {
 				//console.log(res);
-				setUniversity(res.data);
+				setUniversity(res.data.universityBooks);
 				console.log(res.data);
 			})
 			.catch((err) => {
@@ -106,46 +106,45 @@ export const Universityitems = (props) => {
 			});
 	}, []);
 
-
 	return (
 		<div>
 			<NavBar />
 			<Container style={{ marginBottom: 50 }}>
 				<h2 className={classes.h2}>Universities</h2>
-					<div className={classes.root}>
-						{university.map((university) => (
-							<ButtonBase
-								focusRipple
-								key={university._id}
-								className={classes.image}
-								focusVisibleClassName={classes.focusVisible}
+				<div className={classes.root}>
+					{university.map((university) => (
+						<ButtonBase
+							focusRipple
+							key={university._id}
+							className={classes.image}
+							focusVisibleClassName={classes.focusVisible}
+							style={{
+								width: '35%'
+							}}
+						>
+							<span
+								className={classes.imageSrc}
 								style={{
-									width: '35%'
+									backgroundImage: `url(${university.universityImg})`
 								}}
-							>
-								<span
-									className={classes.imageSrc}
-									style={{
-										backgroundImage: `url(${university.universityImg})`
-									}}
-								/>
-								<Link href={`/university/${university._id}`}>
-									<span className={classes.imageBackdrop} />
-									<span className={classes.imageButton}>
-										<Typography
-											component="span"
-											variant="subtitle1"
-											color="inherit"
-											className={classes.imageTitle}
-										>
-											{university.universityName}
-											<span className={classes.imageMarked} />
-										</Typography>
-									</span>
-								</Link>
-							</ButtonBase>
-						))}
-					</div>
+							/>
+							<Link href={`/university/${university._id}`}>
+								<span className={classes.imageBackdrop} />
+								<span className={classes.imageButton}>
+									<Typography
+										component="span"
+										variant="subtitle1"
+										color="inherit"
+										className={classes.imageTitle}
+									>
+										{university.universityName}
+										<span className={classes.imageMarked} />
+									</Typography>
+								</span>
+							</Link>
+						</ButtonBase>
+					))}
+				</div>
 			</Container>
 		</div>
 	);

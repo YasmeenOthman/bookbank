@@ -77,10 +77,11 @@ export default function RequestedByMe() {
 		axios
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
-				setOwners(res.data.namesOfOwners);
+				// setOwners(res.data.namesOfOwners);
 
-				setbooks(res.data.requestedBooks);
-				setblueprints(res.data.bluePrintBooks);
+				// setbooks(res.data.requestedBooks);
+				// setblueprints(res.data.bluePrintBooks);
+				console.log('All Data', res.data);
 				setData(res.data);
 			})
 			.catch((err) => {
