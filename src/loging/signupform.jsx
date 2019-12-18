@@ -67,21 +67,6 @@ class SignUp extends React.Component {
             </div>
             <br />
 
-            {/* <div className="field">
-              <label className="em">Image</label>
-
-              <span className="required" style={{ color: "red" }}>
-                *
-              </span>
-              <br />
-              <input
-                id="imgUrl"
-                placeholder="'Picture Url'"
-                style={{ width: 250, height: 30 }}
-              />
-            </div>
-            <br /> */}
-
             <div className="field">
               <label className="em">Email</label>
 

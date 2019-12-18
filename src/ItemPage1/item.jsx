@@ -17,6 +17,8 @@ import { useState, useEffect } from 'react';
 import { functions } from 'firebase';
 import jwt_decode from 'jwt-decode';
 import color from '@material-ui/core/colors/lime';
+import { awaitExpression } from '@babel/types';
+
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -94,7 +96,6 @@ export default function Item() {
 			});
 	} 
 	, []);
-
 
 	const handleChange = (event) => {
 		setOwnerId(event.target.value);

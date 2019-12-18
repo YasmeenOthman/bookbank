@@ -25,9 +25,11 @@ require("mongoose-query-random");
 var homepageRouter = require("./routers/homePage.js");
 var universityRouter = require("./routers/university.js");
 var profileRouter = require("./routers/profile.js");
+
 // app.use(express.static(path.join(__dirname, "../build")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 
 // app.get("/test", function (req, res) {
 //   res.send("hello")
@@ -35,6 +37,8 @@ app.use(bodyParser.json());
 app.use(homepageRouter);
 app.use("/university", universityRouter);
 app.use("/profile", profileRouter);
+
+
 
 const PORT = process.env.PORT || 8000;
 var server = app.listen(PORT, () =>

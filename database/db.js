@@ -110,7 +110,7 @@ var saveRequestedBook = function(requestedBook, callBack) {
 //=======================================================
 var userSchema = mongoose.Schema({
 	userName: { type: String },
-	email: { type: String, unique: true },
+	email: { type: String },
 	password: { type: String }
 });
 //-------------------User Model-------------------------
@@ -294,13 +294,13 @@ var getUnivName = function(univId, callBack) {
 var getRequestedBooks = function(userId, callBack) {
 	RequestedBook.find({ ownerId: userId }, callBack);
 };
-//----------find requester name for a requeted book ----------
-var findRequesterName = function(requestersId, callBack) {
-	User.find({ _id: { $in: requestersId } }).select('userName').exec(callBack);
+//----------find requesters name / owners name for a requeted book ----------
+var findRequesterName = function(Ids, callBack) {
+	User.find({ _id: { $in: Ids } }).select('userName').exec(callBack);
 };
 //-------------get books the user has requested -------------------------
-var getBooksRequestedByTheUser = function(userId, callBack) {
-	RequestedBook.find({ requesterId: userId }, callBack);
+var getBooksRequestedByTheUser = function(userIds, callBack) {
+	RequestedBook.find({ requesterId: userIds }, callBack);
 };
 //-------------updated requested Book to be Accepted-------------------------
 var updateRequestedBookToAccepted = function(ownerId, requestedDonatedBookId, callBack) {
@@ -326,8 +326,8 @@ var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
 };
 
 //------------get bluePrint books of requested books -----------
-var getBluePrintBooks = function(donatedBooksId, callBack) {
-	Book.find({ _id: { $in: donatedBooksId } }).exec(callBack);
+var getBluePrintBooks = function(bluePrintBooksId, callBack) {
+	Book.find({ _id: { $in: bluePrintBooksId } }).exec(callBack);
 };
 
 module.exports.saveBook = saveBook;
