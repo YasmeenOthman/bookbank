@@ -374,6 +374,22 @@ var getUniversityName = function(univId, callBack) {
   University.findOne({ _id: univId }).exec(callBack);
 };
 
+//-----------Edited by Nour for notice -----------
+
+//-------------get books the user has requested -------------------------
+var getBooksRequestedByTheUser = function (userIds, callBack) {
+	RequestedBookedited.find({ requesterId: userIds }, callBack);
+};
+//-------------updated requested Book to be Accepted-------------------------
+var updateRequestedBookToAccepted = function (ownerId, requestedDonatedBookId, callBack) {
+	RequestedBook.findOneAndUpdate(
+		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
+		{ isAccepted: true },
+		{ new: true }
+	).exec(callBack);
+};
+
+
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;
 module.exports.saveUser = saveUser;
