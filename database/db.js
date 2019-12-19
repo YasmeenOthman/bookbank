@@ -74,36 +74,77 @@ var saveDonatedBook = function(donatedBook, callBack) {
 	newDonatedBook.save(callBack);
 };
 
-//=======================================================
-//-------------------Requested Book Schema---------------
-//=======================================================
+// //=======================================================
+// //-------------------Requested Book Schema---------------
+// //=======================================================
+// var requestedBooksSchema = mongoose.Schema({
+// 	requesterId: { type: String }, // the user who sent the request.
+// 	ownerId: { type: String }, // the who donated the book
+// 	bookId: { type: String }, // Id of the BluePrint book
+// 	donatedBookId: { type: String },
+// 	isAccepted: { type: Boolean, default: false },
+// 	isIgnored: { type: Boolean, default: false },
+// 	createdAt: { type: Date, default: Date.now }
+// });
+
+// //-------------------Requested Book Model-------------------------
+// let RequestedBook = mongoose.model('requested-books', requestedBooksSchema);
+
+// var saveRequestedBook = function(requestedBook, callBack) {
+// 	// console.log('in save function');
+// 	var newRequestedBook = new RequestedBook({
+// 		requesterId: requestedBook.requesterId,
+// 		ownerId: requestedBook.ownerId,
+// 		bookId: requestedBook.bookId,
+// 		donatedBookId: requestedBook.donatedBookId,
+// 		isAccepted: requestedBook.isAccepted,
+// 		isIgnored: requestedBook.isIgnored,
+// 		createdAt: requestedBook.createdAt
+// 	});
+
+// 	newRequestedBook.save(callBack);
+// };
+
+//=============NEW DESIGN FOR REQUESTED BOOKS SCHEMA========
+//============================================================
+//-----------------RequestedEdited Book Schema--------------
+//============================================================
 var requestedBooksSchema = mongoose.Schema({
-	requesterId: { type: String }, // the user who sent the request.
-	ownerId: { type: String }, // the who donated the book
-	bookId: { type: String }, // Id of the BluePrint book
+	requesterId: { type: String },
+	requesterName: { type: String }, //new
+	ownerId: { type: String },
+	ownerName: { type: String }, //new
+	bookId: { type: String },
+	bookName: { type: String }, //new
+	bookCover: { type: String },
 	donatedBookId: { type: String },
+	universityName: { type: String },
 	isAccepted: { type: Boolean, default: false },
 	isIgnored: { type: Boolean, default: false },
 	createdAt: { type: Date, default: Date.now }
 });
-
-//-------------------Requested Book Model-------------------------
-let RequestedBook = mongoose.model('requested-books', requestedBooksSchema);
-
+//-------------------Requested Book EDITED Model-------------------------
+let RequestedBook = mongoose.model('requestedBooks', requestedBooksSchema);
 var saveRequestedBook = function(requestedBook, callBack) {
 	// console.log('in save function');
 	var newRequestedBook = new RequestedBook({
 		requesterId: requestedBook.requesterId,
+		requesterName: requestedBook.requesterName,
 		ownerId: requestedBook.ownerId,
+		ownerName: requestedBook.ownerName,
 		bookId: requestedBook.bookId,
+		bookName: requestedBook.bookName,
+		bookCover: requestedBook.bookCover,
 		donatedBookId: requestedBook.donatedBookId,
+		universityName: requestedBook.universityName,
 		isAccepted: requestedBook.isAccepted,
 		isIgnored: requestedBook.isIgnored,
 		createdAt: requestedBook.createdAt
 	});
-
 	newRequestedBook.save(callBack);
 };
+//===================
+//===================
 
 //=======================================================
 //-------------------User Schema-------------------------

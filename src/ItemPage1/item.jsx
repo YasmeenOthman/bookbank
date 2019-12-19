@@ -12,13 +12,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from '../HomePage/NavBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from 'axios';
-import Container from '@material-ui/core/Container'
+import Container from '@material-ui/core/Container';
 import { useState, useEffect } from 'react';
 import { functions } from 'firebase';
 import jwt_decode from 'jwt-decode';
 import color from '@material-ui/core/colors/lime';
 import { awaitExpression } from '@babel/types';
-
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
 		height: 500,
 		borderRadius: 15,
 		border: '4px solid #77b747',
-		boxShadow: '5px 5px 2px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+		boxShadow:
+			'5px 5px 2px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
 	},
 	reqButton: {
 		color: 'rgb(255, 255, 255)',
@@ -58,21 +58,27 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-
 export default function Item() {
 	const classes = useStyles();
-	const [owner, setOwner] = React.useState('');
-	const [book, setBook] = useState([]);
-	const [ownerBook, setOwnerBook] = useState([]);
-	const [univName, setUnivName] = React.useState('');
-	const [ownerId, setOwnerId] = React.useState('');
-	const [donatedBooks, setDonatedBooks] = React.useState('');
+	const [ owner, setOwner ] = React.useState('');
+	const [ book, setBook ] = useState([]);
+	const [ ownerBook, setOwnerBook ] = useState([]);
+	const [ univName, setUnivName ] = React.useState('');
+	const [ ownerId, setOwnerId ] = React.useState('');
+	const [ donatedBooks, setDonatedBooks ] = React.useState('');
+	const [ bookName, setBookName ] = React.useState('');
+	const [ bookCover, setBookCover ] = React.useState('');
+	const [ ownerName, setOwnerName ] = React.useState('');
+	const [ requesterName, setRequesterName ] = React.useState('');
+	const [ requesterId, setRequesterId ] = React.useState('');
+	const [ bookId, setBookId ] = React.useState('');
 
 	//----------get the token from the local storage-----------
 	var token = localStorage.getItem('usertoken');
 	if (token) {
 		const decoded = jwt_decode(token);
 		var userIdFromToken = decoded.userId;
+		var userNameFromToken = decoded.userName;
 		console.log(userIdFromToken);
 	}
 
@@ -87,20 +93,24 @@ export default function Item() {
 			.then((res) => {
 				setBook(res.data.bluePrintBook);
 				setUnivName(res.data.universityNameOfBook.universityName);
+				setBookName(res.data.bluePrintBook.bookName);
+				setBookCover(res.data.bluePrintBook.bookCover);
 				setOwnerBook(res.data.donatedBooksOwners);
 				setDonatedBooks(res.data.donatedBooks);
-				console.log("Donateeeed", res.data.donatedBooksOwners);
+				setRequesterName(userNameFromToken);
+				setRequesterId(userIdFromToken);
+				setBookId(res.data.bluePrintBook._id);
+
+				console.log('Donateeeed', res.data.donatedBooksOwners);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}
-		, []);
+	}, []);
 
 	const handleChange = (event) => {
 		setOwnerId(event.target.value);
 	};
-
 
 	const handleRequest = (event) => {
 		var path = window.location.href;
@@ -110,23 +120,40 @@ export default function Item() {
 		event.preventDefault();
 
 		// console.log(ownerId);
-		console.log("before and after")
+		console.log('before and after');
 		// setOwnerId("test");
-		console.log(ownerId)
+		console.log(ownerId);
 		//------The choosen donated book Id--------
-		var choosenDonatedBookId = "";
+		var choosenDonatedBookId = '';
 		for (var i = 0; i < donatedBooks.length; i++) {
 			if (ownerId === donatedBooks[i].userId) {
 				choosenDonatedBookId = donatedBooks[i]._id;
+			}
+		}
+
+		//------The choosen book owner--------
+		var choosenOwnerName = '';
+		for (var i = 0; i < ownerBook.length; i++) {
+			console.log('the choosen ownerId inside for loop to find the owner name: ', ownerId);
+			if (ownerId === ownerBook[i]._id) {
+				choosenOwnerName = ownerBook[i].userName;
+				console.log(choosenOwnerName);
+				// setOwnerName(ownerBook[i].userName);
+				// setOwnerName("test");
 			}
 		}
 		//--------send requested book info-----------
 		axios
 			.post(`http://localhost:8000/university/${univId}/book/${bookId}/sendBookRequest`, {
 				requesterId: userIdFromToken,
+				requesterName: userNameFromToken,
 				ownerId: ownerId,
+				ownerName: choosenOwnerName,
 				bookId: bookId,
-				donatedBookId: choosenDonatedBookId
+				bookName: bookName,
+				bookCover: bookCover,
+				donatedBookId: choosenDonatedBookId,
+				universityName: univName
 			})
 			.then((response) => {
 				console.log(response.data);
@@ -134,13 +161,13 @@ export default function Item() {
 			.catch((error) => {
 				console.log(error);
 			});
-		alert("Your Request is sent Successfully ")
+		alert('Your Request is sent Successfully ');
 	};
 	return (
 		<div>
 			<NavBar />
 			<div className={classes.root}>
-				<Container >
+				<Container>
 					<Grid container spacing={4}>
 						<Grid item>
 							<ButtonBase className={classes.image}>
@@ -164,7 +191,9 @@ export default function Item() {
 										<Typography variant="subtitle1">
 											<b>Choose the Owner name you want to borrow the book from:</b>
 										</Typography>
-										<InputLabel id="demo-simple-select-label" className={classes.label}>Owner</InputLabel>
+										<InputLabel id="demo-simple-select-label" className={classes.label}>
+											Owner
+										</InputLabel>
 										<Select
 											labelId="demo-simple-select-label"
 											id="demo-simple-select"
@@ -172,19 +201,24 @@ export default function Item() {
 											onChange={handleChange}
 										>
 											{ownerBook.map((owner1, i) => (
-												<MenuItem key={i} value={owner1._id} >
+												<MenuItem key={i} value={owner1._id}>
 													{' '}
 													{owner1.userName}
-													{console.log("The id of choosen owner in dropDownList", owner1._id)}
+													{console.log('The id of choosen owner in dropDownList', owner1._id)}
 												</MenuItem>
 											))}
-
 										</Select>
 									</FormControl>
 								</Grid>
 								<Grid item>
 									<div>
-										<Button variant="contained" onClick={handleRequest} className={classes.reqButton}>Send Request For Owner</Button>
+										<Button
+											variant="contained"
+											onClick={handleRequest}
+											className={classes.reqButton}
+										>
+											Send Request For Owner
+										</Button>
 									</div>
 								</Grid>
 							</Grid>
