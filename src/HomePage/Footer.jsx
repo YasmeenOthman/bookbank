@@ -15,9 +15,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   imgAva: {
-    height: 80,
-    width: 80,
-    border: '2px solid white'
+    height: 100,
+    width: 100,
+    border: '2px solid white',
+    borderRadius: '50%'
   },
   grayFotter: {
     background: '#484848',
@@ -39,7 +40,7 @@ export const Footer = () => {
         <Container>
           <Grid container justify="center" alignItems="center" spacing={3}>
             <Grid item xs>
-              <img alt="img" src="https://previews.123rf.com/images/yupiramos/yupiramos1609/yupiramos160902988/62320150-hotel-employees-avatar-icon-vector-illustration-design.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://serving.photos.photobox.com/019848108651f78a4223f48aad7d12b0fabb7291aa896c9de9f665acbf513fb80f693f9c.jpg" className={classes.imgAva} />
               <p>Nazeh M.Taha</p>
             </Grid>
             <Grid item xs>

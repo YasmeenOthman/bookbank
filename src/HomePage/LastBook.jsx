@@ -19,12 +19,14 @@ const useStyles = makeStyles((theme) =>
 			padding: theme.spacing(2),
 			textAlign: 'center',
 			color: theme.palette.text.secondary,
-			height: 500
+			height: 470,
+			borderRadius: 15
 		},
 		imgBook: {
 			height: 385,
 			marginBottom: 10,
-			maxWidth: '100%'
+			maxWidth: '100%',
+			borderRadius: 15
 		},
 		h2: {
 			color: 'gray',
