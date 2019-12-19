@@ -324,6 +324,11 @@ var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
 var getBluePrintBooks = function(bluePrintBooksId, callBack) {
 	Book.find({ _id: { $in: bluePrintBooksId } }).exec(callBack);
 };
+//----------------get Owner Profile ---------------------
+var getOwnerEmailOfRequestedBook = function(ownerId, callBack) {
+	User.findOne({ _id: ownerId }).exec(callBack);
+};
+
 //-----------get university name from its Id----------------
 var getUniversityName = function(univId, callBack) {
 	University.findOne({ _id: univId }).exec(callBack);
@@ -362,5 +367,6 @@ module.exports.updateRequestedBookToAccepted = updateRequestedBookToAccepted;
 module.exports.updateRequestedBookToIgnored = updateRequestedBookToIgnored;
 module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
 module.exports.getBluePrintBooks = getBluePrintBooks;
+module.exports.getOwnerEmailOfRequestedBook = getOwnerEmailOfRequestedBook;
 module.exports.getUniversityName = getUniversityName;
 module.exports.editProfile = editProfile;

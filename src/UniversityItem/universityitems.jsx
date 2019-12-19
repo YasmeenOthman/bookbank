@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) =>
 				},
 				'& $imageMarked': {
 					opacity: 0
-				},
-				'& $imageTitle': {
-					border: '4px solid currentColor'
 				}
+				// '& $imageTitle': {
+				// 	border: '4px solid currentColor'
+				// }
 			}
 		},
 		focusVisible: {},
