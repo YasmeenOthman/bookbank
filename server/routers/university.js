@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bookBankDB = require('../../database/db.js');
 const sendMail = require('.././sendRequestMail.js');
+const checkToken = require(".././Authorization/middleware.js")
 
 //---------------- Universities Page --------------------------
 router.route('/').get(function (req, res) {
@@ -15,10 +16,19 @@ router.route('/').get(function (req, res) {
 //----------------Items Page Route --------------------------
 router.route('/:univId').get(function (req, res) {
 	const univId = req.params.univId;
-	bookBankDB.getBooksOfUniversity(univId, function (err, booksOFTheUniversity) {
+	var dataOfUniversityPage = {
+		universityName: '',
+		universityBooks: []
+	};
+	bookBankDB.getUniversityName(univId, function (err, univObj) {
 		if (err) throw err;
-		//console.log(booksOFTheUniversity);
-		res.json(booksOFTheUniversity);
+		dataOfUniversityPage.universityName = univObj.universityName;
+		bookBankDB.getBooksOfUniversity(univId, function (err, booksOFTheUniversity) {
+			if (err) throw err;
+			//console.log(booksOFTheUniversity);
+			dataOfUniversityPage.universityBooks = booksOFTheUniversity;
+			res.json(dataOfUniversityPage);
+		});
 	});
 });
 

@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 
 export const ItemsPage  = () => {
   const [books, setbooks] = useState([]);
-  const [university,setUniversity]=useState([]);
+  const [universityName,setuniversityName]=useState('');
   const classes = useStyles();
 
 	useEffect(() => {
@@ -66,10 +66,8 @@ export const ItemsPage  = () => {
 			.then((res) => {
 				//console.log(res);
 				let universities = res.data.universities;
-				setbooks(res.data);
-				setUniversity(universities);
-				setUniversity(res.data);
-				console.log(res.data);
+				setbooks(res.data.universityBooks);
+				setuniversityName(res.data.universityName)
 			})
 			.catch((err) => {
 				console.log(err);
@@ -80,8 +78,8 @@ export const ItemsPage  = () => {
 		<div>
 			<NavBar />
 			<Container>
-				<h2 className={classes.root1}>University</h2>
-				<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+				<h2 className={classes.root1}>{universityName} Books</h2>
+				<Grid container direction="row"  spacing={3}>
 					{books.map((book) => (
 						<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
 							<Paper className={classes.paper}>

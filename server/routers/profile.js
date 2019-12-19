@@ -132,11 +132,11 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
 	console.log('hereeeeeeeeeeeeeeeeeeeeee');
-	var data = {
+	var data = [{
 		requestedBooks: [],
 		namesOfOwners: [],
 		bluePrintBooks: []
-	};
+	}];
 	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
 		console.log(requestedBooksByTheUser);

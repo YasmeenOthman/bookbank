@@ -54,7 +54,8 @@ const userStyles = makeStyles({
 		marginRight: 10,
 	},
 	title: {
-		color: 'white',
+		color: 'gray',
+		marginLeft: 27
 	}
 });
 
@@ -113,14 +114,6 @@ export const NavBar = () => {
 		}
 	}
 
-	// return focus to the button when we transitioned from !open -> open
-	// const prevOpen = React.useRef(open);
-	// React.useEffect(() => {
-	//   if (prevOpen.current === true && open === false) {
-	//     anchorRef.focus();
-	//   }
-	//   prevOpen.current = open;
-	// }, [open]);
 
 	return (
 		<div>
@@ -139,26 +132,11 @@ export const NavBar = () => {
 							alignItems="center"
 						>
 							<Grid item>
-								<Link href="#" style={{ textDecoration: "none" }}>
-									<Button
-										startIcon={<MailOutlineIcon />}
-										className={classes.button}
-									>
-										{" "}
-										Contact{" "}
-									</Button>
-								</Link>
-							</Grid>
-							<Grid item>
-								<Link href="#" style={{ textDecoration: "none" }}>
-									<Button
-										startIcon={<AndroidIcon />}
-										className={classes.button}
-									>
-										{" "}
-										Mobile App{" "}
-									</Button>
-								</Link>
+							<Link href="/">
+								<Typography variant="h6" noWrap className={classes.title}>
+									BOOK BANK
+							</Typography>
+							</Link>
 							</Grid>
 						</Grid>
 
@@ -257,11 +235,7 @@ export const NavBar = () => {
 							alignItems="center"
 						>
 							<NavCate />
-							<Link href="/">
-								<Typography variant="h6" noWrap className={classes.title}>
-									BOOK BANK
-							</Typography>
-							</Link>
+
 						</Grid>
 						<Grid
 							item
