@@ -4,8 +4,8 @@ const bookBankDB = require('../../database/db.js');
 const sendMail = require('.././sendRequestMail.js');
 
 //---------------- Universities Page --------------------------
-router.route('/').get(function (req, res) {
-	bookBankDB.getAllUniversities(function (err, allUniversities) {
+router.route('/').get(function(req, res) {
+	bookBankDB.getAllUniversities(function(err, allUniversities) {
 		if (err) throw err;
 		//console.log(allUniversities);
 		res.json(allUniversities);
@@ -14,36 +14,38 @@ router.route('/').get(function (req, res) {
 
 //----------------Items Page Route --------------------------
 router.route('/:univId').get(function(req, res) {
-  const univId = req.params.univId;
-  var dataOfUniversityPage = {
-    universityName: '',
-    universityBooks: []
-  };
-  bookBankDB.getUniversityName(univId, function(err, univObj) {
-    if (err) throw err;
-    dataOfUniversityPage.universityName = univObj.universityName;
-    bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
-      if (err) throw err;
-      //console.log(booksOFTheUniversity);
-      dataOfUniversityPage.universityBooks = booksOFTheUniversity;
-      res.json(dataOfUniversityPage);
-    });
-  });
-});
+	const univId = req.params.univId;
+	var dataOfUniversityPage = {
+		universityName: '',
+		universityBooks: []
+	};
 
-//----------------Books according to uni name Route --------------------------
-router.route('/name').get(function (req, res) {
-	const univname = req.params.universityName;
-	console.log(univname);
-	bookBankDB.getBooksOfUniversity(univname, function (err, booksOFTheUniversity) {
+	bookBankDB.getUniversityName(univId, function(err, univObj) {
 		if (err) throw err;
-		//console.log(booksOFTheUniversity);
-		res.json(booksOFTheUniversity);
+		dataOfUniversityPage.universityName = univObj.universityName;
+
+		bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
+			if (err) throw err;
+			console.log(booksOFTheUniversity);
+			dataOfUniversityPage.universityBooks = booksOFTheUniversity;
+			res.json(dataOfUniversityPage);
+		});
 	});
 });
 
+//----------------Items Page Route --------------------------
+router.route('/:univId/allBooks').get(function(req, res) {
+	const univId = req.params.univId;
+
+	bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
+		if (err) throw err;
+		res.json(booksOFTheUniversity);
+	});
+	// });
+});
+
 //----------------- Item Page Route----------------------------
-router.route('/:univId/book/:bookId').get(function (req, res) {
+router.route('/:univId/book/:bookId').get(function(req, res) {
 	console.log('serving the item page route');
 	var bookId = req.params.bookId;
 
@@ -55,12 +57,12 @@ router.route('/:univId/book/:bookId').get(function (req, res) {
 	};
 
 	//---- get bluePrint book ----
-	bookBankDB.getbluePrintBook(bookId, function (err, bluePrintBook) {
+	bookBankDB.getbluePrintBook(bookId, function(err, bluePrintBook) {
 		if (err) throw err;
 		//console.log(bluePrintBook);
 		itemPageData['bluePrintBook'] = bluePrintBook;
 
-		bookBankDB.getUnivName(bluePrintBook.universityId, function (err, uniName) {
+		bookBankDB.getUnivName(bluePrintBook.universityId, function(err, uniName) {
 			if (err) {
 				throw err;
 			}
@@ -68,18 +70,18 @@ router.route('/:univId/book/:bookId').get(function (req, res) {
 			console.log(uniName);
 
 			//---- get donated books of that bluePrint book ----
-			bookBankDB.getDonatedBooks(bookId, function (err, donatedBooks) {
+			bookBankDB.getDonatedBooks(bookId, function(err, donatedBooks) {
 				if (err) throw err;
 
 				//console.log(donatedBooks);
 				itemPageData['donatedBooks'] = donatedBooks;
 
 				//get Users Id of the donated books
-				var usersId = donatedBooks.map(function (doc) {
+				var usersId = donatedBooks.map(function(doc) {
 					return doc.userId;
 				});
 
-				bookBankDB.getDonatedBooksOwnersName(usersId, function (err, profiles) {
+				bookBankDB.getDonatedBooksOwnersName(usersId, function(err, profiles) {
 					if (err) throw err;
 					itemPageData['donatedBooksOwners'] = profiles;
 					res.json(itemPageData);
@@ -90,7 +92,7 @@ router.route('/:univId/book/:bookId').get(function (req, res) {
 });
 
 //------------- create a requested book ----------------------------
-router.route('/:univId/book/:bookId/sendBookRequest').post(function (req, res) {
+router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
 	var requestedBook = req.body;
 	// console.log(requestedBook)
 	var bookId = req.params.bookId;
@@ -102,25 +104,22 @@ router.route('/:univId/book/:bookId/sendBookRequest').post(function (req, res) {
 		isAccepted: false,
 		createdAt: Date.now()
 	};
-	bookBankDB.saveRequestedBook(requestedBookInfo, function (err, requestedBook) {
+	bookBankDB.saveRequestedBook(requestedBookInfo, function(err, requestedBook) {
 		if (err) throw err;
 		console.log(requestedBook);
 		var ownerId = requestedBook.ownerId;
-		bookBankDB.getOwnerEmailOfRequestedBook(ownerId, function (err, ownerDoc) {
+		bookBankDB.getOwnerEmailOfRequestedBook(ownerId, function(err, ownerDoc) {
 			if (err) throw err;
-			console.log("owner info of the requested book");
+			console.log('owner info of the requested book');
 			var ownerEmail = ownerDoc.email;
 			console.log(ownerEmail);
 			// res.json({
 			// 	requestedBook: requestedBook,
 			// 	ownerEmail: ownerEmail
 			// });
-			sendMail(ownerEmail)
+			sendMail(ownerEmail);
 		});
-
 	});
-
-
 });
 
 module.exports = router;
