@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) =>
 				},
 				'& $imageMarked': {
 					opacity: 0
-				},
-				'& $imageTitle': {
-					border: '4px solid currentColor'
 				}
+				// '& $imageTitle': {
+				// 	border: '4px solid currentColor'
+				// }
 			}
 		},
 		focusVisible: {},
@@ -95,10 +95,13 @@ const useStyles = makeStyles((theme) =>
 	})
 );
 export const Universityitems = (props) => {
-  const [university,setUniversity]=useState([]);
+	const [ university, setUniversity ] = useState([]);
+
 	const classes = useStyles();
+
+	//----------get all the Universities-----------
 	useEffect(() => {
-	axios
+		axios
 			.get(`http://localhost:8000/university`)
 			.then((res) => {
 				//console.log(res);
@@ -110,50 +113,50 @@ export const Universityitems = (props) => {
 			});
 	}, []);
 
-
 	return (
 		<div>
 			<NavBar />
-			<Container >
+			<Container>
 				<h2 className={classes.h2}>Universities</h2>
 
-					<div className={classes.root}>
-						{university.map((university) => (
-							<ButtonBase
-								focusRipple
-								key={university._id}
-								className={classes.image}
-								focusVisibleClassName={classes.focusVisible}
+				<div className={classes.root}>
+					{university.map((university) => (
+						<ButtonBase
+							focusRipple
+							key={university._id}
+							className={classes.image}
+							focusVisibleClassName={classes.focusVisible}
+							style={{
+								width: '24%',
+								margin: '10px 10px 10px 0',
+								borderRadius: 15,
+								boxShadow:
+									'4px 5px 9px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+							}}
+						>
+							<span
+								className={classes.imageSrc}
 								style={{
-									width: '24%',
-									margin: '10px 10px 10px 0',
-									borderRadius: 15,
-									boxShadow: '4px 5px 9px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+									backgroundImage: `url(${university.universityImg})`
 								}}
-							>
-								<span
-									className={classes.imageSrc}
-									style={{
-										backgroundImage: `url(${university.universityImg})`
-									}}
-								/>
-								<Link href={`/university/${university._id}`}>
-									<span className={classes.imageBackdrop} />
-									<span className={classes.imageButton}>
-										<Typography
-											component="span"
-											variant="subtitle1"
-											color="inherit"
-											className={classes.imageTitle}
-										>
-											{university.universityName}
-											<span className={classes.imageMarked} />
-										</Typography>
-									</span>
-								</Link>
-							</ButtonBase>
-						))}
-					</div>
+							/>
+							<Link href={`/university/${university._id}`}>
+								<span className={classes.imageBackdrop} />
+								<span className={classes.imageButton}>
+									<Typography
+										component="span"
+										variant="subtitle1"
+										color="inherit"
+										className={classes.imageTitle}
+									>
+										{university.universityName}
+										<span className={classes.imageMarked} />
+									</Typography>
+								</span>
+							</Link>
+						</ButtonBase>
+					))}
+				</div>
 			</Container>
 		</div>
 	);
