@@ -96,7 +96,10 @@ const useStyles = makeStyles((theme) =>
 );
 export const Universityitems = (props) => {
 	const [ university, setUniversity ] = useState([]);
+
 	const classes = useStyles();
+
+	//----------get all the Universities-----------
 	useEffect(() => {
 		axios
 			.get(`http://localhost:8000/university`)

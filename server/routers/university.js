@@ -26,11 +26,22 @@ router.route('/:univId').get(function(req, res) {
 
 		bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
 			if (err) throw err;
-			//console.log(booksOFTheUniversity);
+			console.log(booksOFTheUniversity);
 			dataOfUniversityPage.universityBooks = booksOFTheUniversity;
 			res.json(dataOfUniversityPage);
 		});
 	});
+});
+
+//----------------Items Page Route --------------------------
+router.route('/:univId/allBooks').get(function(req, res) {
+	const univId = req.params.univId;
+
+	bookBankDB.getBooksOfUniversity(univId, function(err, booksOFTheUniversity) {
+		if (err) throw err;
+		res.json(booksOFTheUniversity);
+	});
+	// });
 });
 
 //----------------- Item Page Route----------------------------

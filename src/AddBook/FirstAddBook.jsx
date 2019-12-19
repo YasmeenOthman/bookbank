@@ -125,9 +125,9 @@ const useStyles = makeStyles((theme) => ({
 		cursor: 'pointer',
 		color: 'gray'
 	},
-	// searchImg: {
-	// 	borderRight: '4px solid #77b748'
-	// },
+	searchImg: {
+		borderRight: '4px solid #77b748'
+	},
 	h2: {
 		textAlign: 'center',
 		marginTop: 100,
@@ -174,15 +174,17 @@ if (token) {
 }
 
 export const FirstAddBook = (props) => {
-	useEffect(() => {
-		// props.fetchPosts();
-	}, []);
+	// useEffect(() => {
+	// 	// props.fetchPosts();
+	// }, []);
 	const classes = useStyles();
 	const [ choosenUniv, setChoosenUniv ] = React.useState('');
-	const [ allUnivs, setallUnivs ] = React.useState([]);
-	const [ searchValue, setSearchValue ] = useState(''); //Hooks for Search function
-	const [ allbooksOfUniv, setAllbooksOfUniv ] = useState([]);
+	const [ allUnivs, setAllUnivs ] = React.useState([]);
+	const [ searchValue, setSearchValue ] = React.useState(''); //Hooks for Search function
+	const [ allbooksOfUniv, setAllbooksOfUniv ] = React.useState([]);
 	const [ bluePrintBookId, setBluePrintBookId ] = React.useState('');
+
+	const [ univId, setUnivId ] = React.useState('');
 
 	//-----------------------------Search related to University Name-----------------------------
 
@@ -212,9 +214,10 @@ export const FirstAddBook = (props) => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/university/`)
+			.get(`http://localhost:8000/university`)
 			.then((res) => {
-				setallUnivs(res.data);
+				setAllUnivs(res.data);
+				console.log('Get All Universities', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -228,8 +231,11 @@ export const FirstAddBook = (props) => {
 		setChoosenUniv(event.target.value);
 
 		var univId = findChoosenUnivId(choosenUniv);
+		console.log(univId);
+		console.log('univ Id from select:  ', univId);
+
 		axios
-			.get(`http://localhost:8000/university/${univId}`)
+			.get(`http://localhost:8000/university/${univId}/allBooks`)
 			.then((res) => {
 				setAllbooksOfUniv(res.data);
 				console.log('All the books related to universityName11', res.data);
@@ -240,7 +246,6 @@ export const FirstAddBook = (props) => {
 	};
 
 	//-----------------------------To add newBook to Donated Books -----------------------------
-
 	const handleSumbit = (event) => {
 		event.preventDefault();
 		var path = window.location.href;
@@ -248,7 +253,7 @@ export const FirstAddBook = (props) => {
 		var myPath = path.split('/');
 		var userid = myPath[4];
 		// setBluePrintBookId(bluePrintId);
-		console.log('book id i chosed', bluePrintBookId);
+		// console.log('book id i chosed');
 
 		axios
 			.post(`http://localhost:8000/profile/${userid}/AddDonatedBook`, {
@@ -257,11 +262,11 @@ export const FirstAddBook = (props) => {
 			})
 			.then((response) => {
 				console.log(response.data);
+				alert('You added New Book');
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-		alert('You added New Book');
 	};
 
 	//================================================
@@ -272,6 +277,7 @@ export const FirstAddBook = (props) => {
 	};
 	//-----------------------------To get universityName according to UniversityID-----------------------------
 	const findChoosenUnivId = (choosenUnivName) => {
+		console.log(allUnivs);
 		for (var i = 0; i < allUnivs.length; i++) {
 			if (allUnivs[i].universityName === choosenUnivName) {
 				return allUnivs[i]._id;
