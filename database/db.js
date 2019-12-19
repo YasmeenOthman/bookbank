@@ -105,6 +105,41 @@ var saveRequestedBook = function (requestedBook, callBack) {
 	newRequestedBook.save(callBack);
 };
 
+//-------------------RequestedEdited Book Schema---------------
+//=======================================================
+var requestedBooksEditedSchema = mongoose.Schema({
+	requesterId: { type: String }, 
+	requesterName: {type: String}, //new
+	ownerId: { type: String }, 
+	OwnerName: {type: String}, //new
+	bookId: { type: String }, 
+	bookName: {type: String}, //new
+	donatedBookId: { type: String },
+	isAccepted: { type: Boolean, default: false },
+	isIgnored: { type: Boolean, default: false },
+	createdAt: { type: Date, default: Date.now }
+});
+
+//-------------------Requested Book EDITED Model-------------------------
+let RequestedBookedited = mongoose.model('requested-books-edited', requestedBooksEditedSchema);
+
+var saveRequestedBookedited = function (requestedBookedited, callBack) {
+	// console.log('in save function');
+	var newRequestedBookedited = new RequestedBookedited({
+		requesterId: requestedBookedited.requesterId,
+		requesterName: requestedBookedited.requesterName,
+		ownerId: requestedBookedited.ownerId,
+		bookId: requestedBookedited.bookId,
+		bookName: requestedBookedited.bookName,
+		donatedBookId: requestedBookedited.donatedBookId,
+		isAccepted: requestedBookedited.isAccepted,
+		isIgnored: requestedBookedited.isIgnored,
+		createdAt: requestedBookedited.createdAt
+	});
+
+	newRequestedBookedited.save(callBack);
+};
+
 //=======================================================
 //-------------------User Schema-------------------------
 //=======================================================
@@ -371,3 +406,4 @@ module.exports.makeDonatedBookUnavailable = makeDonatedBookUnavailable;
 module.exports.getBluePrintBooks = getBluePrintBooks;
 module.exports.getOwnerEmailOfRequestedBook = getOwnerEmailOfRequestedBook;
 module.exports.getUniversityName = getUniversityName;
+module.exports.saveRequestedBookedited = saveRequestedBookedited;
