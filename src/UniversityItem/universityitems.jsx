@@ -105,8 +105,8 @@ export const Universityitems = (props) => {
 			.get(`http://localhost:8000/university`)
 			.then((res) => {
 				//console.log(res);
-				setUniversity(res.data.universityBooks);
-				console.log(res.data.universityBooks);
+				setUniversity(res.data);
+				console.log(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
