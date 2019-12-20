@@ -30,8 +30,10 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: 1500
 	},
 	avatar: {
-		width: '100px',
-		height: '100px'
+		width: '150px',
+		height: '150px',
+		margin: 'auto'
+		
 	},
 	formControl: {
 		margin: theme.spacing(1),
@@ -39,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(2)
+	},
+	userDiv: {
+		margin: '85px 0px'
 	},
 	brofile: {
 		marginTop: 100,
@@ -68,7 +73,6 @@ function UserProfile(props) {
 	var id = decoded.userId;
 	console.log(id);
 	const classes = useStyles();
-
 	const [profile, setProfile] = React.useState('');
 	const [profilePic, setProfilePic] = React.useState('');
 
@@ -160,41 +164,35 @@ function UserProfile(props) {
 				<NavBar />
 			</div>
 			<Container>
-			<Typography gutterBottom variant="h5" className={classes.brofile}>USER PROFILE</Typography>
 				<Grid
 					container
 					direction="row"
 					justify="center"
 					alignItems="center"
 				>
-					<Grid item xs={4}>
-
+					<Grid item xs={4} className={classes.userDiv}>
 						<Avatar className={classes.avatar} src={profilePic} alt="Profile picture" />
+					
+					</Grid>
+					<Grid item xs={8} justify="center"
+					alignItems="center">
+						<Typography variant="subtitle1"><b>Name:</b> {userName}</Typography>
+						<Typography variant="subtitle1">
+							<b>Email:</b> {email}
+						</Typography>
+						<div>
 						<Button variant="contained" component="label">
 							<input type="file" onChange={handleImageAsFile} style={{ maxWidth: '50' }} />
 						</Button>
 						<Button variant="contained" onClick={handleFireBaseUpload}>
 							Save Photo
-							</Button>
-					</Grid>
-					<Grid item xs={8}>
-
-						
-
-						<Typography variant="subtitle1">Name:{userName}</Typography>
-
-						<Typography variant="subtitle1">
-							<b>Email:</b> {email}
-						</Typography>
-
-						<div>
+						</Button>
+						  <div>
 							<Link href={`/profile/${id}/AddDonatedBook`}>
 								<Button variant="contained">Add A BOOK</Button>
 							</Link>
-
-
+							</div>
 						</div>
-
 					</Grid>
 				</Grid>
 				<FullWidthTabs />
