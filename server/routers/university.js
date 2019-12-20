@@ -99,6 +99,7 @@ router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
 	var requestedBookInfo = {
 		requesterId: requestedBook.requesterId,
 		requesterName: requestedBook.requesterName,
+		requesterEmail: requestedBook.requesterEmail,
 		ownerId: requestedBook.ownerId,
 		ownerName: requestedBook.ownerName,
 		bookId: requestedBook.bookId,

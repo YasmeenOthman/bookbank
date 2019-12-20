@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import jwt_decode from 'jwt-decode';
+// import sendEmail from 'server/acceptRequestMail.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,32 +51,39 @@ export default function BooksRequested() {
       });
   }, []);
 
-  const handleaccept = (donatedBookId) => {
+  const handleAccept = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
         userId: userIdFromToken,
-        donatedBookId: donatedBookId
+        donatedBookId: donatedBookId,
+        requesterId: requesterId
 			})
 			.then((response) => {
         console.log("hiiiii",response.data);
+        alert(`You have Accepted ${requesterName} Request!`);
+        window.location.href = `http://localhost:3000/profile/${userIdFromToken}`;
         
 			})
 			.catch((error) => {
 				console.log(error);
       });
       console.log("accepted successfully")
+      // sendEmail(requesterEmail, requesterName, bookName)
 	};
  
-  const handleignore = (donatedBookId) => {
+  const handleIgnore = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
         userId: userIdFromToken,
-        donatedBookId: donatedBookId
+        donatedBookId: donatedBookId,
+        requesterId: requesterId
 			})
 			.then((response) => {
         console.log("hiiiii",response.data);
+        alert(`You have Ignored ${requesterName} Request!`);
+        window.location.href = `http://localhost:3000/profile/${userIdFromToken}`;
         
 			})
 			.catch((error) => {
@@ -85,38 +93,44 @@ export default function BooksRequested() {
 	};
   return (
     <div>
-    <div className={classes.root}>   
-      {data.map((book) => (
-            <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm container>
-           <Grid item xs container direction="column" spacing={2}>
-           <Grid item xs>
-           <Typography gutterBottom variant="subtitle1">
-      {book.requesterName} requested your book {book.bookName}
-         </Typography>
-           </Grid>
-           <Grid item>
-               <Button variant="contained" component="label" className={classes.button1} 
-               onClick ={(event)=> {event.preventDefault();
-                handleaccept(book.donatedBookId)
-              }} 
-               >
-             Accept
-           </Button>
-           <Button variant="contained" component="label" className={classes.button2}
-            onClick ={(event)=> {event.preventDefault();
-              handleignore(book.donatedBookId)
-            }} 
-             >
-             Ignore
-           </Button>
-           </Grid>
-           </Grid>
-           </Grid>
-          </Grid>
-        </Paper>  
-      ))}                  
+    <div className={classes.root}>  
+        {data.isAccepted || data.isIgnored ? (
+             <div>no requested books</div>  
+    ): (
+      data.map((book) => (
+        <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container>
+      <Grid item xs container direction="column" spacing={2}>
+      <Grid item xs>
+      <Typography gutterBottom variant="subtitle1">
+  {book.requesterName} requested your book {book.bookName}
+    </Typography>
+      </Grid>
+      <Grid item>
+          <Button variant="contained" component="label" className={classes.button1} 
+          onClick ={(event)=> {event.preventDefault();
+            handleAccept(book.donatedBookId, book.requesterName, book.requesterId)
+          }} 
+          >
+        Accept
+      </Button>
+      <Button variant="contained" component="label" className={classes.button2}
+        onClick ={(event)=> {event.preventDefault();
+          handleIgnore(book.donatedBookId, book.requesterName, book.requesterId)
+        }} 
+        >
+        Ignore
+      </Button>
+      </Grid>
+      </Grid>
+      </Grid>
+      </Grid>
+    </Paper>  
+      ))
+
+    )} 
+                        
     </div>
     </div>
   )
