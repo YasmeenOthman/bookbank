@@ -51,15 +51,18 @@ export default function BooksRequested() {
       });
   }, []);
 
-  const handleaccept = (donatedBookId) => {
+  const handleAccept = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
         userId: userIdFromToken,
-        donatedBookId: donatedBookId
+        donatedBookId: donatedBookId,
+        requesterId: requesterId
 			})
 			.then((response) => {
         console.log("hiiiii",response.data);
+        alert(`You have Accepted ${requesterName} Request!`);
+        window.location.href = `http://localhost:3000/profile/${userIdFromToken}`;
         
 			})
 			.catch((error) => {
@@ -69,15 +72,18 @@ export default function BooksRequested() {
       // sendEmail(requesterEmail, requesterName, bookName)
 	};
  
-  const handleignore = (donatedBookId) => {
+  const handleIgnore = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
         userId: userIdFromToken,
-        donatedBookId: donatedBookId
+        donatedBookId: donatedBookId,
+        requesterId: requesterId
 			})
 			.then((response) => {
         console.log("hiiiii",response.data);
+        alert(`You have Ignored ${requesterName} Request!`);
+        window.location.href = `http://localhost:3000/profile/${userIdFromToken}`;
         
 			})
 			.catch((error) => {
@@ -104,14 +110,14 @@ export default function BooksRequested() {
       <Grid item>
           <Button variant="contained" component="label" className={classes.button1} 
           onClick ={(event)=> {event.preventDefault();
-            handleaccept(book.donatedBookId)
+            handleAccept(book.donatedBookId, book.requesterName, book.requesterId)
           }} 
           >
         Accept
       </Button>
       <Button variant="contained" component="label" className={classes.button2}
         onClick ={(event)=> {event.preventDefault();
-          handleignore(book.donatedBookId)
+          handleIgnore(book.donatedBookId, book.requesterName, book.requesterId)
         }} 
         >
         Ignore
