@@ -22,7 +22,7 @@ export const App = () => {
 					<Route exact path={`/university/:id`} component={ItemsPage} />
 					<Route exact path={'/university/:univId/book/:bookId'} component={Item} />
 					<Route exact path="/login" component={SignIn} />
-					<Route  path="university" component={universityitems} />
+					<Route exact path="/university" component={universityitems} />
 					<Route exact path="/profile/:userId" component={UserProfile} />
 					<Route exact path="/profile/:userId/AddDonatedBook" component={FirstAddBook} />
 					<Route exact path="/profile/:userId/addBlueprintDonatedBook" component={AddBook} />
