@@ -112,6 +112,7 @@ var saveDonatedBook = function(donatedBook, callBack) {
 var requestedBooksSchema = mongoose.Schema({
 	requesterId: { type: String },
 	requesterName: { type: String }, //new
+	requesterEmail: {type: String},
 	ownerId: { type: String },
 	ownerName: { type: String }, //new
 	bookId: { type: String },
@@ -130,6 +131,7 @@ var saveRequestedBook = function(requestedBook, callBack) {
 	var newRequestedBook = new RequestedBook({
 		requesterId: requestedBook.requesterId,
 		requesterName: requestedBook.requesterName,
+		requesterEmail: requestedBook.requesterEmail,
 		ownerId: requestedBook.ownerId,
 		ownerName: requestedBook.ownerName,
 		bookId: requestedBook.bookId,
@@ -343,7 +345,7 @@ var updateRequestedBookToAccepted = function(ownerId, requestedDonatedBookId, ca
 	RequestedBook.findOneAndUpdate(
 		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
 		{ isAccepted: true },
-		{ new: true }
+		{ new: false }
 	).exec(callBack);
 };
 
@@ -352,13 +354,13 @@ var updateRequestedBookToIgnored = function(ownerId, requestedDonatedBookId, cal
 	RequestedBook.findOneAndUpdate(
 		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
 		{ isIgnored: true },
-		{ new: true }
+		{ new: false }
 	).exec(callBack);
 };
 
 //-------------updated DONATED Book to be unavailable-------------------------
 var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
-	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: true }).exec(callBack);
+	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: false }).exec(callBack);
 };
 
 //------------get bluePrint books of requested books -----------

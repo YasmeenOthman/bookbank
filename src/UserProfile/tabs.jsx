@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 //components import
 import BooksRequested from './BooksRequested.jsx';
-// import RequestedByMe from './RequestedByMe'
+import RequestedByMe from './RequestedByMe'
 // import Notifications from '.././Notify/Notification.js'
 import BooksDonated from './BooksDonated.jsx'
 import jwt_decode from "jwt-decode";
@@ -87,7 +87,7 @@ export default function FullWidthTabs() {
         >
           <Tab label="Books Donated" {...a11yProps(0)} />
           <Tab label="Books Requests" {...a11yProps(1)} />
-          {/* <Tab label="Books Requested By me" {...a11yProps(2)} /> */}
+          <Tab label="Books Requested By me" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -101,9 +101,9 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <BooksRequested />
         </TabPanel>
-        {/* <TabPanel value={value} index={2} dir={theme.direction}>
+        <TabPanel value={value} index={2} dir={theme.direction}>
             <RequestedByMe /> 
-        </TabPanel> */}
+        </TabPanel>
       </SwipeableViews>
     </div>
     </Container>

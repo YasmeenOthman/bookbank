@@ -68,6 +68,7 @@ export default function Item() {
 	const [ donatedBooks, setDonatedBooks ] = React.useState('');
 	const [ bookName, setBookName ] = React.useState('');
 	const [ bookCover, setBookCover ] = React.useState('');
+	const [ requesterEmail, setrequesterEmail ] = React.useState('');
 	const [ ownerName, setOwnerName ] = React.useState('');
 	const [ requesterName, setRequesterName ] = React.useState('');
 	const [ requesterId, setRequesterId ] = React.useState('');
@@ -79,6 +80,7 @@ export default function Item() {
 		const decoded = jwt_decode(token);
 		var userIdFromToken = decoded.userId;
 		var userNameFromToken = decoded.userName;
+		var emailFromToken = decoded.email;
 		console.log(userIdFromToken);
 	}
 
@@ -100,6 +102,7 @@ export default function Item() {
 				setRequesterName(userNameFromToken);
 				setRequesterId(userIdFromToken);
 				setBookId(res.data.bluePrintBook._id);
+				setrequesterEmail(res.data.requesterEmail)
 
 				console.log('Donateeeed', res.data.donatedBooksOwners);
 			})
@@ -153,7 +156,8 @@ export default function Item() {
 				bookName: bookName,
 				bookCover: bookCover,
 				donatedBookId: choosenDonatedBookId,
-				universityName: univName
+				universityName: univName,
+				requesterEmail: emailFromToken 
 			})
 			.then((response) => {
 				console.log(response.data);

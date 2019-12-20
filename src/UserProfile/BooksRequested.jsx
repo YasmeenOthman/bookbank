@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import jwt_decode from 'jwt-decode';
+// import sendEmail from 'server/acceptRequestMail.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,6 +66,7 @@ export default function BooksRequested() {
 				console.log(error);
       });
       console.log("accepted successfully")
+      // sendEmail(requesterEmail, requesterName, bookName)
 	};
  
   const handleignore = (donatedBookId) => {
@@ -85,38 +87,44 @@ export default function BooksRequested() {
 	};
   return (
     <div>
-    <div className={classes.root}>   
-      {data.map((book) => (
-            <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm container>
-           <Grid item xs container direction="column" spacing={2}>
-           <Grid item xs>
-           <Typography gutterBottom variant="subtitle1">
-      {book.requesterName} requested your book {book.bookName}
-         </Typography>
-           </Grid>
-           <Grid item>
-               <Button variant="contained" component="label" className={classes.button1} 
-               onClick ={(event)=> {event.preventDefault();
-                handleaccept(book.donatedBookId)
-              }} 
-               >
-             Accept
-           </Button>
-           <Button variant="contained" component="label" className={classes.button2}
-            onClick ={(event)=> {event.preventDefault();
-              handleignore(book.donatedBookId)
-            }} 
-             >
-             Ignore
-           </Button>
-           </Grid>
-           </Grid>
-           </Grid>
-          </Grid>
-        </Paper>  
-      ))}                  
+    <div className={classes.root}>  
+        {data.isAccepted || data.isIgnored ? (
+             <div>no requested books</div>  
+    ): (
+      data.map((book) => (
+        <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container>
+      <Grid item xs container direction="column" spacing={2}>
+      <Grid item xs>
+      <Typography gutterBottom variant="subtitle1">
+  {book.requesterName} requested your book {book.bookName}
+    </Typography>
+      </Grid>
+      <Grid item>
+          <Button variant="contained" component="label" className={classes.button1} 
+          onClick ={(event)=> {event.preventDefault();
+            handleaccept(book.donatedBookId)
+          }} 
+          >
+        Accept
+      </Button>
+      <Button variant="contained" component="label" className={classes.button2}
+        onClick ={(event)=> {event.preventDefault();
+          handleignore(book.donatedBookId)
+        }} 
+        >
+        Ignore
+      </Button>
+      </Grid>
+      </Grid>
+      </Grid>
+      </Grid>
+    </Paper>  
+      ))
+
+    )} 
+                        
     </div>
     </div>
   )
