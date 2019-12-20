@@ -139,7 +139,7 @@ export default function AddBook() {
 	React.useEffect(() => {
 
 		axios
-			.get(`https://rbk-bookbank.herokuapp.com/university/`)
+			.get(`https://blooming-refuge-64917.herokuapp.com/university/`)
 			.then((res) => {
 				setUnivs(res.data);
 			})
@@ -166,7 +166,7 @@ export default function AddBook() {
 			userId: userIdFromToken
 		};
 		axios
-			.post(`https://rbk-bookbank.herokuapp.com/profile/${userIdFromToken}/addBlueprintDonatedBook`, {
+			.post(`https://blooming-refuge-64917.herokuapp.com/profile/${userIdFromToken}/addBlueprintDonatedBook`, {
 				name: name,
 				description: description,
 				imgUrl: imageAsUrl,

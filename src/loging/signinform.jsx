@@ -92,7 +92,7 @@ class SignIn extends React.Component {
 			password: $('#password').val()
 		};
 		$.ajax({
-			url: 'https://rbk-bookbank.herokuapp.com/login',
+			url: 'https://blooming-refuge-64917.herokuapp.com/login',
 			method: 'POST',
 			data: data,
 			datatype: 'json',

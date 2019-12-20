@@ -102,7 +102,7 @@ export const Universityitems = (props) => {
 	//----------get all the Universities-----------
 	useEffect(() => {
 		axios
-			.get(`https://rbk-bookbank.herokuapp.com/university`)
+			.get(`https://blooming-refuge-64917.herokuapp.com/university`)
 			.then((res) => {
 				//console.log(res);
 				setUniversity(res.data);

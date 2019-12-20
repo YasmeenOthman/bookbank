@@ -58,7 +58,7 @@ export default function RequestedByMe() {
 		var univId = myPath[4];
 
 		axios
-			.get(`https://rbk-bookbank.herokuapp.com/profile/${id}/booksRequestedByTheUser`)
+			.get(`https://blooming-refuge-64917.herokuapp.com/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
 				setData(res.data);
 				console.log(res.data);

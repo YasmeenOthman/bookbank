@@ -16,7 +16,7 @@ class SignUp extends React.Component {
 
     };
     $.ajax({
-      url: "https://rbk-bookbank.herokuapp.com/signup",
+      url: "https://blooming-refuge-64917.herokuapp.com/signup",
       method: "POST",
       data: registerInfo,
       dataType: "json",

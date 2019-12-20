@@ -99,7 +99,7 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <BooksDonated />
         </TabPanel>
-        <Link href={`https://rbk-bookbank.herokuapp.com/profile/${id}/requestedBooks`}>
+        <Link href={`https://blooming-refuge-64917.herokuapp.com/profile/${id}/requestedBooks`}>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <BooksRequested />
         </TabPanel>
