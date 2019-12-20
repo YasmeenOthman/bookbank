@@ -10,6 +10,9 @@ import UserProfile from './UserProfile/user';
 // import MediaUploader from './MediaUpload/mediaUpload';
 import AddBook from './AddBook/Addbook';
 import { FirstAddBook } from './AddBook/FirstAddBook.jsx';
+// import { BooksDonated } from './UserProfile/BooksDonated.jsx'
+// import { BooksRequested } from './UserProfile/BooksRequested'
+// import { RequestedByMe } from './UserProfile/RequestedByMe.jsx'
 
 export const App = () => {
 	return (
@@ -26,6 +29,9 @@ export const App = () => {
 					<Route exact path="/profile/:userId" component={UserProfile} />
 					<Route exact path="/profile/:userId/AddDonatedBook" component={FirstAddBook} />
 					<Route exact path="/profile/:userId/addBlueprintDonatedBook" component={AddBook} />
+					{/* <Route exact path="/profile/:userId/donatedBooksAsBluePrints" component={BooksDonated} />
+					<Route exact path="/profile/:userId/requestedBooks" component={BooksRequested} />
+					<Route exact path="/profile/:userId/booksRequestedByTheUser" component={RequestedByMe} /> */}
 					{/* <Route exact path="profile/"/> */}
 				</Switch>
 			</div>
