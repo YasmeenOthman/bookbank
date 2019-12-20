@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RequestedByMe() {
 	const [ data, setData ] = useState([]);
-	const [ status, setStatus ] = useState('');
-
 
 	const classes = useStyles();
 	var token = localStorage.getItem('usertoken');
@@ -61,29 +59,16 @@ export default function RequestedByMe() {
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
 				setData(res.data);
-				console.log(res.data);
-				findStatus(res.data.isAccepted, res.data.isIgnored);
-
+				console.log("Books requests : ",res.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
 
-	var findStatus = function(accepted, ignored) {
-		if(accepted){
-			setStatus('Accepted');
-		}else if(ignored){
-			setStatus('Ignored');
-		}else if(!accepted && !ignored){
-			setStatus('Pending');
-		}
-	}
-
 	// var status = function ()
 	return (
 		<div>
-			
 				<Container>
 					<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
 						{data.map((book) => (
@@ -104,7 +89,20 @@ export default function RequestedByMe() {
 											style={{ color: 'Black', border: '1px solid white' }}
 											variant="outlined"
 										>
-											Status: {status};
+											{book.isAccepted ? (
+												<div>
+														Status: Accepted
+												</div>
+											): book.isIgnored ?(
+												<div>
+												Status: Ignored
+												</div>
+											):(
+												<div>
+												Status: Pending
+												</div>
+											)}
+											
 										</Button>
 										<Button
 											style={{ color: 'Black', border: '1px solid white' }}
@@ -112,14 +110,18 @@ export default function RequestedByMe() {
 										>
 											Owner: {book.ownerName}
 										</Button>
+										<Button
+											style={{ color: 'Black', border: '1px solid white' }}
+											variant="outlined"
+										>
+											Owner Email: {book.ownerEmail}
+										</Button>
 									</Link>
 								</Paper>
 							</Grid>
 						))}
 					</Grid>
 				</Container>
-			
-				
 		</div>
 	);
 }
