@@ -181,12 +181,16 @@ function UserProfile(props) {
 							<b>Email:</b> {email}
 						</Typography>
 						<div>
+						<b>Change Profile Photo</b>
+						<div>
 						<Button variant="contained" component="label">
 							<input type="file" onChange={handleImageAsFile} style={{ maxWidth: '50' }} />
 						</Button>
+						
 						<Button variant="contained" onClick={handleFireBaseUpload}>
-							Save Photo
+							Save
 						</Button>
+						</div>
 						  <div>
 							<Link href={`/profile/${id}/AddDonatedBook`}>
 								<Button variant="contained">Add A BOOK</Button>

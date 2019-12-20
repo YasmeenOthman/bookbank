@@ -10,7 +10,7 @@ var router = express.Router();
 const bookBankDB = require('../../database/db.js');
 
 //------------------Serving the Homepage ------------------
-router.route('/').get(function(req, res) {
+router.route('/getData').get(function(req, res) {
 	console.log('serving the Root rout');
 	// console.log(req.body);
 	var homePageData = {
