@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 //components import
 import BooksRequested from './BooksRequested.jsx';
 import RequestedByMe from './RequestedByMe'
@@ -98,9 +99,11 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <BooksDonated />
         </TabPanel>
+        <Link href={`http://localhost:8000/profile/${id}/requestedBooks`}>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <BooksRequested />
         </TabPanel>
+        </Link>
         <TabPanel value={value} index={2} dir={theme.direction}>
             <RequestedByMe /> 
         </TabPanel>

@@ -84,6 +84,7 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 				bookBankDB.getDonatedBooksOwnersName(usersId, function(err, profiles) {
 					if (err) throw err;
 					itemPageData['donatedBooksOwners'] = profiles;
+					
 					res.json(itemPageData);
 				});
 			});

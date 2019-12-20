@@ -161,75 +161,111 @@ export default function Item() {
 			})
 			.then((response) => {
 				console.log(response.data);
+				alert('Your Request is sent Successfully ');
+				// window.location.href = `http://localhost:3000/profile/${userIdFromToken}/requestedBooks`;
+
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-		alert('Your Request is sent Successfully ');
 	};
 	return (
 		<div>
 			<NavBar />
-			<div className={classes.root}>
-				<Container>
-					<Grid container spacing={4}>
-						<Grid item>
-							<ButtonBase className={classes.image}>
-								<img className={classes.img} alt="complex" src={book.bookCover} />
-							</ButtonBase>
-						</Grid>
-						<Grid item xs={12} sm container>
-							<Grid item xs container direction="column" spacing={9} className={classes.contantDiv}>
-								<Grid item xs>
-									<Typography gutterBottom variant="h5" className={classes.bookName}>
-										{book.bookName}
-									</Typography>
-									<Typography variant="subtitle1" className={classes.textStyle}>
-										<b> University:</b> {univName}
-									</Typography>
-									<Typography variant="subtitle1" className={classes.textStyle}>
-										<b>Description:</b> {book.bookDescription}
-									</Typography>
-
-									<FormControl className={classes.formControl}>
-										<Typography variant="subtitle1">
-											<b>Choose the Owner name you want to borrow the book from:</b>
-										</Typography>
-										<InputLabel id="demo-simple-select-label" className={classes.label}>
-											Owner
-										</InputLabel>
-										<Select
-											labelId="demo-simple-select-label"
-											id="demo-simple-select"
-											value={ownerId}
-											onChange={handleChange}
-										>
-											{ownerBook.map((owner1, i) => (
-												<MenuItem key={i} value={owner1._id}>
-													{' '}
-													{owner1.userName}
-													{console.log('The id of choosen owner in dropDownList', owner1._id)}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</Grid>
-								<Grid item>
-									<div>
-										<Button
-											variant="contained"
-											onClick={handleRequest}
-											className={classes.reqButton}
-										>
-											Send Request For Owner
-										</Button>
+			{ownerBook.length ? (
+										<div className={classes.root}>
+										<Container>
+											<Grid container spacing={4}>
+												<Grid item>
+													<ButtonBase className={classes.image}>
+														<img className={classes.img} alt="complex" src={book.bookCover} />
+													</ButtonBase>
+												</Grid>
+												<Grid item xs={12} sm container>
+													<Grid item xs container direction="column" spacing={9} className={classes.contantDiv}>
+														<Grid item xs>
+															<Typography gutterBottom variant="h5" className={classes.bookName}>
+																{book.bookName}
+															</Typography>
+															<Typography variant="subtitle1" className={classes.textStyle}>
+																<b> University:</b> {univName}
+															</Typography>
+															<Typography variant="subtitle1" className={classes.textStyle}>
+																<b>Description:</b> {book.bookDescription}
+															</Typography>
+						
+															<FormControl className={classes.formControl}>
+																<Typography variant="subtitle1">
+																	<b>Choose the Owner name you want to borrow the book from:</b>
+																</Typography>
+																<InputLabel id="demo-simple-select-label" className={classes.label}>
+																	Owner
+																</InputLabel>
+																<Select
+																	labelId="demo-simple-select-label"
+																	id="demo-simple-select"
+																	value={ownerId}
+																	onChange={handleChange}
+																>
+																	{ownerBook.map((owner1, i) => (
+																		<MenuItem key={i} value={owner1._id}>
+																			{' '}
+																			{owner1.userName}
+																			{console.log('The id of choosen owner in dropDownList', owner1._id)}
+																		</MenuItem>
+																	))}
+																</Select>
+															</FormControl>
+														</Grid>
+						
+														<Grid item>
+															<div>
+																<Button
+																	variant="contained"
+																	onClick={handleRequest}
+																	className={classes.reqButton}
+																>
+																	Send Request For Owner
+																</Button>
+															</div>
+														</Grid>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Container>
 									</div>
-								</Grid>
-							</Grid>
-						</Grid>
-					</Grid>
-				</Container>
-			</div>
+										):(
+											<div className={classes.root}>
+											<Container>
+												<Grid container spacing={4}>
+													<Grid item>
+														<ButtonBase className={classes.image}>
+															<img className={classes.img} alt="complex" src={book.bookCover} />
+														</ButtonBase>
+													</Grid>
+													<Grid item xs={12} sm container>
+														<Grid item xs container direction="column" spacing={9} className={classes.contantDiv}>
+															<Grid item xs>
+																<Typography gutterBottom variant="h5" className={classes.bookName}>
+																	{book.bookName}
+																</Typography>
+																<Typography variant="subtitle1" className={classes.textStyle}>
+																	<b> University:</b> {univName}
+																</Typography>
+																<Typography variant="subtitle1" className={classes.textStyle}>
+																	<b>Description:</b> {book.bookDescription}
+																</Typography>
+																<Typography variant="subtitle1" className={classes.textStyle}>
+																	The book is not available now
+																</Typography>
+																</Grid>
+													</Grid>
+												</Grid>
+											</Grid>
+										</Container>
+									</div>
+										)}
+			
 		</div>
 	);
 }
