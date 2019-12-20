@@ -56,12 +56,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function FullWidthTabs() {
   var token = localStorage.getItem("usertoken");
-console.log(token);
-const decoded = jwt_decode(token);
-var email = decoded.email;
-var username = decoded.userName;
-var id = decoded.userId;
-
+  const decoded = jwt_decode(token);
+  var email = decoded.email;
+  var username = decoded.userName;
+  var id = decoded.userId;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);

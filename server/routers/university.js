@@ -95,13 +95,20 @@ router.route('/:univId/book/:bookId').get(function(req, res) {
 router.route('/:univId/book/:bookId/sendBookRequest').post(function(req, res) {
 	var requestedBook = req.body;
 	// console.log(requestedBook)
-	var bookId = req.params.bookId;
+	// var bookId = req.params.bookId;
 	var requestedBookInfo = {
 		requesterId: requestedBook.requesterId,
+		requesterName: requestedBook.requesterName,
+		requesterEmail: requestedBook.requesterEmail,
 		ownerId: requestedBook.ownerId,
-		bookId: bookId,
+		ownerName: requestedBook.ownerName,
+		bookId: requestedBook.bookId,
+		bookName: requestedBook.bookName,
+		bookCover: requestedBook.bookCover,
 		donatedBookId: requestedBook.donatedBookId,
+		universityName: requestedBook.universityName,
 		isAccepted: false,
+		isIgnored: false,
 		createdAt: Date.now()
 	};
 	bookBankDB.saveRequestedBook(requestedBookInfo, function(err, requestedBook) {
