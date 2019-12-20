@@ -76,7 +76,7 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const token = localStorage.getItem("usertoken");
-    const endPoint = 'https://blooming-refuge-64917.herokuapp.com';
+    //const endPoint = 'https://blooming-refuge-64917.herokuapp.com';
     let room = 'ALL';
     let name = "";
 
@@ -86,17 +86,17 @@ const ChatBox = () => {
     }
     console.log(name)
 
-    useEffect(() => {
-        socket = io(endPoint);
-        socket.emit('join', { name, room }, () => {
-        });
+    // useEffect(() => {
+    //     socket = io(endPoint);
+    //     socket.emit('join', { name, room }, () => {
+    //     });
 
-        return () => {
-            socket.emit('disconnect');
-            socket.off();
-        }
+    //     return () => {
+    //         socket.emit('disconnect');
+    //         socket.off();
+    //     }
 
-    }, [endPoint]);
+    // }, [endPoint]);
 
     useEffect(() => {
         socket.on('message', (message) => {
