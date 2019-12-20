@@ -51,7 +51,7 @@ export default function BooksRequested() {
       });
   }, []);
 
-  const handleAccept = (donatedBookId, requesterName, requesterId) => {
+  const handleaccept = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
@@ -72,7 +72,7 @@ export default function BooksRequested() {
       // sendEmail(requesterEmail, requesterName, bookName)
 	};
  
-  const handleIgnore = (donatedBookId, requesterName, requesterId) => {
+  const handleignore = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
 			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
@@ -83,7 +83,7 @@ export default function BooksRequested() {
 			.then((response) => {
         console.log("hiiiii",response.data);
         alert(`You have Ignored ${requesterName} Request!`);
-        window.location.href = `http://localhost:3000/profile/${userIdFromToken}`;
+        window.location.href = `http://localhost:3000/profile/${userIdFromToken}/requestedBooks`;
         
 			})
 			.catch((error) => {
@@ -110,14 +110,14 @@ export default function BooksRequested() {
       <Grid item>
           <Button variant="contained" component="label" className={classes.button1} 
           onClick ={(event)=> {event.preventDefault();
-            handleAccept(book.donatedBookId, book.requesterName, book.requesterId)
+            handleaccept(book.donatedBookId, book.requesterName, book.requesterId)
           }} 
           >
         Accept
       </Button>
       <Button variant="contained" component="label" className={classes.button2}
         onClick ={(event)=> {event.preventDefault();
-          handleIgnore(book.donatedBookId, book.requesterName, book.requesterId)
+          handleignore(book.donatedBookId, book.requesterName, book.requesterId)
         }} 
         >
         Ignore

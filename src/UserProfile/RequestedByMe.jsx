@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RequestedByMe() {
 	const [ data, setData ] = useState([]);
+	const [ status, setStatus ] = useState('');
+
 
 	const classes = useStyles();
 	var token = localStorage.getItem('usertoken');
@@ -60,16 +62,28 @@ export default function RequestedByMe() {
 			.then((res) => {
 				setData(res.data);
 				console.log(res.data);
+				findStatus(res.data.isAccepted, res.data.isIgnored);
+
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
 
+	var findStatus = function(accepted, ignored) {
+		if(accepted){
+			setStatus('Accepted');
+		}else if(ignored){
+			setStatus('Ignored');
+		}else if(!accepted && !ignored){
+			setStatus('Pending');
+		}
+	}
+
 	// var status = function ()
 	return (
 		<div>
-			{data.isAccepted ? (
+			
 				<Container>
 					<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
 						{data.map((book) => (
@@ -90,13 +104,13 @@ export default function RequestedByMe() {
 											style={{ color: 'Black', border: '1px solid white' }}
 											variant="outlined"
 										>
-											Status: Accepted
+											Status: {status};
 										</Button>
 										<Button
 											style={{ color: 'Black', border: '1px solid white' }}
 											variant="outlined"
 										>
-											Owner: {data.ownerName}
+											Owner: {book.ownerName}
 										</Button>
 									</Link>
 								</Paper>
@@ -104,42 +118,8 @@ export default function RequestedByMe() {
 						))}
 					</Grid>
 				</Container>
-			) : (
-				<Container>
-					<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
-						{data.map((book) => (
-							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
-								<Paper className={classes.paper}>
-									<img alt="img" src={book.bookCover} className={classes.imgBook} />
-									<Link
-										href={`/university/${book.universityId}/book/${book._id}`}
-										style={{ color: 'black' }}
-									>
-										<h3 style={{ marginBottom: 5 }}>{book.bookName}</h3>
-									</Link>
-									<Link
-										href={`/university/${book.universityId}/book/${book._id}`}
-										style={{ color: 'white' }}
-									>
-										<Button
-											style={{ color: 'Black', border: '1px solid white' }}
-											variant="outlined"
-										>
-											Status: Pending
-										</Button>
-										<Button
-											style={{ color: 'Black', border: '1px solid white' }}
-											variant="outlined"
-										>
-											Owner: {data.ownerName}
-										</Button>
-									</Link>
-								</Paper>
-							</Grid>
-						))}
-					</Grid>
-				</Container>
-			)}
+			
+				
 		</div>
 	);
 }
