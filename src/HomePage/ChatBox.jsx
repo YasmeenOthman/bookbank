@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import jwt_decode from "jwt-decode";
 import io from 'socket.io-client';
-let socket;
+// let socket;
 const useStyles = makeStyles(theme => ({
     root: {
         position: 'absolute',
@@ -98,11 +98,11 @@ const ChatBox = () => {
 
     // }, [endPoint]);
 
-    useEffect(() => {
-        socket.on('message', (message) => {
-            setMessages([...messages, message]);
-        })
-    }, [messages])
+    // useEffect(() => {
+    //     socket.on('message', (message) => {
+    //         setMessages([...messages, message]);
+    //     })
+    // }, [messages])
 
     //function for sending message
     const sendMessage = (event) => {
