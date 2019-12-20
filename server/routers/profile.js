@@ -131,7 +131,7 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 // });
 
 //=======================================
-//----Temp Route for bookRequested from the user-------
+//----Temp Route for books Requestes-----
 //=======================================
 router.route('/:userId/requestedBooks').get(function(req, res) {
 	const userId = req.params.userId;
@@ -145,10 +145,10 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 //=======================================
 //=======================================
 
-//----------Get Books requested by the user-----------------
+// //----------Get Books requested by the user-----------------
 // router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 // 	const userId = req.params.userId;
-// 	console.log('hereeeeeeeeeeeeeeeeeeeeee');
+// 	// console.log('hereeeeeeeeeeeeeeeeeeeeee');
 // 	var data = [
 // 		{
 // 			requestedBooks: [],
@@ -190,13 +190,11 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 // 	});
 // });
 
-//=======================================
-//----Temp Route for bookRequested from the user-------
-//=======================================
+//----------Get Books requested by the user using the new schema for requested Books-----------------
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
 
-	bookBankDB.getrequestedBooksByTheUser(userId, function(err, requestedBooksByTheUser) {
+	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
 		console.log(requestedBooksByTheUser);
 		res.json(requestedBooksByTheUser);
