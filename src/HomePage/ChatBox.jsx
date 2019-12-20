@@ -76,7 +76,7 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const token = localStorage.getItem("usertoken");
-    const endPoint = 'localhost:8000';
+    const endPoint = 'https://blooming-refuge-64917.herokuapp.com';
     let room = 'ALL';
     let name = "";
 
