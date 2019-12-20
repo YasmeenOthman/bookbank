@@ -22,7 +22,7 @@ app.use(
 //-----------------------------------
 const bookBankDB = require("../database/db");
 require("mongoose-query-random");
-var homepageRouter = require("./routers/homePage.js");
+var homepageRouter = require("./routers/HomePage.js");
 var universityRouter = require("./routers/university.js");
 var profileRouter = require("./routers/profile.js");
 // app.use(express.static(path.join(__dirname, "../build")));
