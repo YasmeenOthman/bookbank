@@ -10,13 +10,13 @@ const socketio = require("socket.io");
 const http = require("http");
 
 //---------- for CORS problem----------------
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // allow to server to accept request from different origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true // allow session cookie from browser to pass through
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000', // allow to server to accept request from different origin
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true // allow session cookie from browser to pass through
+//   })
+// );
 // const server = http.createServer(app);
 // const io = socketio(server);
 //-----------------------------------
