@@ -335,15 +335,15 @@ var findRequesterName = function(Ids, callBack) {
 	User.find({ _id: { $in: Ids } }).select('userName').exec(callBack);
 };
 //-------------get books the user has requested -------------------------
-var getBooksRequestedByTheUser = function(userIds, callBack) {
-	RequestedBook.find({ requesterId: userIds }, callBack);
+var getBooksRequestedByTheUser = function(userId, callBack) {
+	RequestedBook.find({ requesterId: userId }, callBack);
 };
 //-------------updated requested Book to be Accepted-------------------------
 var updateRequestedBookToAccepted = function(ownerId, requestedDonatedBookId, callBack) {
 	RequestedBook.findOneAndUpdate(
 		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
 		{ isAccepted: true },
-		{ new: true }
+		{ new: false }
 	).exec(callBack);
 };
 
@@ -352,13 +352,13 @@ var updateRequestedBookToIgnored = function(ownerId, requestedDonatedBookId, cal
 	RequestedBook.findOneAndUpdate(
 		{ donatedBookId: requestedDonatedBookId, ownerId: ownerId },
 		{ isIgnored: true },
-		{ new: true }
+		{ new: false }
 	).exec(callBack);
 };
 
 //-------------updated DONATED Book to be unavailable-------------------------
 var makeDonatedBookUnavailable = function(donatedBookId, callBack) {
-	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: true }).exec(callBack);
+	DonatedBook.findByIdAndUpdate({ _id: donatedBookId }, { availability: false }, { new: false }).exec(callBack);
 };
 
 //------------get bluePrint books of requested books -----------
@@ -376,7 +376,7 @@ var getUniversityName = function(univId, callBack) {
 };
 //--------edit Profile---------------
 var editProfile = function(profileId, userAvatar, callBack) {
-	Profile.findByIdAndUpdate({ _id: profileId }, { userAvatar: userAvatar }, { new: true }).exec(callBack);
+	Profile.findByIdAndUpdate({ _id: profileId }, { userAvatar: userAvatar }, { new: false }).exec(callBack);
 };
 module.exports.saveBook = saveBook;
 module.exports.saveDonatedBook = saveDonatedBook;

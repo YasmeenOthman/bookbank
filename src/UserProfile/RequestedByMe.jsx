@@ -52,22 +52,6 @@ export default function RequestedByMe() {
 	var username = decoded.userName;
 	var id = decoded.userId;
 
-	var prepareData = function(requestedBooks, namesOfOwners, bluePrintBooks) {
-		var requestedBooksData = [];
-		for (var i = 0; i < requestedBooks.length; i++) {
-			requestedBooks[i]['ownerName'] = namesOfOwners[i]['userName'];
-			requestedBooks[i]['ownerId'] = namesOfOwners[i]['_id'];
-			requestedBooks[i]['BookId'] = bluePrintBooks[i]['_id'];
-			requestedBooks[i]['bookName'] = bluePrintBooks[i]['bookName'];
-			requestedBooks[i]['bookCover'] = bluePrintBooks[i]['bookCover'];
-			requestedBooks[i]['universityId'] = bluePrintBooks[i]['universityId'];
-			requestedBooks[i]['bookDescription'] = bluePrintBooks[i]['bookDescription'];
-			//----push the obj to the array--------
-			requestedBooksData.push(requestedBooks[i]);
-		}
-		return requestedBooksData;
-	};
-
 	useEffect(() => {
 		var path = window.location.href;
 		console.log(path);
