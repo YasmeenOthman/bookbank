@@ -131,7 +131,7 @@ router.route('/:userId/donatedBooksAsBluePrints').get(function(req, res) {
 // });
 
 //=======================================
-//----Temp Route for bookRequested-------
+//----Temp Route for bookRequested from the user-------
 //=======================================
 router.route('/:userId/requestedBooks').get(function(req, res) {
 	const userId = req.params.userId;
@@ -146,49 +146,64 @@ router.route('/:userId/requestedBooks').get(function(req, res) {
 //=======================================
 
 //----------Get Books requested by the user-----------------
+// router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
+// 	const userId = req.params.userId;
+// 	console.log('hereeeeeeeeeeeeeeeeeeeeee');
+// 	var data = [
+// 		{
+// 			requestedBooks: [],
+// 			namesOfOwners: [],
+// 			bluePrintBooks: []
+// 		}
+// 	];
+// 	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
+// 		if (err) throw err;
+// 		console.log(requestedBooksByTheUser);
+// 		// res.json(requestedBooksByTheUser);
+// 		data.requestedBooks = requestedBooksByTheUser;
+
+// 		//------get owners Id------------
+// 		var ownersIdOfTheRequestedBooks = requestedBooksByTheUser.map(function(book) {
+// 			return book.ownerId;
+// 		});
+
+// 		//------get IDs of bluePrint books---------------
+// 		var bluePrintBooksId = requestedBooksByTheUser.map(function(book) {
+// 			return book.bookId;
+// 		});
+
+// 		//------find OWNERS name of the requestd books the user-----------------
+// 		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
+// 			if (err) throw err;
+// 			console.log(ownersName);
+// 			data.namesOfOwners = ownersName;
+
+// 			//---------find bluePrint books that the user requested ------
+// 			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
+// 				if (err) throw err;
+// 				console.log(bluePrintBooks);
+// 				data.bluePrintBooks = bluePrintBooks;
+// 				var allData = prepareData(requestedBooksByTheUser, ownersName, bluePrintBooks);
+// 				res.json(allData);
+// 			});
+// 		});
+// 	});
+// });
+
+//=======================================
+//----Temp Route for bookRequested from the user-------
+//=======================================
 router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 	const userId = req.params.userId;
-	console.log('hereeeeeeeeeeeeeeeeeeeeee');
-	var data = [
-		{
-			requestedBooks: [],
-			namesOfOwners: [],
-			bluePrintBooks: []
-		}
-	];
-	bookBankDB.getBooksRequestedByTheUser(userId, function(err, requestedBooksByTheUser) {
+
+	bookBankDB.getrequestedBooksByTheUser(userId, function(err, requestedBooksByTheUser) {
 		if (err) throw err;
 		console.log(requestedBooksByTheUser);
-		// res.json(requestedBooksByTheUser);
-		data.requestedBooks = requestedBooksByTheUser;
-
-		//------get owners Id------------
-		var ownersIdOfTheRequestedBooks = requestedBooksByTheUser.map(function(book) {
-			return book.ownerId;
-		});
-
-		//------get IDs of bluePrint books---------------
-		var bluePrintBooksId = requestedBooksByTheUser.map(function(book) {
-			return book.bookId;
-		});
-
-		//------find OWNERS name of the requestd books the user-----------------
-		bookBankDB.findRequesterName(ownersIdOfTheRequestedBooks, function(err, ownersName) {
-			if (err) throw err;
-			console.log(ownersName);
-			data.namesOfOwners = ownersName;
-
-			//---------find bluePrint books that the user requested ------
-			bookBankDB.getBluePrintBooks(bluePrintBooksId, function(err, bluePrintBooks) {
-				if (err) throw err;
-				console.log(bluePrintBooks);
-				data.bluePrintBooks = bluePrintBooks;
-			// 	var allData = prepareData(requestedBooksByTheUser, ownersName, bluePrintBooks);
-			// 	res.json(allData);
-			});
-		});
+		res.json(requestedBooksByTheUser);
 	});
 });
+//=======================================
+//=======================================
 
 //-------------ACCEPT BOOK REQUEST--------------
 router.route('/:userId/requestedBooks/:donatedBookId/AcceptRequest').post(function(req, res) {

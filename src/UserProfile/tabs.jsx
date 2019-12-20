@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 //components import
 import BooksRequested from './BooksRequested.jsx';
-import RequestedByMe from './RequestedByMe'
+// import RequestedByMe from './RequestedByMe'
 // import Notifications from '.././Notify/Notification.js'
 import BooksDonated from './BooksDonated.jsx'
 import jwt_decode from "jwt-decode";
@@ -56,12 +56,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function FullWidthTabs() {
   var token = localStorage.getItem("usertoken");
-console.log(token);
-const decoded = jwt_decode(token);
-var email = decoded.email;
-var username = decoded.userName;
-var id = decoded.userId;
-
+  const decoded = jwt_decode(token);
+  var email = decoded.email;
+  var username = decoded.userName;
+  var id = decoded.userId;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -89,7 +87,7 @@ var id = decoded.userId;
         >
           <Tab label="Books Donated" {...a11yProps(0)} />
           <Tab label="Books Requests" {...a11yProps(1)} />
-          <Tab label="Books Requested By me" {...a11yProps(2)} />
+          {/* <Tab label="Books Requested By me" {...a11yProps(2)} /> */}
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -103,9 +101,9 @@ var id = decoded.userId;
         <TabPanel value={value} index={1} dir={theme.direction}>
           <BooksRequested />
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
+        {/* <TabPanel value={value} index={2} dir={theme.direction}>
             <RequestedByMe /> 
-        </TabPanel>
+        </TabPanel> */}
       </SwipeableViews>
     </div>
     </Container>

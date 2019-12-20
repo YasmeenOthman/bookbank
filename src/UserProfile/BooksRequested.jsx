@@ -24,8 +24,6 @@ marginleft: 10,
 
 
 
-
-
 export default function BooksRequested() {
   const classes = useStyles();
   const [data, setdata] = useState([]);
@@ -83,7 +81,7 @@ export default function BooksRequested() {
 			.catch((error) => {
 				console.log(error);
       });
-      console.log("the request has been ignored")
+      console.log("the request has been")
 	};
   return (
     <div>
