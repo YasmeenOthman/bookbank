@@ -41,7 +41,7 @@ export default function BooksRequested() {
     var univId = myPath[4];
   
     axios
-      .get(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks`)
+      .get(`https://rbk-bookbank.herokuapp.com/profile/${userIdFromToken}/requestedBooks`)
       .then((res) => {
         setdata(res.data)
         console.log(res.data)
@@ -54,7 +54,7 @@ export default function BooksRequested() {
   const handleaccept = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
-			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
+			.post(`https://rbk-bookbank.herokuapp.com/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
         userId: userIdFromToken,
         donatedBookId: donatedBookId,
         requesterId: requesterId
@@ -75,7 +75,7 @@ export default function BooksRequested() {
   const handleignore = (donatedBookId, requesterName, requesterId) => {
 		// event.preventDefault();
 		axios
-			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
+			.post(`https://rbk-bookbank.herokuapp.com/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
         userId: userIdFromToken,
         donatedBookId: donatedBookId,
         requesterId: requesterId

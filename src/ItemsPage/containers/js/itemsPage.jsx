@@ -62,7 +62,7 @@ export const ItemsPage  = () => {
 		var univId = myPath[4];
 
 		axios
-			.get(`http://localhost:8000/university/${univId}`)
+			.get(`https://rbk-bookbank.herokuapp.com/university/${univId}`)
 			.then((res) => {
 				//console.log(res);
 				let universities = res.data.universities;

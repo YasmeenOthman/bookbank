@@ -91,7 +91,7 @@ export default function Item() {
 		var bookId = myPath[6];
 
 		axios
-			.get(`http://localhost:8000/university/${univId}/book/${bookId}`)
+			.get(`https://rbk-bookbank.herokuapp.com/university/${univId}/book/${bookId}`)
 			.then((res) => {
 				setBook(res.data.bluePrintBook);
 				setUnivName(res.data.universityNameOfBook.universityName);
@@ -147,7 +147,7 @@ export default function Item() {
 		}
 		//--------send requested book info-----------
 		axios
-			.post(`http://localhost:8000/university/${univId}/book/${bookId}/sendBookRequest`, {
+			.post(`https://rbk-bookbank.herokuapp.com/university/${univId}/book/${bookId}/sendBookRequest`, {
 				requesterId: userIdFromToken,
 				requesterName: userNameFromToken,
 				ownerId: ownerId,

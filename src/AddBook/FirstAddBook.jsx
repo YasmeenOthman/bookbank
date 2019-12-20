@@ -234,7 +234,7 @@ export const FirstAddBook = (props) => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/university`)
+			.get(`https://rbk-bookbank.herokuapp.com/university`)
 			.then((res) => {
 				setAllUnivs(res.data);
 				console.log('Get All Universities', res.data);
@@ -255,7 +255,7 @@ export const FirstAddBook = (props) => {
 		console.log('univ Id from select:  ', univId);
 
 		axios
-			.get(`http://localhost:8000/university/${univId}/allBooks`)
+			.get(`https://rbk-bookbank.herokuapp.com/university/${univId}/allBooks`)
 			.then((res) => {
 				setAllbooksOfUniv(res.data);
 				console.log('All the books related to universityName11', res.data);
@@ -276,7 +276,7 @@ export const FirstAddBook = (props) => {
 		// console.log('book id i chosed');
 
 		axios
-			.post(`http://localhost:8000/profile/${userid}/AddDonatedBook`, {
+			.post(`https://rbk-bookbank.herokuapp.com/profile/${userid}/AddDonatedBook`, {
 				userId: userIdFromToken,
 				bookId: bluePrintBookId
 			})

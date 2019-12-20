@@ -139,7 +139,7 @@ export default function AddBook() {
 	React.useEffect(() => {
 
 		axios
-			.get(`http://localhost:8000/university/`)
+			.get(`https://rbk-bookbank.herokuapp.com/university/`)
 			.then((res) => {
 				setUnivs(res.data);
 			})
@@ -166,7 +166,7 @@ export default function AddBook() {
 			userId: userIdFromToken
 		};
 		axios
-			.post(`http://localhost:8000/profile/${userIdFromToken}/addBlueprintDonatedBook`, {
+			.post(`https://rbk-bookbank.herokuapp.com/profile/${userIdFromToken}/addBlueprintDonatedBook`, {
 				name: name,
 				description: description,
 				imgUrl: imageAsUrl,
