@@ -183,8 +183,8 @@ router.route('/:userId/booksRequestedByTheUser').get(function(req, res) {
 				if (err) throw err;
 				console.log(bluePrintBooks);
 				data.bluePrintBooks = bluePrintBooks;
-				var allData = prepareData(requestedBooksByTheUser, ownersName, bluePrintBooks);
-				res.json(allData);
+			// 	var allData = prepareData(requestedBooksByTheUser, ownersName, bluePrintBooks);
+			// 	res.json(allData);
 			});
 		});
 	});

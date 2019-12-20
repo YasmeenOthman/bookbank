@@ -29,10 +29,6 @@ marginleft: 10,
 export default function BooksRequested() {
   const classes = useStyles();
   const [data, setdata] = useState([]);
-  const [books, setbooks] = useState([]);
-  const [requester,setrequester]=useState([]);
-  const [request,setrequest]=useState([]);
-  const [blueprint, setBlueprint] = useState([])
   var token = localStorage.getItem("usertoken");
   const decoded = jwt_decode(token);
   var email = decoded.email;
@@ -48,70 +44,81 @@ export default function BooksRequested() {
     axios
       .get(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks`)
       .then((res) => {
-
-        setbooks(res.data.bluePrintBooks);
-        setrequester(res.data.requesters);
-        setrequest(res.data.request)
-        setBlueprint(res.data.requestedBooksfromUser)
         setdata(res.data)
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // const handleaccept = (event) => {
-  //   console.log(Blueprint)
-	// 	event.preventDefault();
-	// 	axios
-	// 		.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
-  //       userId: userIdFromToken,
-  //       donatedBookId: blueprint.requestedBooksfromUser.bookdonatedId
-	// 		})
-	// 		.then((response) => {
-	// 			console.log(response.data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// 		alert("You added New Book")
-	// };
+  const handleaccept = (donatedBookId) => {
+		// event.preventDefault();
+		axios
+			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/AcceptRequest`, {
+        userId: userIdFromToken,
+        donatedBookId: donatedBookId
+			})
+			.then((response) => {
+        console.log("hiiiii",response.data);
+        
+			})
+			.catch((error) => {
+				console.log(error);
+      });
+      console.log("accepted successfully")
+	};
  
+  const handleignore = (donatedBookId) => {
+		// event.preventDefault();
+		axios
+			.post(`http://localhost:8000/profile/${userIdFromToken}/requestedBooks/${donatedBookId}/IgnoreRequest`, {
+        userId: userIdFromToken,
+        donatedBookId: donatedBookId
+			})
+			.then((response) => {
+        console.log("hiiiii",response.data);
+        
+			})
+			.catch((error) => {
+				console.log(error);
+      });
+      console.log("the request has been ignored")
+	};
   return (
     <div>
-    <div className={classes.root}>         
-                 <Paper className={classes.paper}>
-                 <Grid container spacing={2}>
-                   <Grid item xs={12} sm container>
-                <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                {requester.map((requester1) => (
-                  requester1.userName                    
-                ))}  requested {books.map((book1) => (
-                    book1.bookName   
-                ))}
-
-              </Typography>
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" component="label" className={classes.button1} 
-                    // onClick={handleaccept}
-                    // var bookdonatedId = {bluePrintBooks.map((book) => (
-                    //  book.donatedBookId                       
-                    // ))}
-                    >
-                  Accept
-                </Button>
-                <Button variant="contained" component="label" className={classes.button2}>
-                  Ignore
-                </Button>
-                </Grid>
-                </Grid>
-                </Grid>
-        </Grid>
-      </Paper>     
-                  
+    <div className={classes.root}>   
+      {data.map((book) => (
+            <Paper className={classes.paper}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm container>
+           <Grid item xs container direction="column" spacing={2}>
+           <Grid item xs>
+           <Typography gutterBottom variant="subtitle1">
+      {book.requesterName} requested your book {book.bookName}
+         </Typography>
+           </Grid>
+           <Grid item>
+               <Button variant="contained" component="label" className={classes.button1} 
+               onClick ={(event)=> {event.preventDefault();
+                handleaccept(book.donatedBookId)
+              }} 
+               >
+             Accept
+           </Button>
+           <Button variant="contained" component="label" className={classes.button2}
+            onClick ={(event)=> {event.preventDefault();
+              handleignore(book.donatedBookId)
+            }} 
+             >
+             Ignore
+           </Button>
+           </Grid>
+           </Grid>
+           </Grid>
+          </Grid>
+        </Paper>  
+      ))}                  
     </div>
     </div>
   )
