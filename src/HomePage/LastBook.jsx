@@ -61,7 +61,7 @@ export const LastBook = (posts) => {
 									href={`/university/${book.universityId}/book/${book._id}`}
 									style={{ color: 'white' }}
 								>
-									<p style={{ marginBottom: 5 }}>university name</p>
+									{/* <p style={{ marginBottom: 5 }}>university name</p> */}
 								</Link>
 								{/* <Link href={`/university/${book.universityId}/book/${book.id}`} style={{ color: 'white' }}>
                                     <Button style={{ color: 'white', border: '1px solid white' }} variant="outlined">Default</Button>

@@ -197,7 +197,7 @@ export const NavBar = () => {
 																<Link href={`/Profile/${id}`}>Profile</Link>
 															</MenuItem>
 															<MenuItem onClick={handleClose}>
-																<Link href="/Notification">Notification</Link>
+																<Link href={`/Profile/${id}`}>Notification</Link>
 																{/* < Notifications /> */}
 															</MenuItem>
 															<MenuItem

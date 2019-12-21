@@ -40,23 +40,23 @@ export const Footer = () => {
         <Container>
           <Grid container justify="center" alignItems="center" spacing={3}>
             <Grid item xs>
-              <img alt="img" src="https://serving.photos.photobox.com/019848108651f78a4223f48aad7d12b0fabb7291aa896c9de9f665acbf513fb80f693f9c.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://ca.slack-edge.com/TM2QVR1GU-UMA80TBPT-b7bd933b562d-512" className={classes.imgAva} />
               <p>Nazeh M.Taha</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://i.ibb.co/MfmVMTX/Screen-Shot-2019-12-20-at-10-41-48-PM.png" className={classes.imgAva} />
               <p>Nour Saqqa</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://ca.slack-edge.com/TM2QVR1GU-UMELWK15J-420bcea92d48-512" className={classes.imgAva} />
               <p>Alaa Al Agha</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://ca.slack-edge.com/TM2QVR1GU-UMH122R7Z-0b186193ccd6-512" className={classes.imgAva} />
               <p>Tasnim Zakarneh</p>
             </Grid>
             <Grid item xs>
-              <img alt="img" src="https://cdn2.vectorstock.com/i/thumb-large/08/26/beautiful-face-of-arabic-muslim-woman-in-hijab-vector-20260826.jpg" className={classes.imgAva} />
+              <img alt="img" src="https://ca.slack-edge.com/TM2QVR1GU-UMF5C2H7X-4ec876416ea9-512" className={classes.imgAva} />
               <p>Yasmeen Othman</p>
             </Grid>
           </Grid>

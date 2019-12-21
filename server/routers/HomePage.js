@@ -16,6 +16,7 @@ router.route('/getData').get(function(req, res) {
 	var homePageData = {
 		universities: [],
 		recentBooks: [],
+		allBooks: [],
 		totalUsers: 0,
 		totalDonatedBooks: 0,
 		totalUniversities: 0
@@ -53,7 +54,15 @@ router.route('/getData').get(function(req, res) {
 						// console.log(numberOfUsers);
 						homePageData.totalUsers = numberOfUsers;
 						//now homePageData have all the data from the database.
-						res.json(homePageData);
+						bookBankDB.getAllBooks(function(err, allBooks){
+							if (err) {
+								throw err;
+							}
+							homePageData.allBooks = allBooks;
+
+							res.json(homePageData);
+
+						})
 					});
 				});
 			});
