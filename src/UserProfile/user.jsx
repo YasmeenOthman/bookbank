@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 	root1: {
 		margin: theme.spacing(2)
 	},
+	h6: {
+		marginBottom: 10
+	},
 	paper: {
 		padding: theme.spacing(2),
 		margin: 'auto',
@@ -44,6 +47,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 	userDiv: {
 		margin: '85px 0px'
+	},
+	imgBro: {
+		color: 'navy',
+		fontSize: 14
+	},
+	addBut: {
+        color: 'white',
+    width: '49%',
+    background: '#76b646',
+    marginTop: 12,
+    borderBottom: '2px solid #438e0a'
 	},
 	brofile: {
 		marginTop: 100,
@@ -170,20 +184,20 @@ function UserProfile(props) {
 					justify="center"
 					alignItems="center"
 				>
-					<Grid item xs={4} className={classes.userDiv}>
+					<Grid item xs={6} className={classes.userDiv}>
 						<Avatar className={classes.avatar} src={profilePic} alt="Profile picture" />
 					
 					</Grid>
-					<Grid item xs={8} justify="center"
+					<Grid item xs={6} justify="center"
 					alignItems="center">
-						<Typography variant="subtitle1"><b>Name:</b> {userName}</Typography>
-						<Typography variant="subtitle1">
+						<Typography variant="subtitle1" className={classes.h6}><b>Name:</b> {userName}</Typography>
+						<Typography variant="subtitle1" className={classes.h6}>
 							<b>Email:</b> {email}
 						</Typography>
-						<div>
-						<b>Change Profile Photo</b>
-						<div>
-						<Button variant="contained" component="label">
+						<div className={classes.h6}>
+						<b className={classes.imgBro}>Change Profile Photo</b>
+						<div style={{    margin: '10px 0'}}>
+						<Button variant="contained" component="label" style={{background: '#bbd5eb', padding: 9}}>
 							<input type="file" onChange={handleImageAsFile} style={{ maxWidth: '50' }} />
 						</Button>
 						
@@ -193,7 +207,7 @@ function UserProfile(props) {
 						</div>
 						  <div>
 							<Link href={`/profile/${id}/AddDonatedBook`}>
-								<Button variant="contained">Add A BOOK</Button>
+								<Button variant="contained" className={classes.addBut}>Add A BOOK</Button>
 							</Link>
 							</div>
 						</div>

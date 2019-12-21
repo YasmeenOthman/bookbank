@@ -55,7 +55,7 @@ export const LastBook = (posts) => {
 									href={`/university/${book.universityId}/book/${book._id}`}
 									style={{ color: 'white' }}
 								>
-									<h3 style={{ marginBottom: 5 }}>{book.bookName}</h3>
+									<h3 style={{ marginBottom: 5, marginTop: 25 }}>{book.bookName}</h3>
 								</Link>
 								<Link
 									href={`/university/${book.universityId}/book/${book._id}`}
