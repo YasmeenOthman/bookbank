@@ -83,7 +83,7 @@ function UserProfile(props) {
 		var myPath = path.split('/');
 		var userId = myPath[4];
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/profile/${userId}`)
+			.get(`http://localhost:8000/profile/${userId}`)
 			.then((res) => {
 				setProfile(res.data);
 				setProfilePic(res.data.userAvatar);
@@ -144,7 +144,7 @@ function UserProfile(props) {
 
 		//-------- post request to send the new img to the server-------
 		axios
-			.post(`https://blooming-refuge-64917.herokuapp.com/profile/${id}/editeProfilePic`, {
+			.post(`http://localhost:8000/profile/${id}/editeProfilePic`, {
 				profileId: profile._id,
 				userAvatar: profilePic
 			})

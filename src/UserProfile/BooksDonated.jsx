@@ -55,7 +55,7 @@ export const BooksDonated  = () => {
     var userId = myPath[4];
 
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/profile/${userId}/donatedBooksAsBluePrints`)
+			.get(`http://localhost:8000/profile/${userId}/donatedBooksAsBluePrints`)
 			.then((res) => {
 				setbooks(res.data);
 				console.log("data of donated books",res.data);

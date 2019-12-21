@@ -6,7 +6,7 @@ import axios from 'axios';
 var path = window.location.href;
 var userId = parseInt(path[path.length - 1]);
 export const fetchPosts= () => dispatch => {   
-            axios.get(`https://blooming-refuge-64917.herokuapp.com/profile/${userId}`)
+            axios.get(`http://localhost:8000/profile/${userId}`)
                 .then(data => dispatch({
                     type: FETCH_POSTS,
                     payload: data

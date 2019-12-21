@@ -38,11 +38,11 @@ export default function BigImag() {
 	return (
 		<Container className={classes.root}>
 			<div className={classes.butContainer}>
-				{/* <img
+				<img
 					alt="empty"
 					src="http://exprostudio.com/html/book_library/images/slider/img-01.jpg"
 					className={classes.image}
-				/> */}
+				/>
 				<Grid className={classes.butGrid} container direction="row" justify="center" alignItems="center">
 					<BookNum />
 				</Grid>

@@ -234,7 +234,7 @@ export const FirstAddBook = (props) => {
 
 	useEffect(() => {
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/university`)
+			.get(`http://localhost:8000/university`)
 			.then((res) => {
 				setAllUnivs(res.data);
 				console.log('Get All Universities', res.data);
@@ -255,7 +255,7 @@ export const FirstAddBook = (props) => {
 		console.log('univ Id from select:  ', univId);
 
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/university/${univId}/allBooks`)
+			.get(`http://localhost:8000/university/${univId}/allBooks`)
 			.then((res) => {
 				setAllbooksOfUniv(res.data);
 				console.log('All the books related to universityName11', res.data);
@@ -276,7 +276,7 @@ export const FirstAddBook = (props) => {
 		// console.log('book id i chosed');
 
 		axios
-			.post(`https://blooming-refuge-64917.herokuapp.com/profile/${userid}/AddDonatedBook`, {
+			.post(`http://localhost:8000/profile/${userid}/AddDonatedBook`, {
 				userId: userIdFromToken,
 				bookId: bluePrintBookId
 			})

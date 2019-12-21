@@ -39,7 +39,7 @@ app.use("/profile", profileRouter);
 if(process.env.NODE_ENV === "production"){
   app.use(express.static("build"));
   
-  app.get("*", (req, res) => {
+  app.get("/*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 }
@@ -49,33 +49,33 @@ var server = app.listen(PORT, () =>
   console.log(`Listening to  http://localhost:${PORT} ...`)
 );
 //-------------For chat to-------------
-// var io = require('socket.io').listen(server);
-// io.on('connection', (socket) => {
-//   console.log('connect from sockit.io');
-//   socket.on('join', ({ name, room }, callback) => {
-//     const { error, user } = addUser({ id: socket.id, name, room });
-//     console.log(name, room);
-//     if (error) return callback(error);
+var io = require('socket.io').listen(server);
+io.on('connection', (socket) => {
+  console.log('connect from sockit.io');
+  socket.on('join', ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+    console.log(name, room);
+    if (error) return callback(error);
 
-//     socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
-//     socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}, has Joined!` });
-//     socket.join(user.room);
+    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}` });
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}, has Joined!` });
+    socket.join(user.room);
 
-//     callback();
-//   });
+    callback();
+  });
 
 
-//   socket.on('sendMessage', (message, callback) => {
-//     const user = getUser(socket.id);
+  socket.on('sendMessage', (message, callback) => {
+    const user = getUser(socket.id);
 
-//     io.to(user.room).emit('message', { user: user.name, text: message });
-//     callback();
-//   });
+    io.to(user.room).emit('message', { user: user.name, text: message });
+    callback();
+  });
 
-//   socket.on('disconnect', () => {
-//     const user = removeUser(socket.id);
-//     if (user) {
-//       io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })
-//     }
-//   })
-// });
+  socket.on('disconnect', () => {
+    const user = removeUser(socket.id);
+    if (user) {
+      io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })
+    }
+  })
+});

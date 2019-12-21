@@ -102,7 +102,7 @@ export const Universityitems = (props) => {
 	//----------get all the Universities-----------
 	useEffect(() => {
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/university`)
+			.get(`http://localhost:8000/university`)
 			.then((res) => {
 				//console.log(res);
 				setUniversity(res.data);

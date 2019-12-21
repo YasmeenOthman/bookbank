@@ -62,7 +62,7 @@ export const ItemsPage  = () => {
 		var univId = myPath[4];
 
 		axios
-			.get(`https://blooming-refuge-64917.herokuapp.com/university/${univId}`)
+			.get(`http://localhost:8000/university/${univId}`)
 			.then((res) => {
 				//console.log(res);
 				let universities = res.data.universities;
