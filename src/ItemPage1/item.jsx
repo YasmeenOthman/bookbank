@@ -137,10 +137,12 @@ export default function Item() {
 
 		//------The choosen book owner--------
 		var choosenOwnerName = '';
+		var ownerEmail = '';
 		for (var i = 0; i < ownerBook.length; i++) {
 			console.log('the choosen ownerId inside for loop to find the owner name: ', ownerId);
 			if (ownerId === ownerBook[i]._id) {
 				choosenOwnerName = ownerBook[i].userName;
+				ownerEmail = ownerBook[i].email;
 				console.log(choosenOwnerName);
 				// setOwnerName(ownerBook[i].userName);
 				// setOwnerName("test");
@@ -158,7 +160,8 @@ export default function Item() {
 				bookCover: bookCover,
 				donatedBookId: choosenDonatedBookId,
 				universityName: univName,
-				requesterEmail: emailFromToken 
+				requesterEmail: emailFromToken,
+				ownerEmail:ownerEmail
 			})
 			.then((response) => {
 				console.log(response.data);

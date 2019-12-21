@@ -96,6 +96,7 @@ router.route('/:univId/book/:bookId').get(function (req, res) {
 //------------- create a requested book ----------------------------
 router.route('/:univId/book/:bookId/sendBookRequest').post(function (req, res) {
 	var requestedBook = req.body;
+	var universityId = req.params.univId;
 	// console.log(requestedBook)
 	// var bookId = req.params.bookId;
 	var requestedBookInfo = {
@@ -104,11 +105,13 @@ router.route('/:univId/book/:bookId/sendBookRequest').post(function (req, res) {
 		requesterEmail: requestedBook.requesterEmail,
 		ownerId: requestedBook.ownerId,
 		ownerName: requestedBook.ownerName,
+		ownerEmail:requestedBook.ownerEmail,
 		bookId: requestedBook.bookId,
 		bookName: requestedBook.bookName,
 		bookCover: requestedBook.bookCover,
 		donatedBookId: requestedBook.donatedBookId,
 		universityName: requestedBook.universityName,
+		universityId: requestedBook.universityId,
 		isAccepted: false,
 		isIgnored: false,
 		createdAt: Date.now()

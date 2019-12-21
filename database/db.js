@@ -120,6 +120,7 @@ var requestedBooksSchema = mongoose.Schema({
 	bookCover: { type: String },
 	donatedBookId: { type: String },
 	universityName: { type: String },
+	universityId:{type: String},
 	isAccepted: { type: Boolean, default: false },
 	isIgnored: { type: Boolean, default: false },
 	createdAt: { type: Date, default: Date.now }
@@ -134,11 +135,13 @@ var saveRequestedBook = function (requestedBook, callBack) {
 		requesterEmail: requestedBook.requesterEmail,
 		ownerId: requestedBook.ownerId,
 		ownerName: requestedBook.ownerName,
+		ownerEmail: requestedBook.ownerEmail,
 		bookId: requestedBook.bookId,
 		bookName: requestedBook.bookName,
 		bookCover: requestedBook.bookCover,
 		donatedBookId: requestedBook.donatedBookId,
 		universityName: requestedBook.universityName,
+		universityId: requestedBook.universityId,
 		isAccepted: requestedBook.isAccepted,
 		isIgnored: requestedBook.isIgnored,
 		createdAt: requestedBook.createdAt
