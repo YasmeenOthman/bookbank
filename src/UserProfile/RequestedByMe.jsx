@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import jwt_decode from 'jwt-decode';
+import Link from '@material-ui/core/Link';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RequestedByMe() {
-	const [ books, setbooks ] = useState([]);
 	const [ data, setData ] = useState([]);
-	const [ owner, setOwners ] = useState([]);
-	const [ blueprint, setblueprints ] = useState([]);
-	const [ requestedBooks, setRequestedBooks ] = useState([]);
+	const [ status, setStatus ] = useState('');
+
 
 	const classes = useStyles();
 	var token = localStorage.getItem('usertoken');
@@ -51,32 +50,6 @@ export default function RequestedByMe() {
 	var email = decoded.email;
 	var username = decoded.userName;
 	var id = decoded.userId;
-
-	// var request = function () {
-	//   if (books.isAccepted === true) {
-	//     return "Accepted"
-	//   } else if (books.isAccepted === false && books.isIgnored === false) {
-	//     return "Ignored"
-	//   } else {
-	//     return "pending"
-	//   }
-	// }
-
-	var prepareData = function(requestedBooks, namesOfOwners, bluePrintBooks) {
-		var requestedBooksData = [];
-		for (var i = 0; i < requestedBooks.length; i++) {
-			requestedBooks[i]['ownerName'] = namesOfOwners[i]['userName'];
-			requestedBooks[i]['ownerId'] = namesOfOwners[i]['_id'];
-			requestedBooks[i]['BookId'] = bluePrintBooks[i]['_id'];
-			requestedBooks[i]['bookName'] = bluePrintBooks[i]['bookName'];
-			requestedBooks[i]['bookCover'] = bluePrintBooks[i]['bookCover'];
-			requestedBooks[i]['universityId'] = bluePrintBooks[i]['universityId'];
-			requestedBooks[i]['bookDescription'] = bluePrintBooks[i]['bookDescription'];
-			//----push the obj to the array--------
-			requestedBooksData.push(requestedBooks[i]);
-		}
-		return requestedBooksData;
-	};
 
 	useEffect(() => {
 		var path = window.location.href;
@@ -87,65 +60,66 @@ export default function RequestedByMe() {
 		axios
 			.get(`http://localhost:8000/profile/${id}/booksRequestedByTheUser`)
 			.then((res) => {
-				setOwners(res.data.namesOfOwners);
-				setbooks(res.data.requestedBooks);
-				setblueprints(res.data.bluePrintBooks);
 				setData(res.data);
+				console.log(res.data);
+				findStatus(res.data.isAccepted, res.data.isIgnored);
 
-				// setbooks(res.data)
-				var allData = prepareData(books, owner, blueprint);
-				setRequestedBooks(allData);
-				setRequestedBooks([ 1, 2, 3 ]);
-
-				console.log(requestedBooks);
-				console.log('nouuuur', res.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
 
-	var bookname = blueprint.bookName;
+	var findStatus = function(accepted, ignored) {
+		if(accepted){
+			setStatus('Accepted');
+		}else if(ignored){
+			setStatus('Ignored');
+		}else if(!accepted && !ignored){
+			setStatus('Pending');
+		}
+	}
+
+	// var status = function ()
 	return (
 		<div>
-			{books.isAccepted ? (
-				requestedBooks.map((book1) => (
-					<Container>
-						<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
-							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
+			
+				<Container>
+					<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
+						{data.map((book) => (
+							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={book._id}>
 								<Paper className={classes.paper}>
-									<img alt="img" src={book1.bookCover} className={classes.imgBook} />
-
-									<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
-									<h3 style={{ marginBottom: 5 }}>{book1.ownerName}</h3>
-
-									<Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
-										Status: Accepted
-									</Button>
+									<img alt="img" src={book.bookCover} className={classes.imgBook} />
+									<Link
+										href={`/university/${book.universityId}/book/${book._id}`}
+										style={{ color: 'black' }}
+									>
+										<h3 style={{ marginBottom: 5 }}>{book.bookName}</h3>
+									</Link>
+									<Link
+										href={`/university/${book.universityId}/book/${book._id}`}
+										style={{ color: 'white' }}
+									>
+										<Button
+											style={{ color: 'Black', border: '1px solid white' }}
+											variant="outlined"
+										>
+											Status: {status};
+										</Button>
+										<Button
+											style={{ color: 'Black', border: '1px solid white' }}
+											variant="outlined"
+										>
+											Owner: {book.ownerName}
+										</Button>
+									</Link>
 								</Paper>
 							</Grid>
-						</Grid>
-					</Container>
-				))
-			) : (
-				requestedBooks.map((book1) => (
-					<Container>
-						<Grid container direction="row" justify="center" alignItems="center" spacing={3}>
-							<Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={books._id}>
-								<Paper className={classes.paper}>
-									<img alt="img" src={book1.bookCover} className={classes.imgBook} />
-
-									<h3 style={{ marginBottom: 5 }}>{book1.bookName}</h3>
-
-									<Button style={{ color: 'Black', border: '1px solid white' }} variant="outlined">
-										Status: Ignored
-									</Button>
-								</Paper>
-							</Grid>
-						</Grid>
-					</Container>
-				))
-			)}
+						))}
+					</Grid>
+				</Container>
+			
+				
 		</div>
 	);
 }

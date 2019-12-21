@@ -9,11 +9,12 @@ import io from 'socket.io-client';
 let socket;
 const useStyles = makeStyles(theme => ({
     root: {
-        position: 'fixed',
-        right: 0
+        position: 'absolute',
+        top: 71,
+        right: 50
     },
     chat: {
-        color: '#77b747',
+        color: 'white',
         right: -24,
         position: 'relative',
     },
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     chatInput: {
         width: '99%',
         height: 40
-        
+
     },
     chatContainer: {
         height: 300
@@ -66,39 +67,39 @@ const ChatBox = () => {
     const endPoint = 'localhost:8000';
     let room = 'ALL';
     let name = "";
-    
+
     if (token) {
         const decoded = jwt_decode(token);
         name = decoded.userName
     }
-console.log(name)
+    console.log(name)
 
     useEffect(() => {
         socket = io(endPoint);
-        socket.emit('join',{name, room}, () => {
+        socket.emit('join', { name, room }, () => {
         });
 
-    return () => {
-        socket.emit('disconnect');
-        socket.off();
-    }
-       
+        return () => {
+            socket.emit('disconnect');
+            socket.off();
+        }
+
     }, [endPoint]);
 
     useEffect(() => {
         socket.on('message', (message) => {
-            setMessages([...messages,message]);
+            setMessages([...messages, message]);
         })
     }, [messages])
 
     //function for sending message
-const sendMessage =(event)=>{
-    event.preventDefault();
-    if(message){
-    socket.emit('sendMessage', message, ()=> setMessage(''));
-}
-}
-//console.log(message, messages);
+    const sendMessage = (event) => {
+        event.preventDefault();
+        if (message) {
+            socket.emit('sendMessage', message, () => setMessage(''));
+        }
+    }
+    //console.log(message, messages);
     const handleChange = () => {
         setChecked(prev => !prev);
     };
@@ -116,19 +117,19 @@ const sendMessage =(event)=>{
                             <h1 className={classes.chatTitel}>CHAT</h1>
 
                             <div>
-                             
-                                 <div  className={classes.chatContainer}>
-                                {
-                                    messages.map((message, i) => 
-                                    <div key={i}>
-                                       <p>{message.user}:{message.text}</p>
-                                    </div>
-                                    )} 
-                                   </div> 
-                             
+
+                                <div className={classes.chatContainer}>
+                                    {
+                                        messages.map((message, i) =>
+                                            <div key={i}>
+                                                <p>{message.user}:{message.text}</p>
+                                            </div>
+                                        )}
+                                </div>
+
                                 <div>
-                                    <input placeholder="Type to chat ....." value={message} onChange={(event)=> setMessage(event.target.value)}
-                                    onKeyPress={event => event.key === 'Enter' ? sendMessage(event): null} className={classes.chatInput}/>
+                                    <input placeholder="Type to chat ....." value={message} onChange={(event) => setMessage(event.target.value)}
+                                        onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null} className={classes.chatInput} />
                                 </div>
                             </div>
                         </Paper>
